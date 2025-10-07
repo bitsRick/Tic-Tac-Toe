@@ -1,0 +1,72 @@
+# This is a comment
+# This file should be placed at the root of your Unity project
+
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Aa]ssets/AssetStoreTools*
+
+# Visual Studio / MonoDevelop generated files
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+*.userprefs
+*.sln
+*.csproj
+*.pidb
+*.user
+*.suo
+*.unityproj
+*.booproj
+*.svd
+
+# Rider
+.idea/
+*.sln.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Linux
+*~
+
+# Build results
+*.apk
+*.aab
+*.unitypackage
+
+# Asset meta data
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+*.mdb
+*.pdb
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swm
+
+# Other
+*.log
+*.sublime-project
+*.sublime-workspace

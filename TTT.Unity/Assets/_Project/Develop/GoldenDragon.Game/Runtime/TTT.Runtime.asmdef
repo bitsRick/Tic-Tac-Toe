@@ -3,7 +3,9 @@
     "rootNamespace": "GoldenDragon",
     "references": [
         "VContainer",
-        "UniTask"
+        "UniTask",
+        "DOTween.Modules",
+        "DOTweenPro.Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

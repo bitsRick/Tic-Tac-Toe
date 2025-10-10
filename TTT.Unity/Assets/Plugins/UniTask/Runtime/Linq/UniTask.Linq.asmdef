@@ -1,8 +1,6 @@
 {
-    "name": "TTT.Runtime",
-    "rootNamespace": "GoldenDragon",
+    "name": "UniTask.Linq",
     "references": [
-        "VContainer",
         "UniTask"
     ],
     "includePlatforms": [],

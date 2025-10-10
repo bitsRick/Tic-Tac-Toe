@@ -15,6 +15,9 @@ namespace GoldenDragon
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<SceneManager>(Lifetime.Scoped);
+            builder.Register<LoadingService>(Lifetime.Singleton);
+
+            builder.RegisterEntryPoint<BootstrapFlow>();
         }
     }
 }

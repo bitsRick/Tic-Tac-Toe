@@ -2,6 +2,8 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace GoldenDragon
@@ -40,7 +42,6 @@ namespace GoldenDragon
         {
             await _registrationScreen.Hide();
             await _saveLoadService.CreateNewData(inputFieldText);
-            await UniTask.Delay(Constant.B.DelayTransitionNextScene);   
             await StartLoading();
         }
 

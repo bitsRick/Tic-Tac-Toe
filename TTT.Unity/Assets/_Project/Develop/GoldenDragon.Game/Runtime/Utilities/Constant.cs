@@ -4,7 +4,8 @@
     {
         public static class B
         {
-            public const int DelayTransitionNextScene = 70;
+            public const int DelayTransitionNextScene = 40;
+            public const float DurationFadeRegistrationScreen = 0.5f;
         }
     }
 }

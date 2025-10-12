@@ -18,8 +18,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         public async void Start()
         {
             await _loadingService.BeginLoading(new FooLoadingUnit(3));
-            
-            
         }
     }
 }

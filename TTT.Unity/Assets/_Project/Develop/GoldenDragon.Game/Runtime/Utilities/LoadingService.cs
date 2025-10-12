@@ -24,7 +24,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     public sealed class LoadingService
     {
         private readonly Stopwatch _watch =
-#if !COMPANYNAME_PROD
+#if !GOLDENDRAGON_PROD
             new();
 #else
             null;

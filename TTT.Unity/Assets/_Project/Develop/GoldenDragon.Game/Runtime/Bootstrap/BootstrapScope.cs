@@ -1,3 +1,4 @@
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 using VContainer;
@@ -8,6 +9,7 @@ namespace GoldenDragon
     public sealed class BootstrapScope : LifetimeScope
     {
         [SerializeField] private LoadingView _loadingView;
+        [SerializeField] private RegistrationScreen registrationScreenScreen;
         
         protected override void Awake()
         {
@@ -21,8 +23,10 @@ namespace GoldenDragon
             
             builder.Register<SceneManager>(Lifetime.Scoped);
             builder.Register<LoadingService>(Lifetime.Singleton);
+            builder.Register<IPlayerProgress, ProgressService>(Lifetime.Singleton);
+            builder.Register<SaveLoadService>(Lifetime.Singleton);
 
-            builder.RegisterEntryPoint<BootstrapFlow>();
+            builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen);
         }
     }
 }

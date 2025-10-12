@@ -19,7 +19,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            await _loadingService.BeginLoading(new FooLoadingUnit(3));
+            //await _loadingService.BeginLoading(new FooLoadingUnit(3));
 
             await _loadingView.Hide();
             // _sceneManager.LoadScene(RuntimeConstants.Scene.Core).Forget();

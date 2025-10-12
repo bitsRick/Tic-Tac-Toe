@@ -34,7 +34,6 @@ namespace GoldenDragon
             {
                 _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
             }
-            
         }
 
         public async void SetRegistration(string inputFieldText)

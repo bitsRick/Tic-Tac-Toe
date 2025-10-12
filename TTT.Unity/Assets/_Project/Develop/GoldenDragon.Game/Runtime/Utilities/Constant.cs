@@ -4,7 +4,7 @@
     {
         public static class B
         {
-            public const int DelayTransitionNextScene = 100;
+            public const int DelayTransitionNextScene = 70;
         }
     }
 }

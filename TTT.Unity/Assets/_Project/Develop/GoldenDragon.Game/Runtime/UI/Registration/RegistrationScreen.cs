@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Core;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,22 +12,10 @@ namespace GoldenDragon
     {
         [SerializeField] private TMP_InputField  _inputField;
         [SerializeField] private Button _btn;
-        private BootstrapFlow _bootstrapFlow;
-
-        private void OnEnable()
-        {
-            _btn.onClick.AddListener(OnClickBtn);
-        }
-
-        private void OnDestroy()
-        {
-            _bootstrapFlow = null;
-            _btn.onClick.RemoveListener(OnClickBtn);
-        }
-
+        
         public void Initialized(BootstrapFlow bootstrapFlow)
         {
-            _bootstrapFlow = bootstrapFlow;
+            _btn.OnClickAsObservable().Subscribe(_ =>  bootstrapFlow.SetRegistration(_inputField.text)).AddTo(this);
         }
 
         public override UniTask Show()
@@ -39,11 +28,6 @@ namespace GoldenDragon
         {
             gameObject.SetActive(false);
             return UniTask.CompletedTask;
-        }
-
-        private void OnClickBtn()
-        {
-            _bootstrapFlow.SetRegistration(_inputField.text);
         }
     }
 }

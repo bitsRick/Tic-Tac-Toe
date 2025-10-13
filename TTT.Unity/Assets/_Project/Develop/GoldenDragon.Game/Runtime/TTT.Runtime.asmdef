@@ -4,11 +4,15 @@
     "references": [
         "VContainer",
         "UniTask",
+        "UniTask.Addressables",
         "UniTask.DOTween",
         "DOTween.Modules",
         "DOTweenPro.Scripts",
         "Unity.TextMeshPro",
-        "UniRx"
+        "UniRx",
+        "Unity.ResourceManager",
+        "Unity.Addressables",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

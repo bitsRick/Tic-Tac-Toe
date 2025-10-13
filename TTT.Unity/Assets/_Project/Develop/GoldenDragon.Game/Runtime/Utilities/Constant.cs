@@ -4,8 +4,22 @@
     {
         public static class B
         {
-            public const int DelayTransitionNextScene = 40;
             public const float DurationFadeRegistrationScreen = 0.5f;
+        }
+        
+        public static class M
+        {
+            public static class Asset
+            {
+                public static class Ui
+                {
+                    public const string MetaRoot = "MetaRoot";
+                } 
+                
+                public static class Popup
+                {
+                }
+            }
         }
     }
 }

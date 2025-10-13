@@ -25,6 +25,9 @@ namespace GoldenDragon
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<IPlayerProgress, ProgressService>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
+            builder.Register<AssetInstall>(Lifetime.Singleton);
+            builder.Register<AssetLoad>(Lifetime.Singleton);
+            builder.Register<AssetService>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen);
         }

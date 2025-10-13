@@ -1,5 +1,6 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon.Units;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -8,10 +9,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
     {
         private readonly SceneManager _sceneManager;
         private readonly LoadingService _loadingService;
-        private LoadingView _loadingView;
+        private readonly LoadingView _loadingView;
+        private AssetService _assetService;
 
-        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView)
+        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView, AssetService assetService)
         {
+            _assetService = assetService;
             _loadingView = loadingView;
             _sceneManager = sceneManager;
             _loadingService = loadingService;
@@ -19,10 +22,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            //await _loadingService.BeginLoading(new FooLoadingUnit(3));
-
+            // Fabrica
+            var rootHud = _assetService.Load.GetAssetAsync<GameObject>(TypeAsset.Meta_UI, Constant.M.Asset.Ui.MetaRoot).GetComponent<ViewHudRoot>();
+            await _assetService.Install.InstallToRoot(rootHud);
+            
+            await _loadingService.BeginLoading(new FooLoadingUnit(3));
+            
+            await rootHud.Initialized();
             await _loadingView.Hide();
-            // _sceneManager.LoadScene(RuntimeConstants.Scene.Core).Forget();
+        }
+
+        public async void StartMatch()
+        {
+            await _sceneManager.LoadScene(RuntimeConstants.Scene.Core);
         }
     }
 }

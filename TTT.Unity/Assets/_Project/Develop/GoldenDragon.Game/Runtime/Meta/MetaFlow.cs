@@ -1,6 +1,6 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using GoldenDragon.Units;
-using UnityEngine;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -11,9 +11,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly LoadingService _loadingService;
         private readonly LoadingView _loadingView;
         private AssetService _assetService;
+        private FactoryMetaUi _factoryMetaUi;
 
-        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView, AssetService assetService)
+        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView, AssetService assetService,FactoryMetaUi factoryMetaUi)
         {
+            _factoryMetaUi = factoryMetaUi;
             _assetService = assetService;
             _loadingView = loadingView;
             _sceneManager = sceneManager;
@@ -22,13 +24,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            // Fabrica
-            var rootHud = _assetService.Load.GetAssetAsync<GameObject>(TypeAsset.Meta_UI, Constant.M.Asset.Ui.MetaRoot).GetComponent<ViewHudRoot>();
-            await _assetService.Install.InstallToRoot(rootHud);
+            MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
+            await metaRoot.Initialized();
             
-            await _loadingService.BeginLoading(new FooLoadingUnit(3));
+            await _assetService.Install.InstallToRoot(metaRoot);
             
-            await rootHud.Initialized();
+            //await _loadingService.BeginLoading(new FooLoadingUnit(3));
+            
             await _loadingView.Hide();
         }
 

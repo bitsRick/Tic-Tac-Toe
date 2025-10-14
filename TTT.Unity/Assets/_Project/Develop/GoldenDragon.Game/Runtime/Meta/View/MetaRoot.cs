@@ -1,9 +1,9 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace GoldenDragon
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class ViewHudRoot : MonoBehaviour
+    public class MetaRoot : MonoBehaviour
     {
         public async UniTask Initialized()
         {

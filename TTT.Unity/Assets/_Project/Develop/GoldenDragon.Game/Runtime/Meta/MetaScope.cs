@@ -1,4 +1,5 @@
-﻿using VContainer;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+using VContainer;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -7,6 +8,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<FactoryMetaUi>(Lifetime.Singleton);
+            
             builder.RegisterEntryPoint<MetaFlow>();
         }
     }

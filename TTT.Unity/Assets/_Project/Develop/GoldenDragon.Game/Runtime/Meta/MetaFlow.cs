@@ -1,6 +1,7 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -26,8 +27,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         {
             MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
             await metaRoot.Initialized();
-            
-            await _assetService.Install.InstallToRoot(metaRoot);
             
             //await _loadingService.BeginLoading(new FooLoadingUnit(3));
             

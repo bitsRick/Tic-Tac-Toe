@@ -2,7 +2,7 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 {
     public class AssetCatch
     {

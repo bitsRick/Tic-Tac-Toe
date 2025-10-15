@@ -1,20 +1,16 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
-{    
-    public enum TypeAsset
-    {
-        Meta_UI,
-        Popup,
-    }
-        public class AssetLoad
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
+{
+    public class AssetLoad
         {
             private readonly AssetCatch _assetCatch = new AssetCatch();
 
-            public T GetAssetAsync<T>(TypeAsset typeAsset,string nameAsset)where T : UnityEngine.Object
+            public T GetAsset<T>(TypeAsset typeAsset,string nameAsset)where T : UnityEngine.Object
             {
                 Log.Default.D($"Loading asset[{typeAsset}] path:{nameAsset}");
 
@@ -22,6 +18,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                 _assetCatch.Add(typeAsset, nameAsset, handle);
                 
                 return handle.WaitForCompletion();
+            }
+
+            public async UniTask<T> GetAssetAsync<T>(TypeAsset typeAsset,string tagPopup) where T:UnityEngine.Object
+            {
+                Log.Default.D($"Loading asset[Popup] path:{tagPopup}");
+
+                AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(tagPopup);
+                _assetCatch.Add(typeAsset,tagPopup,handle);
+                
+                return await handle.ToUniTask();
             }
 
             public async UniTask ReleaseAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class

@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Popup
   m_GUID: 928a1d337afff564785c365348f5dce9
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 08c47e974e281074f801dfe4eb9ea817
+    m_Address: Popup_Setting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 563396767af9ae3499b440afb836f949, type: 2}
   m_SchemaSet:

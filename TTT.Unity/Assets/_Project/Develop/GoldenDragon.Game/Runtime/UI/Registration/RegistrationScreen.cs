@@ -36,7 +36,10 @@ namespace GoldenDragon
 
         public override async UniTask Hide()
         {
-            await _selfGroup.DOFade(0f, Constant.B.DurationFadeRegistrationScreen).SetAutoKill(true).Play();
+            await _selfGroup.DOFade(0f, Constant.B.DurationFadeRegistrationScreen)
+                .SetAutoKill(true)
+                .Play();
+            
             gameObject.SetActive(false);
         }
     }

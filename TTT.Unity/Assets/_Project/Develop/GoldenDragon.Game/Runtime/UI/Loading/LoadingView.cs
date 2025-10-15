@@ -1,7 +1,7 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Core;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 
 namespace GoldenDragon
@@ -25,6 +25,7 @@ namespace GoldenDragon
 
         public override UniTask Show()
         {
+            gameObject.SetActive(true);
             return UniTask.CompletedTask;
         }
 
@@ -34,8 +35,9 @@ namespace GoldenDragon
             
             _fadeTween = _canvasGroup.DOFade(0f, 0.75f)
                 .SetAutoKill(true)
+                .SetTest(() => gameObject.SetActive(false))
                 .Play();
-
+            
             return UniTask.CompletedTask;
         }
     }

@@ -18,8 +18,15 @@
                 
                 public static class Popup
                 {
+                    public const string Setting = "Popup_Setting";
                 }
             }
         }
+    }
+    
+    public enum TypePopup
+    {
+        Setting,
+        None
     }
 }

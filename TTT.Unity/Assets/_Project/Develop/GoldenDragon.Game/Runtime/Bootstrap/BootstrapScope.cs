@@ -1,4 +1,5 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 using VContainer;

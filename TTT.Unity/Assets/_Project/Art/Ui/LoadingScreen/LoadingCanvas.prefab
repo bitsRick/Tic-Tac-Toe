@@ -64,7 +64,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &8974571763110903528
 MonoBehaviour:
@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa7706bb68410444aad1dc7e00ff026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loading: {fileID: 5984343702184946431}
+  _nameGame: {fileID: 2417363240187186370}
   _canvasGroup: {fileID: 6389670365954899771}
 --- !u!1 &3374859464594482718
 GameObject:
@@ -361,7 +363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21568626, g: 0.8666667, b: 0.83414996, a: 0.20392157}
+  m_Color: {r: 0.21568626, g: 0.8666667, b: 0.83414996, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

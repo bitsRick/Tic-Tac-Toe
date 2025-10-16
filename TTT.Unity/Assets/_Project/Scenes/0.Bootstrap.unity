@@ -355,10 +355,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6026302666640238145, guid: 2d63fe556eefa9448ad8d060f4ac33f7, type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -387,12 +383,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3276331098522143891, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6389670365954899771, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
-      propertyPath: m_Alpha
+    - target: {fileID: 3042583146891888930, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7294856633325578867, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
@@ -474,10 +466,6 @@ PrefabInstance:
     - target: {fileID: 7294856633325578867, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9104606732989783749, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
-      propertyPath: m_Color.a
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

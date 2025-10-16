@@ -1,5 +1,7 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Core;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
@@ -11,11 +13,25 @@ namespace GoldenDragon
 {
     public class RegistrationScreen : View
     {
+        [Header("Lang")]
+        [SerializeField] private TextMeshProUGUI _registration;
+        [SerializeField] private TextMeshProUGUI _nick;
+        [SerializeField] private TextMeshProUGUI _nickWrite;
+        [SerializeField] private TextMeshProUGUI _enter;
+        
         [SerializeField] private TMP_InputField  _inputField;
         [SerializeField] private Button _btn;
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
-        
+
+        private void Awake()
+        {
+            _registration.text = Lang.Ui.RegistrationScreen.Registration;
+            _nick.text = Lang.Ui.RegistrationScreen.Nick;
+            _nickWrite.text = Lang.Ui.RegistrationScreen.NickWrite;
+            _enter.text = Lang.Ui.RegistrationScreen.Enter;
+        }
+
         public void Initialized(BootstrapFlow bootstrapFlow)
         {
             _btn.OnClickAsObservable().Subscribe(_ =>

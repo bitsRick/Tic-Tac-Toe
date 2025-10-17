@@ -19,6 +19,10 @@
                 public static class Popup
                 {
                     public const string Setting = "Popup_Setting";
+                    public const string Inventory = "Popup_Inventory";
+                    public const string LeaderBoard = "Popup_leaderBoard";
+                    public const string Match = "Popup_Match";
+                    public const string Shop = "Popup_Shop";
                 }
             }
         }

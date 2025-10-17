@@ -26,6 +26,32 @@
                     public static string Sound = "Музыка";
                     public static string Music = "Звуки";
                 }
+
+                public static class LeaderBoard
+                {
+                    public static string NameForm = "Таблица Лидеров";
+                }
+
+                public static class Inventory
+                {
+                    public static string Header = "Инвентарь стилей";
+                    public static string BoardButton = "Доска";
+                    public static string StyleEnter = "Присенить";
+                }
+                
+                public static class Shop
+                {
+                    public static string Header = "Маназин";
+                    public static string BoardButton = "Доска";
+                    public static string Sell = "Куплено";
+                    public static string Buy = "Купить";
+                }
+
+                public static class MatchPopup
+                {
+                    public static string VsBot = "Игрок Vs Бот";
+                    public static string VsPlayer = "Игрок Vs Игрок";
+                }
             }
         }
     }

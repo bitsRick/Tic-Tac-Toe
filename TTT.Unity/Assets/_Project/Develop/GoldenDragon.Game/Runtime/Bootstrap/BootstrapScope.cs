@@ -1,3 +1,4 @@
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -29,6 +30,7 @@ namespace GoldenDragon
             builder.Register<AssetInstall>(Lifetime.Singleton);
             builder.Register<AssetLoad>(Lifetime.Singleton);
             builder.Register<AssetService>(Lifetime.Singleton);
+            builder.Register<LangFileLoad>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen);
         }

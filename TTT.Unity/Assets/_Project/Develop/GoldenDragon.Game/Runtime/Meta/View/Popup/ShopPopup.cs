@@ -10,9 +10,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Lang")] 
         [SerializeField] private TextMeshProUGUI _nameHeader;
         [SerializeField] private TextMeshProUGUI _buttonBorder;
+        
+        private Model _model;
         private string _sellStyle;
         private string _buyButton;
-        private Model _model;
 
         private void Awake()
         {

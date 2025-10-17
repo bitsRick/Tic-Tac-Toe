@@ -267,6 +267,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2038638976260450604, guid: 2d63fe556eefa9448ad8d060f4ac33f7, type: 3}
+      propertyPath: _switchLanguage
+      value: 
+      objectReference: {fileID: 2145546254}
     - target: {fileID: 2629184874053726759, guid: 2d63fe556eefa9448ad8d060f4ac33f7, type: 3}
       propertyPath: m_Name
       value: RegestrationScreen
@@ -369,6 +373,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d69817127f419b48897f9c218f365d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2145546254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1984859558255936867, guid: 2d63fe556eefa9448ad8d060f4ac33f7, type: 3}
+  m_PrefabInstance: {fileID: 1694399113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1445925276468666254

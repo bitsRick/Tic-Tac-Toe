@@ -6,7 +6,9 @@
         "UnityEditor.TestRunner",
         "Unity.Addressables",
         "Unity.ResourceManager",
-        "TTT.Runtime"
+        "TTT.Runtime",
+        "UniTask",
+        "UniTask.Editor"
     ],
     "includePlatforms": [
         "Editor"

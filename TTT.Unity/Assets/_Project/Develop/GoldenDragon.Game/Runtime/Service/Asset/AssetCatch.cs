@@ -36,7 +36,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 return default;
             }
             
-            
             AsyncOperationHandle<T> asyncOperationHandle = 
                 (AsyncOperationHandle<T>)_assetCollection[typeAsset][nameAsset];
 

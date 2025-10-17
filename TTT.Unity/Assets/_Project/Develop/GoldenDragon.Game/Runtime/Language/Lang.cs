@@ -6,6 +6,7 @@
         {
             public static class RegistrationScreen
             {
+                public static string Language = "Язык";
                 public static string Registration = "Регистрация";
                 public static string Nick = "Ник";
                 public static string NickWrite = "Введите Ник";

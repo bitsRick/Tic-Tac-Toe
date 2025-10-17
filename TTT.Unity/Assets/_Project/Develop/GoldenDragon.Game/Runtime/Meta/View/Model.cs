@@ -11,8 +11,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
     {
         private PopupService _popupService;
         private MetaBlackPopupBackground _popupBackground;
-        private bool _isActivePopup;
         private PopupBase _activePopup;
+        private bool _isActivePopup;
 
         [Inject]
         public void Construct(PopupService popupService)

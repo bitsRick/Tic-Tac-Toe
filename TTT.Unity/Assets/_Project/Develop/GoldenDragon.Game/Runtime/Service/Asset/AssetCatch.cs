@@ -10,7 +10,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 
         public void Add<T>(TypeAsset typeAsset, string nameAsset, AsyncOperationHandle<T> handle) where T : class
         {
-            _assetCollection.Add(typeAsset,new Dictionary<string, object> { { nameAsset, handle } });
+            if (_assetCollection.TryGetValue(typeAsset,out Dictionary<string,object> dicVal))
+            {
+                if (dicVal.ContainsKey(nameAsset))
+                {
+                    Log.Default.W($"{nameAsset} is asset added in Dictionary:{nameof(_assetCollection)}");
+                }
+                else
+                {
+                    dicVal.Add(nameAsset,handle);
+                }
+            }
+            else
+            {
+                _assetCollection.Add(typeAsset,new Dictionary<string, object>(){{nameAsset,handle}});   
+            }
         }
 
         public AsyncOperationHandle<T> Get<T>(TypeAsset typeAsset, string nameAsset) where T:class

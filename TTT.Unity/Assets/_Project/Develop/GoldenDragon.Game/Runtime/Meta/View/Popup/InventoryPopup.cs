@@ -11,6 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _nameHeaderForm;
         [SerializeField] private TextMeshProUGUI _nameButtonBoard;
         private string _styleEnter;
+        private Model _model;
 
         private void Awake()
         {
@@ -19,9 +20,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             _styleEnter = Lang.Ui.Popup.Inventory.StyleEnter;
         }
 
+        public void Construct(Model model)
+        {
+            _model = model;
+        }
+
         public override void Dispose()
         {
-            
+            Destroy(this);
         }
     }
 }

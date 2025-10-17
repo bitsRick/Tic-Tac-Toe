@@ -31,6 +31,10 @@
     public enum TypePopup
     {
         Setting,
-        None
+        None,
+        LeaderBoard,
+        Match,
+        Inventory,
+        Shop
     }
 }

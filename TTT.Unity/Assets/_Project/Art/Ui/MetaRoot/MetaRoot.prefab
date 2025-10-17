@@ -240,7 +240,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.35
+  m_fontSize: 47.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.35
+  m_fontSize: 47.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1281,6 +1281,10 @@ MonoBehaviour:
   _popupBackground: {fileID: 1863880295726761240}
   _parent: {fileID: 3154578153073629528}
   _btnOpenSetting: {fileID: 6720890661524543792}
+  _btnOpenLeaderBoard: {fileID: 8151904967943463455}
+  _btnOpenMatch: {fileID: 3980752847219687593}
+  _btnOpenShop: {fileID: 3372792947650308831}
+  _btnOpenInventory: {fileID: 3232563367370111623}
 --- !u!1 &3565206790092837403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1919,7 +1923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

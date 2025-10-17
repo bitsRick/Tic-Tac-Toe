@@ -29,12 +29,69 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupSetting()
         {
-            if (_isActivePopup == false)
+            if (IsNotOpenPopup(TypePopup.Setting))
             {
-                _isActivePopup = true;
-                _activePopup = _popupService.GetPopup(TypePopup.Setting);
-                
                 if (_activePopup is SettingPopup popup)
+                {
+                    popup.Construct(this);
+                    
+                    _popupBackground.Show();
+                    
+                    popup.Show();
+                }
+            }
+        }
+
+        public void OpenPopupLeaderBoard()
+        {
+            if (IsNotOpenPopup(TypePopup.LeaderBoard))
+            {
+                if (_activePopup is LeaderBoardPopup popup)
+                {
+                    popup.Construct(this);
+                    
+                    _popupBackground.Show();
+                    
+                    popup.Show();
+                }
+            }
+        }
+
+        public void OpenPopupMatch()
+        {
+            if (IsNotOpenPopup(TypePopup.Match))
+            {
+                if (_activePopup is MatchPopup popup)
+                {
+                    popup.Construct(this);
+                    
+                    _popupBackground.Show();
+                    
+                    popup.Show();
+                }
+            }
+        }
+
+        public void OpenPopupInventory()
+        {
+            if (IsNotOpenPopup(TypePopup.Inventory))
+            {
+                if (_activePopup is InventoryPopup popup)
+                {
+                    popup.Construct(this);
+                    
+                    _popupBackground.Show();
+                    
+                    popup.Show();
+                }
+            }
+        }
+
+        public void OpenPopupShop()
+        {
+            if (IsNotOpenPopup(TypePopup.Shop))
+            {
+                if (_activePopup is ShopPopup popup)
                 {
                     popup.Construct(this);
                     
@@ -51,6 +108,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _activePopup.Hide();
             _popupBackground.Hide();
             _activePopup = null;
+        }
+
+        private bool IsNotOpenPopup(TypePopup typePopupOpen)
+        {
+            if (_isActivePopup == false)
+            {
+                _isActivePopup = true;
+                _activePopup = _popupService.GetPopup(typePopupOpen);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 {
@@ -17,6 +16,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
         public T InstallToUiPopup<T>(GameObject installObject,GameObject parent) where T: class
         {
             GameObject instance = UnityEngine.Object.Instantiate(installObject, parent.transform, false);
+            instance.SetActive(false);
             return instance.GetComponent<T>();
         }
     }

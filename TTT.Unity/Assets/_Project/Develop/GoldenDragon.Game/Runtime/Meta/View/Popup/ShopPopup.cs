@@ -12,6 +12,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _buttonBorder;
         private string _sellStyle;
         private string _buyButton;
+        private Model _model;
 
         private void Awake()
         {
@@ -21,8 +22,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             _sellStyle = Lang.Ui.Popup.Shop.Sell;
         }
 
+        public void Construct(Model model)
+        {
+            _model = model;
+        }
+
         public override void Dispose()
         {
+            Destroy(this);
         }
     }
 }

@@ -11,15 +11,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _namePopupText;
 
         private Model _model;
+        private Lang _language;
 
-        private void Awake()
+        public void Construct(Model model, Lang language)
         {
-            _namePopupText.text = Lang.Ui.Popup.LeaderBoard.NameForm;
+            _language = language;
+            _model = model;
         }
 
-        public void Construct(Model model)
+        public void Initialized()
         {
-            _model = model;
+            _namePopupText.text = _language.UI.POPUP.LEADER_BOARD.NameForm;
         }
 
         public override void Dispose()

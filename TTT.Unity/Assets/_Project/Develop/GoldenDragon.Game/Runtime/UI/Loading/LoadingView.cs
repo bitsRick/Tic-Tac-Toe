@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
@@ -22,8 +23,12 @@ namespace GoldenDragon
         private void Awake()
         {
             DontDestroyOnLoad(this);
-            _loading.text = Lang.Ui.LoadingScreen.Loading;
-            _nameGame.text = Lang.Ui.LoadingScreen.Name;
+        }
+
+        public async UniTask Initialized(Lang language)
+        {
+            _loading.text = language.UI.LOADING_SCREEN.Loading;
+            _nameGame.text = language.UI.LOADING_SCREEN.Name;
         }
 
         private void OnDestroy()

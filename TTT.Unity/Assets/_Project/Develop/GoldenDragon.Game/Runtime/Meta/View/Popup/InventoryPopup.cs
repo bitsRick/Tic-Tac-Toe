@@ -12,22 +12,24 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _nameButtonBoard;
         private string _styleEnter;
         private Model _model;
-
-        private void Awake()
+        private Lang _language;
+        
+        public void Construct(Model model,Lang l)
         {
-            _nameHeaderForm.text = Lang.Ui.Popup.Inventory.Header;
-            _nameButtonBoard.text = Lang.Ui.Popup.Inventory.BoardButton;
-            _styleEnter = Lang.Ui.Popup.Inventory.StyleEnter;
-        }
-
-        public void Construct(Model model)
-        {
+            _language = l;
             _model = model;
         }
 
         public override void Dispose()
         {
             Destroy(this);
+        }
+
+        public void Initialized()
+        {
+            _nameHeaderForm.text = _language.UI.POPUP.INVENTORY.Header;
+            _nameButtonBoard.text = _language.UI.POPUP.INVENTORY.BoardButton;
+            _styleEnter = _language.UI.POPUP.INVENTORY.StyleEnter;
         }
     }
 }

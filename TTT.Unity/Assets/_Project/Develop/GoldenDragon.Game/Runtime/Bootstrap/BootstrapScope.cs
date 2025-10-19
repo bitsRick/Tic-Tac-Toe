@@ -22,7 +22,8 @@ namespace GoldenDragon
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_loadingView);
-            
+
+            builder.Register<Lang>(Lifetime.Singleton);
             builder.Register<SceneManager>(Lifetime.Scoped);
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<IPlayerProgress, ProgressService>(Lifetime.Singleton);

@@ -1,59 +1,83 @@
-﻿namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
+﻿using System;
+
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
 {
-    public static class Lang
+    [Serializable]
+    public class Lang
     {
-        public static class Ui
+        [Serializable]
+        public class Ui
         {
-            public static class RegistrationScreen
+            [Serializable]
+            public class RegistrationScreen
             {
-                public static string Language = "Язык";
-                public static string Registration = "Регистрация";
-                public static string Nick = "Ник";
-                public static string NickWrite = "Введите Ник";
-                public static string Enter = "Вход";
+                public string Language = "Язык";
+                public string Registration = "Регистрация";
+                public string Nick = "Ник";
+                public string NickWrite = "Введите Ник";
+                public string Enter = "Вход";
             }
-        
-            public static class LoadingScreen
+
+            [Serializable]
+            public class LoadingScreen
             {
-                public static string Name = "Крестик и нолики";
-                public static string Loading = "Загрузка...";
+                public string Name = "Крестик и нолики";
+                public string Loading = "Загрузка...";
             }
-        
-            public static class Popup
+
+            [Serializable]
+            public class Popup
             {
-                public static class Setting
+                [Serializable]
+                public class Setting
                 {
-                    public static string Name = "Настройки";
-                    public static string Sound = "Музыка";
-                    public static string Music = "Звуки";
+                    public string Name = "Настройки";
+                    public string Sound = "Музыка";
+                    public string Music = "Звуки";
                 }
 
-                public static class LeaderBoard
+                [Serializable]
+                public class LeaderBoard
                 {
-                    public static string NameForm = "Таблица Лидеров";
+                    public string NameForm = "Таблица Лидеров";
                 }
 
-                public static class Inventory
+                [Serializable]
+                public class Inventory
                 {
-                    public static string Header = "Инвентарь стилей";
-                    public static string BoardButton = "Доска";
-                    public static string StyleEnter = "Присенить";
-                }
-                
-                public static class Shop
-                {
-                    public static string Header = "Маназин";
-                    public static string BoardButton = "Доска";
-                    public static string Sell = "Куплено";
-                    public static string Buy = "Купить";
+                    public string Header = "Инвентарь стилей";
+                    public string BoardButton = "Доска";
+                    public string StyleEnter = "Присенить";
                 }
 
-                public static class MatchPopup
+                [Serializable]
+                public class Shop
                 {
-                    public static string VsBot = "Игрок Vs Бот";
-                    public static string VsPlayer = "Игрок Vs Игрок";
+                    public string Header = "Маназин";
+                    public string BoardButton = "Доска";
+                    public string Sell = "Куплено";
+                    public string Buy = "Купить";
                 }
+
+                [Serializable]
+                public class MatchPopup
+                {
+                    public string VsBot = "Игрок Vs Бот";
+                    public string VsPlayer = "Игрок Vs Игрок";
+                }
+
+                public Setting SETTING = new Setting();
+                public LeaderBoard LEADER_BOARD = new ();
+                public Inventory INVENTORY = new ();
+                public Shop SHOP = new ();
+                public MatchPopup MATCH_POPUP = new ();
             }
+
+            public RegistrationScreen REGISTRATION_SCREEN = new RegistrationScreen();
+            public LoadingScreen LOADING_SCREEN = new LoadingScreen();
+            public Popup POPUP = new ();
         }
+
+        public Ui UI = new Ui();
     }
 }

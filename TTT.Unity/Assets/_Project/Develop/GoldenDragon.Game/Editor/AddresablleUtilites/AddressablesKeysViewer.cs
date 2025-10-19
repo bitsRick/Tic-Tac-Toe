@@ -108,6 +108,4 @@ namespace _Project.Develop.GoldenDragon.Game.Editor.AddresablleUtilites
             RefreshKeys();
         }
     }
-
-// Вспомогательный класс для диалога ввода
 }

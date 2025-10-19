@@ -6,7 +6,8 @@
         "Unity.Addressables.Editor",
         "Unity.ResourceManager",
         "Unity.2D.Sprite.Editor",
-        "Unity.TextMeshPro.Editor"
+        "Unity.TextMeshPro.Editor",
+        "TTT.Runtime"
     ],
     "includePlatforms": [
         "Editor"

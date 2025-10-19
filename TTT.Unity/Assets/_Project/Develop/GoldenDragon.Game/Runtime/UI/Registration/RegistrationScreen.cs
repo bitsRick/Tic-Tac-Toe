@@ -27,15 +27,10 @@ namespace GoldenDragon
         [SerializeField] private Button _btn;
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
+        private Lang _language;
 
         private void Awake()
         {
-            _registration.text = Lang.Ui.RegistrationScreen.Registration;
-            _nick.text = Lang.Ui.RegistrationScreen.Nick;
-            _nickWrite.text = Lang.Ui.RegistrationScreen.NickWrite;
-            _enter.text = Lang.Ui.RegistrationScreen.Enter;
-            _lang.text = Lang.Ui.RegistrationScreen.Language;
-            
             _switchLanguage.options.Clear();
             _switchLanguage.options.Add(new TMP_Dropdown.OptionData(
                 Constant.B.Lang.RusLangFile.Remove(
@@ -48,7 +43,12 @@ namespace GoldenDragon
             _switchLanguage.value = 0;
         }
 
-        public void Initialized(BootstrapFlow bootstrapFlow)
+        public void Construct(Lang lang)
+        {
+            _language = lang;
+        }
+
+        public UniTask Initialized(BootstrapFlow bootstrapFlow)
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
@@ -58,6 +58,14 @@ namespace GoldenDragon
                 _isActive = true;
                 bootstrapFlow.SetRegistration(_inputField.text);
             }).AddTo(this);
+            
+            _registration.text = _language.UI.REGISTRATION_SCREEN.Registration;
+            _nick.text = _language.UI.REGISTRATION_SCREEN.Nick;
+            _nickWrite.text = _language.UI.REGISTRATION_SCREEN.NickWrite;
+            _enter.text = _language.UI.REGISTRATION_SCREEN.Enter;
+            _lang.text = _language.UI.REGISTRATION_SCREEN.Language;
+            
+            return UniTask.CompletedTask;
         }
 
         public override UniTask Show()

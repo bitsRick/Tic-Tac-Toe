@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
@@ -13,10 +14,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private MetaBlackPopupBackground _popupBackground;
         private PopupBase _activePopup;
         private bool _isActivePopup;
+        private Lang _language;
 
         [Inject]
-        public void Construct(PopupService popupService)
+        public void Construct(PopupService popupService,Lang language)
         {
+            _language = language;
             _popupService = popupService;
         }
 
@@ -33,8 +36,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is SettingPopup popup)
                 {
-                    popup.Construct(this);
-                    
+                    popup.Construct(this,_language);
+                    popup.Initialized();
                     _popupBackground.Show();
                     
                     popup.Show();
@@ -48,8 +51,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is LeaderBoardPopup popup)
                 {
-                    popup.Construct(this);
-                    
+                    popup.Construct(this,_language);
+                    popup.Initialized();
                     _popupBackground.Show();
                     
                     popup.Show();
@@ -63,8 +66,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is MatchPopup popup)
                 {
-                    popup.Construct(this);
-                    
+                    popup.Construct(this,_language);
+                    popup.Initialized();
                     _popupBackground.Show();
                     
                     popup.Show();
@@ -78,8 +81,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is InventoryPopup popup)
                 {
-                    popup.Construct(this);
-                    
+                    popup.Construct(this,_language);
+                    popup.Initialized();
                     _popupBackground.Show();
                     
                     popup.Show();
@@ -93,7 +96,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is ShopPopup popup)
                 {
-                    popup.Construct(this);
+                    popup.Construct(this,_language);
+                    popup.Initialized();
                     
                     _popupBackground.Show();
                     

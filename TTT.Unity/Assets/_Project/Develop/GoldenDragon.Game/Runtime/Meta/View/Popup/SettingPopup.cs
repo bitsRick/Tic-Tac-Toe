@@ -14,19 +14,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _musicText;
         
         private Model _model;
+        private Lang _language;
 
-        private void Awake()
+        public void Construct(Model model, Lang language)
         {
-            _headerText.text = Lang.Ui.Popup.Setting.Name;
-            _soundText.text = Lang.Ui.Popup.Setting.Sound;
-            _musicText.text = Lang.Ui.Popup.Setting.Music;
-        }
-
-        public void Construct(Model model)
-        {
+            _language = language;
             _model = model;
         }
-        
+
+        public void Initialized()
+        {
+            _headerText.text = _language.UI.POPUP.SETTING.Name;
+            _soundText.text = _language.UI.POPUP.SETTING.Sound;
+            _musicText.text = _language.UI.POPUP.SETTING.Music;
+        }
+
         public override UniTask Show()
         {
             return base.Show();

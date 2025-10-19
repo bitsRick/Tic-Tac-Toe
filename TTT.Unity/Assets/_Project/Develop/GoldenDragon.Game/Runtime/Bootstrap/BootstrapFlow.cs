@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
@@ -14,9 +15,15 @@ namespace GoldenDragon
         private SceneManager _sceneManager;
         private RegistrationScreen _registrationScreen;
         private SaveLoadService _saveLoadService;
+        private LoadingView _loadingView;
+        private Lang _lang;
 
-        public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,RegistrationScreen registrationScreen,SaveLoadService saveLoadService)
+        public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
+            RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
+            LoadingView loadingView,Lang lang)
         {
+            _lang = lang;
+            _loadingView = loadingView;
             _saveLoadService = saveLoadService;
             _registrationScreen = registrationScreen;
             _sceneManager = sceneManager;
@@ -25,11 +32,13 @@ namespace GoldenDragon
 
         public async void Start()
         {
+            await _loadingView.Initialized(_lang);
             await _loadingService.BeginLoading(_saveLoadService);
 
             if (_saveLoadService.Data == null)
             {
-                _registrationScreen.Initialized(this);
+                _registrationScreen.Construct(_lang);
+                await _registrationScreen.Initialized(this);
                 await _registrationScreen.Show();
             }
             else

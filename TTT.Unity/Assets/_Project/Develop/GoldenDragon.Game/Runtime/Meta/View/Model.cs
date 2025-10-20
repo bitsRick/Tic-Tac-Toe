@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
@@ -15,10 +16,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private PopupBase _activePopup;
         private bool _isActivePopup;
         private Lang _language;
+        private AudioService _audioService;
 
         [Inject]
-        public void Construct(PopupService popupService,Lang language)
+        public void Construct(PopupService popupService,Lang language,AudioService audioService)
         {
+            _audioService = audioService;
             _language = language;
             _popupService = popupService;
         }
@@ -32,6 +35,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupSetting()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             if (IsNotOpenPopup(TypePopup.Setting))
             {
                 if (_activePopup is SettingPopup popup)
@@ -47,6 +52,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupLeaderBoard()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             if (IsNotOpenPopup(TypePopup.LeaderBoard))
             {
                 if (_activePopup is LeaderBoardPopup popup)
@@ -62,6 +69,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupMatch()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             if (IsNotOpenPopup(TypePopup.Match))
             {
                 if (_activePopup is MatchPopup popup)
@@ -77,6 +86,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupInventory()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             if (IsNotOpenPopup(TypePopup.Inventory))
             {
                 if (_activePopup is InventoryPopup popup)
@@ -92,6 +103,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupShop()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             if (IsNotOpenPopup(TypePopup.Shop))
             {
                 if (_activePopup is ShopPopup popup)
@@ -108,6 +121,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void ClosePopup()
         {
+            _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+            
             _isActivePopup = false;
             _activePopup.Hide();
             _popupBackground.Hide();

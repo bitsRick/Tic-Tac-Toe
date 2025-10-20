@@ -1,10 +1,9 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace GoldenDragon
@@ -17,11 +16,13 @@ namespace GoldenDragon
         private SaveLoadService _saveLoadService;
         private LoadingView _loadingView;
         private Lang _lang;
+        private AudioService _audioService;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,Lang lang)
+            LoadingView loadingView,Lang lang,AudioService audioService)
         {
+            _audioService = audioService;
             _lang = lang;
             _loadingView = loadingView;
             _saveLoadService = saveLoadService;
@@ -32,12 +33,14 @@ namespace GoldenDragon
 
         public async void Start()
         {
-            await _loadingView.Initialized(_lang);
             await _loadingService.BeginLoading(_saveLoadService);
+            await _audioService.LoadAudioBootstrap();
+            
+            await _loadingView.Initialized(_lang);
 
             if (_saveLoadService.Data == null)
             {
-                _registrationScreen.Construct(_lang);
+                _registrationScreen.Construct(_lang,_audioService);
                 await _registrationScreen.Initialized(this);
                 await _registrationScreen.Show();
             }

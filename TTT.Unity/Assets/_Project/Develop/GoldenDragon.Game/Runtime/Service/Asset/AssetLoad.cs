@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -30,7 +31,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 return await handle.ToUniTask();
             }
 
-            public async UniTask ReleaseAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class
+            public async UniTask ReleaseAssetAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class
             {
                 AsyncOperationHandle<T> asset = _assetCatch.Get<T>(typeAsset,nameAsset);
                 asset.Release();

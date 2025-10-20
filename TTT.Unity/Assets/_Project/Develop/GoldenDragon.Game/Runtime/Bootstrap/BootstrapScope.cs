@@ -1,3 +1,4 @@
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
@@ -12,6 +13,7 @@ namespace GoldenDragon
     {
         [SerializeField] private LoadingView _loadingView;
         [SerializeField] private RegistrationScreen registrationScreenScreen;
+        [SerializeField] private AudioService _audioService;
         
         protected override void Awake()
         {
@@ -22,7 +24,8 @@ namespace GoldenDragon
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_loadingView);
-
+            builder.RegisterComponent(_audioService);
+            
             builder.Register<Lang>(Lifetime.Singleton);
             builder.Register<SceneManager>(Lifetime.Scoped);
             builder.Register<LoadingService>(Lifetime.Singleton);
@@ -33,7 +36,7 @@ namespace GoldenDragon
             builder.Register<AssetService>(Lifetime.Singleton);
             builder.Register<LangFileLoad>(Lifetime.Singleton);
 
-            builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen);
+            builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen).WithParameter(_audioService);
         }
     }
 }

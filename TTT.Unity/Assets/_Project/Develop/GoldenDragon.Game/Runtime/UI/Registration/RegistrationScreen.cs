@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Core;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -28,6 +29,7 @@ namespace GoldenDragon
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
         private Lang _language;
+        private AudioService _audioService;
 
         private void Awake()
         {
@@ -43,8 +45,9 @@ namespace GoldenDragon
             _switchLanguage.value = 0;
         }
 
-        public void Construct(Lang lang)
+        public void Construct(Lang lang,AudioService audioService)
         {
+            _audioService = audioService;
             _language = lang;
         }
 
@@ -52,6 +55,8 @@ namespace GoldenDragon
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
+                _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+                
                 if (_isActive)
                     return;
                

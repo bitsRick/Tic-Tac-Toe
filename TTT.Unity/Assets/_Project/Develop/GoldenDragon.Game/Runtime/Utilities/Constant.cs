@@ -16,6 +16,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 
                 public static Func<int,int> IndexRemove => index => index - 5;
             }
+            
+            public static class Audio
+            {
+                public const string AudioClipButtonClick = "Button_click";
+                public const string AudioClipBackgroundMeta = "Meta_background";
+            }
         }
         
         public static class M
@@ -37,6 +43,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                 }
             }
         }
+        
+        public static class U
+        {
+            public static class Audio
+            {
+                public const string MusicMixerExposeName = "MusicValue"; 
+                public const string SoundMixerExposeName = "SFXValue"; 
+            }
+        }
     }
     
     public enum TypePopup
@@ -47,5 +62,26 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Match,
         Inventory,
         Shop
+    }
+    
+    public enum TypeAsset
+    {
+        Meta_UI,
+        Popup,
+        Audio
+    }
+    
+    public enum TypeSceneAudio
+    {
+        Bootstrap,
+        Meta,
+        Match
+    }
+
+    public enum TypeAudio
+    {
+        Clip,
+        Background,
+        None
     }
 }

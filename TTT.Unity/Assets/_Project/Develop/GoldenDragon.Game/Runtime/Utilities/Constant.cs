@@ -21,6 +21,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             {
                 public const string AudioClipButtonClick = "Button_click";
                 public const string AudioClipBackgroundMeta = "Meta_background";
+                public const string AudioConfig = "ConfigSounds";
             }
         }
         
@@ -69,19 +70,5 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Meta_UI,
         Popup,
         Audio
-    }
-    
-    public enum TypeSceneAudio
-    {
-        Bootstrap,
-        Meta,
-        Match
-    }
-
-    public enum TypeAudio
-    {
-        Clip,
-        Background,
-        None
     }
 }

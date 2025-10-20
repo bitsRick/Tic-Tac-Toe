@@ -17,11 +17,13 @@ namespace GoldenDragon
         private LoadingView _loadingView;
         private Lang _lang;
         private AudioService _audioService;
+        private AudioPlayer _audioPlayer;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,Lang lang,AudioService audioService)
+            LoadingView loadingView,Lang lang,AudioService audioService,AudioPlayer audioPlayer)
         {
+            _audioPlayer = audioPlayer;
             _audioService = audioService;
             _lang = lang;
             _loadingView = loadingView;
@@ -34,13 +36,13 @@ namespace GoldenDragon
         public async void Start()
         {
             await _loadingService.BeginLoading(_saveLoadService);
-            await _audioService.LoadAudioBootstrap();
+            await _loadingService.BeginLoading(_audioService);
             
             await _loadingView.Initialized(_lang);
 
             if (_saveLoadService.Data == null)
             {
-                _registrationScreen.Construct(_lang,_audioService);
+                _registrationScreen.Construct(_lang,_audioPlayer);
                 await _registrationScreen.Initialized(this);
                 await _registrationScreen.Show();
             }

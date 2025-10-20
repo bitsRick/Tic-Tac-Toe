@@ -15,13 +15,8 @@ MonoBehaviour:
   m_GroupName: Audio
   m_GUID: 2e22e3cee4b0ad84b9ad6a71769ffa86
   m_SerializeEntries:
-  - m_GUID: 398444d7780c3854ab5b1f5d682e39ad
-    m_Address: Button_click
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b84f484923483c1478555ff0ee8dd048
-    m_Address: Meta_background
+  - m_GUID: 822f42d758c995f41a4aa3e2990c2842
+    m_Address: ConfigSounds
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

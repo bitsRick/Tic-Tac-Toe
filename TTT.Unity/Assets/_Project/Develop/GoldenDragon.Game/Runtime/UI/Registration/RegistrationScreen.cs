@@ -30,6 +30,7 @@ namespace GoldenDragon
         private bool _isActive;
         private Lang _language;
         private AudioService _audioService;
+        private AudioPlayer _player;
 
         private void Awake()
         {
@@ -45,9 +46,9 @@ namespace GoldenDragon
             _switchLanguage.value = 0;
         }
 
-        public void Construct(Lang lang,AudioService audioService)
+        public void Construct(Lang lang,AudioPlayer player)
         {
-            _audioService = audioService;
+            _player = player;
             _language = lang;
         }
 
@@ -55,7 +56,7 @@ namespace GoldenDragon
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
-                _audioService.PlaySFX(Constant.B.Audio.AudioClipButtonClick);
+                _player.Click();
                 
                 if (_isActive)
                     return;

@@ -11,7 +11,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 {
-    public class AudioService : MonoBehaviour
+    public class AudioService : MonoBehaviour,ILoadUnit
     {
         [Header("Mixer")]
         [SerializeField] private AudioMixer _mixer;
@@ -28,7 +28,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private AudioClip _buttonClick;
         private AudioClip _sfx2;
         private AssetLoad _assetLoad;
-        private List<AudioContainer> _audioContainers = new List<AudioContainer>();
+        private ConfigSounds _config;
+
+        public ConfigSounds ConfigAudio => _config;
 
         private void Awake()
         {
@@ -116,72 +118,34 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             _assetLoad = assetLoad;
         }
 
-        public UniTask LoadAudioBootstrap()
+        public UniTask Load()
         {
-            _audioContainers.Add(new AudioContainer(
-                Constant.B.Audio.AudioClipButtonClick,
-                _assetLoad.GetAsset<AudioClip>(TypeAsset.Audio, Constant.B.Audio.AudioClipButtonClick),
-                TypeSceneAudio.Bootstrap));
+            _config = _assetLoad.GetAsset<ConfigSounds>(TypeAsset.Audio,Constant.B.Audio.AudioConfig);
+
+            if (_config == null) Log.Default.W($"Not Load config:{Constant.B.Audio.AudioConfig}");
+
             return UniTask.CompletedTask;
         }
         
-        public UniTask LoadAudioMeta()
+        public void PlaySFX(AudioClip clip)
         {
-            _audioContainers.Add(new AudioContainer(
-                Constant.B.Audio.AudioClipBackgroundMeta,
-                _assetLoad.GetAsset<AudioClip>(TypeAsset.Audio, Constant.B.Audio.AudioClipBackgroundMeta),
-                TypeSceneAudio.Meta));
-            return UniTask.CompletedTask;
-        }
-
-        public UniTask LoadAudioMatch()
-        {
-            return UniTask.CompletedTask;
-        }
-        
-        public void PlaySFX(string path)
-        {
-            var audioContainer = _audioContainers.FirstOrDefault(container => container.Key == path);
-
-            if (audioContainer != null)
-                _sfxSource.PlayOneShot(audioContainer.AudioClip);
+            if (clip != null)
+                _sfxSource.PlayOneShot(clip);
             else
-                Log.Default.W($"Not yet sfx:{path}");
+                Log.Default.W($"Not yet sfx:{clip}");
         }
 
-        public void PlayBackground(string path)
+        public void PlayBackground(AudioClip clip)
         {
-            var audioContainer = _audioContainers.FirstOrDefault(container => container.Key == path);
-
-            if (audioContainer != null)
+            if (clip != null)
             {
-                _backgroundSource.clip = audioContainer.AudioClip;
+                _backgroundSource.clip = clip;
                 _backgroundSource.Play();
             }
             else
             {
-                Log.Default.W($"Not yet bacground:{path}");
+                Log.Default.W($"Not yet bacground:{clip}");
             }
-        }
-        
-        public void Release(TypeSceneAudio releaseSceneAudio)
-        {
-            switch (releaseSceneAudio)
-            {
-                case TypeSceneAudio.Bootstrap:
-                    break;
-                case TypeSceneAudio.Meta:
-                    break;
-                case TypeSceneAudio.Match:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(releaseSceneAudio), releaseSceneAudio, null);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            
         }
     }
 }

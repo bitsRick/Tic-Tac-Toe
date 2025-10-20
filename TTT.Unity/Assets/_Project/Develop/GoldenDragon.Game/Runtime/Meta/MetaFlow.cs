@@ -15,11 +15,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private AssetService _assetService;
         private FactoryMetaUi _factoryMetaUi;
         private AudioService _audioService;
+        private AudioPlayer _audioPlayer;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
-            AssetService assetService,FactoryMetaUi factoryMetaUi,AudioService audioService)
+            AssetService assetService,FactoryMetaUi factoryMetaUi,AudioPlayer audioPlayer)
         {
-            _audioService = audioService;
+            _audioPlayer = audioPlayer;
             _factoryMetaUi = factoryMetaUi;
             _assetService = assetService;
             _loadingView = loadingView;
@@ -29,15 +30,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            await _audioService.LoadAudioMeta();
-            
             MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
             await metaRoot.Initialized();
             
             //await _loadingService.BeginLoading(new FooLoadingUnit(3));
             
             await _loadingView.Hide();
-            _audioService.PlayBackground(Constant.B.Audio.AudioClipBackgroundMeta);
+            _audioPlayer.MetaBackground();
         }
 
         public async void StartMatch()

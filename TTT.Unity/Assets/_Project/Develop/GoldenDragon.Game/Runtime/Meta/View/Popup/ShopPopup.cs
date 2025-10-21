@@ -2,12 +2,14 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
     public class ShopPopup:PopupBase
     {
-        [SerializeField] private Transform _root;
+        [SerializeField] private GameObject _root;
+        [SerializeField] private HorizontalLayoutGroup _horizontalLayout;
         [Header("Lang")] 
         [SerializeField] private TextMeshProUGUI _nameHeader;
         [SerializeField] private TextMeshProUGUI _buttonBorder;
@@ -17,7 +19,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         private string _sellStyle;
         private string _buyButton;
 
-        public Transform RootInstance => _root;
+        public GameObject RootInstance => _root;
+        public HorizontalLayoutGroup HorizontalLayoutGroup => _horizontalLayout;
         
         public void Construct(Model model,Lang language)
         {

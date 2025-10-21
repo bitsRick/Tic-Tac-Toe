@@ -40,16 +40,18 @@ namespace GoldenDragon
             
             await _loadingView.Initialized(_lang);
 
-            if (_saveLoadService.Data == null)
-            {
-                _registrationScreen.Construct(_lang,_audioPlayer);
-                await _registrationScreen.Initialized(this);
-                await _registrationScreen.Show();
-            }
-            else
-            {
-                _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
-            }
+            // if (_saveLoadService.Data == null)
+            // {
+            //     _registrationScreen.Construct(_lang,_audioPlayer);
+            //     await _registrationScreen.Initialized(this);
+            //     await _registrationScreen.Show();
+            // }
+            // else
+            // {
+            //     _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
+            // }
+            
+            _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
         }
 
         public async void SetRegistration(string inputFieldText)

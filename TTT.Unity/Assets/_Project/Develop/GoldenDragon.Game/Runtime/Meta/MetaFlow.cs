@@ -2,8 +2,11 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -19,9 +22,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private AudioPlayer _audioPlayer;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
+        private PoolUiElement<ElementSell> _poolElementSellUi;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
-            AssetService assetService,FactoryMetaUi factoryMetaUi,AudioPlayer audioPlayer,StyleDataLoad styleDataLoad,Model modelMetaRoot)
+            AssetService assetService,FactoryMetaUi factoryMetaUi,AudioPlayer audioPlayer,
+            StyleDataLoad styleDataLoad,Model modelMetaRoot)
         {
             _modelMetaRoot = modelMetaRoot;
             _styleDataLoad = styleDataLoad;
@@ -35,9 +40,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
+            _poolElementSellUi = new PoolUiElement<ElementSell>(_assetService,_assetService
+                .Load
+                .GetAsset<GameObject>(TypeAsset.Elements,Constant.M.Asset.Popup.ShopElementBuyPrefab));
+            
             await _loadingService.BeginLoading(_styleDataLoad);
+            await _loadingService.BeginLoading(_poolElementSellUi, _styleDataLoad.GetData().Length);
             MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
-            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData());
+            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_poolElementSellUi);
             await metaRoot.Initialized();
             
             await _loadingView.Hide();

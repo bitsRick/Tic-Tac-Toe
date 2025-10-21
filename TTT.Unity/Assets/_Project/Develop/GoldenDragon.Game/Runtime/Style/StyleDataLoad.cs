@@ -4,6 +4,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using Newtonsoft.Json;
 using UnityEngine;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 {
@@ -12,6 +13,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
         private AssetLoad _assetLoad;
         private StyleData[] _data;
 
+        [Inject]
         public StyleDataLoad(AssetLoad assetLoad)
         {
             _assetLoad = assetLoad;

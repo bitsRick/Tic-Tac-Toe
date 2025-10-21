@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Meta UI
   m_GUID: bf305004db0fef24bad31918ac9da1dd
   m_SerializeEntries:
+  - m_GUID: 9208a720f6109794bad15623a877fdbe
+    m_Address: Shop_Element_Buy-Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a09a9bda7a62f39449cea785d2e24091
     m_Address: MetaRoot
     m_ReadOnly: 0

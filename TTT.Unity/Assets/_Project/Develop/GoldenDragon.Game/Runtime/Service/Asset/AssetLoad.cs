@@ -15,6 +15,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             {
                 Log.Default.D($"Loading asset[{typeAsset}] path:{nameAsset}");
 
+                if (_assetCatch.TryGet<T>(typeAsset, nameAsset,out AsyncOperationHandle<T> handleOut))
+                    return handleOut.WaitForCompletion();
+
                 AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(nameAsset);
                 _assetCatch.Add(typeAsset, nameAsset, handle);
                 
@@ -33,7 +36,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 
             public async UniTask ReleaseAssetAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class
             {
-                AsyncOperationHandle<T> asset = _assetCatch.Get<T>(typeAsset,nameAsset);
+                AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
                 asset.Release();
 
                 await UniTask.CompletedTask;

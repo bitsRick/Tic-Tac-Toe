@@ -25,6 +25,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             }
         }
         
+        public static class L
+        {
+            public static class Asset
+            {
+                public const string DataStyleJson = "DataStyle";
+            }
+        }
+        
         public static class M
         {
             public static class Asset
@@ -69,6 +77,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     {
         Meta_UI,
         Popup,
-        Audio
+        Audio,
+        Json,
+        Sprite
     }
 }

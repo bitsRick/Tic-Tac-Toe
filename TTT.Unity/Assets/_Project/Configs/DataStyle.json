@@ -1,0 +1,38 @@
+[
+ {
+   "Id": "Default_O",
+   "ValueX": 0,
+   "ValueO": 0,
+   "Type": "O"
+ },
+ {
+   "Id": "Default_X",
+   "ValueX": 0,
+   "ValueO": 0,
+   "Type": "X"
+ },
+ {
+   "Id": "Default_Board",
+   "ValueX": 0,
+   "ValueO": 0,
+   "Type": "Board"
+ },
+ {
+   "Id": "Style_Board-One",
+   "ValueX": 50,
+   "ValueO": 50,
+   "Type": "Board"
+ },
+ {
+   "Id": "Style_O-One",
+   "ValueX": 50,
+   "ValueO": 10,
+   "Type": "O"
+ },
+ {
+   "Id": "Style_X-One",
+   "ValueX": 10,
+   "ValueO": 50,
+   "Type": "X"
+ }
+]

@@ -4,7 +4,9 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using Newtonsoft.Json.Serialization;
 using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
@@ -17,6 +19,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private bool _isActivePopup;
         private Lang _language;
         private AudioPlayer _audioPlayer;
+        private StyleData[] _styleData;
 
         [Inject]
         public void Construct(PopupService popupService,Lang language,AudioPlayer audioPlayer)
@@ -26,8 +29,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _popupService = popupService;
         }
 
-        public UniTask Initialized(MetaRoot metaRoot)
+        public UniTask Initialized(MetaRoot metaRoot, StyleData[] styleData)
         {
+            _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
             _popupBackground.Initialized(this);
             return UniTask.CompletedTask;

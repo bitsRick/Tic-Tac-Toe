@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using GoldenDragon.Units;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Loading
@@ -19,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Loading
         public async void Start()
         {
             //await _loadingService.BeginLoading(new FooLoadingUnit(3));
-            _sceneManager.LoadScene(RuntimeConstants.Scene.Meta).Forget();
+           await _sceneManager.LoadScene(RuntimeConstants.Scene.Meta);
         }
     }
 }

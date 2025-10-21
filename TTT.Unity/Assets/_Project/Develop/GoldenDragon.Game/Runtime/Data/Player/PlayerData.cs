@@ -1,6 +1,6 @@
 using System;
 
-namespace GoldenDragon
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 {
     [Serializable]
     public class PlayerData

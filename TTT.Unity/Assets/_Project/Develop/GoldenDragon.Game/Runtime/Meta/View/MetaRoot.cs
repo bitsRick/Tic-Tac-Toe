@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UniRx;
 using UnityEngine;
@@ -39,7 +40,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         
         public async UniTask Initialized()
         {
-            await _model.Initialized(this);
             await InitializedEvent();
             
             GameObject setting = await _factoryMetaUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);

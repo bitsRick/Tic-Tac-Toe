@@ -7,14 +7,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 {
     public class ShopPopup:PopupBase
     {
+        [SerializeField] private Transform _root;
         [Header("Lang")] 
         [SerializeField] private TextMeshProUGUI _nameHeader;
         [SerializeField] private TextMeshProUGUI _buttonBorder;
         
         private Model _model;
+        private Lang _language;
         private string _sellStyle;
         private string _buyButton;
-        private Lang _language;
+
+        public Transform RootInstance => _root;
         
         public void Construct(Model model,Lang language)
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
@@ -8,8 +9,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     {
         public bool IsRegistred;
         public string Nick;
-        public int XCount;
-        public int YCount;
+        public int SoftValueX;
+        public int SoftValueO;
         public int WinCount;
         public int LoseCount;
 
@@ -17,19 +18,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         {
             IsRegistred = true;
             Nick = nick;
-            XCount = 0;
-            YCount = 0;
+            SoftValueX = 0;
+            SoftValueO = 0;
 
-            ShopPlayerData = new ShopPlayerData[]
+            ShopPlayerData = new List<ShopPlayerData>()
             {
-                new ShopPlayerData(){Id = "Default_O",TypeStyleElementShop = TypeShowElementShop.O},
-                new ShopPlayerData(){Id = "Default_X",TypeStyleElementShop = TypeShowElementShop.X},
-                new ShopPlayerData(){Id = "Default_Board",TypeStyleElementShop = TypeShowElementShop.Board},
+                new(){Id = "Default_O",TypeStyleElementShop = TypeShowElementShop.O},
+                new(){Id = "Default_X",TypeStyleElementShop = TypeShowElementShop.X},
+                new (){Id = "Default_Board",TypeStyleElementShop = TypeShowElementShop.Board},
             };
         }
 
 
-        public ShopPlayerData[] ShopPlayerData;
+        public List<ShopPlayerData> ShopPlayerData;
     }
 
     [Serializable]

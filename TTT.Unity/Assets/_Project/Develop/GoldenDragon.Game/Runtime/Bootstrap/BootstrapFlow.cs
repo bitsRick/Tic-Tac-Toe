@@ -51,6 +51,8 @@ namespace GoldenDragon
             //     _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
             // }
             
+            await _saveLoadService.CreateNewData("Dodo");
+            
             _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
         }
 

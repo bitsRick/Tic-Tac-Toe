@@ -19,5 +19,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             instance.SetActive(false);
             return instance.GetComponent<T>();
         }
+
+        public T InstallToGameObject<T>(T installObject)where T:UnityEngine.Object
+        {
+            return Object.Instantiate(installObject);
+        }
     }
 }

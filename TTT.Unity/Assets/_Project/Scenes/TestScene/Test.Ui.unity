@@ -1404,10 +1404,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3790572342854628433, guid: ebbfd62142a11a94fb57a9fac78cd6f0, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5082304534411051764, guid: ebbfd62142a11a94fb57a9fac78cd6f0, type: 3}
       propertyPath: m_Name
       value: PopupShop

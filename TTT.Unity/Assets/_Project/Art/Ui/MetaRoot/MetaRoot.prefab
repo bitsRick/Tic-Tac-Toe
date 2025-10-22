@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 8258942200839129574}
   - component: {fileID: 3341976957491499537}
   m_Layer: 5
-  m_Name: Xcount
+  m_Name: Ocount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1178,7 +1178,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7180870191836543625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1285,6 +1285,8 @@ MonoBehaviour:
   _btnOpenMatch: {fileID: 3980752847219687593}
   _btnOpenShop: {fileID: 3372792947650308831}
   _btnOpenInventory: {fileID: 3232563367370111623}
+  _softValueX: {fileID: 8163246217973677312}
+  _softValueO: {fileID: 3341976957491499537}
 --- !u!1 &3565206790092837403
 GameObject:
   m_ObjectHideFlags: 0

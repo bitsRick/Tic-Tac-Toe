@@ -33,6 +33,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public GameObject RootInstance => _root;
         public HorizontalLayoutGroup HorizontalLayoutGroup => _horizontalLayout;
+        public TextMeshProUGUI SoftValueX => _valueX;
+        public TextMeshProUGUI SoftValueO => _valueO;
 
         public void Construct(Model model,Lang language)
         {

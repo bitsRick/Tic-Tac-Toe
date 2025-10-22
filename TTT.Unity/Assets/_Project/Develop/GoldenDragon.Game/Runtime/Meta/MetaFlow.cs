@@ -40,9 +40,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            _poolElementSellUi = new PoolUiElement<ElementSell>(_assetService,_assetService
-                .Load
-                .GetAsset<GameObject>(TypeAsset.Elements,Constant.M.Asset.Popup.ShopElementBuyPrefab));
+            _poolElementSellUi = new PoolUiElement<ElementSell>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);
             await _loadingService.BeginLoading(_poolElementSellUi, _styleDataLoad.GetData().Length);

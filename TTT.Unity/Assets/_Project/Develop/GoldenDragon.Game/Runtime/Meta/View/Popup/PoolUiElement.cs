@@ -12,15 +12,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     {
         private List<T> _listElement = new List<T>();
         private AssetService _assetService;
-        private readonly GameObject _prefab;
         private int _index = -1;
         private GameObject _poolRoot;
         
         public List<T> Elements => _listElement;
 
-        public PoolUiElement(AssetService assetService,GameObject prefab)
+        public PoolUiElement(AssetService assetService)
         {
-            _prefab = prefab;
             _assetService = assetService;
         }
 
@@ -30,7 +28,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             
             for (int i = 0; i < lenght; i++)
             {
-                var gameObject = UnityEngine.Object.Instantiate(_prefab);
+                var gameObject = _assetService.Install.InstallToGameObject<GameObject>(
+                    _assetService.Load
+                        .GetAsset<GameObject>(TypeAsset.Elements, Constant.M.Asset.Popup.ShopElementBuyPrefab));
+                    
                 gameObject.transform.parent = _poolRoot.gameObject.transform;
                 gameObject.SetActive(false);
                 var newElement = gameObject.GetComponent<T>();

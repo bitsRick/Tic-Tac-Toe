@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,15 +23,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         [SerializeField] private Button _btnOpenMatch;
         [SerializeField] private Button _btnOpenShop;
         [SerializeField] private Button _btnOpenInventory;
+        [Header("SoftValue")]
+        [SerializeField] private TextMeshProUGUI _softValueX;
+        [SerializeField] private TextMeshProUGUI _softValueO;
         
         private PopupService _popupService;
         private FactoryMetaUi _factoryMetaUi;
         private Model _model;
         private AssetService _assetService;
-        
+        private IPlayerProgress _playerProgress;
+        public Subject<Unit> OnSoftValueChanged = new Subject<Unit>();
+
         [Inject]
-        public void Constructor(PopupService popupService,FactoryMetaUi factoryMetaUi,Model model,AssetService assetService)
+        public void Constructor(PopupService popupService,FactoryMetaUi factoryMetaUi,Model model,AssetService assetService,IPlayerProgress playerProgress)
         {
+            _playerProgress = playerProgress;
             _assetService = assetService;
             _model = model;
             _factoryMetaUi = factoryMetaUi;
@@ -61,6 +65,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _popupService.AddPopupInList(TypePopup.Shop,shopPopup);
             _popupService.AddPopupInList(TypePopup.Inventory,inventoryPopup);
             _popupService.AddPopupInList(TypePopup.Match,matchPopup);
+
+            OnSoftValueChanged
+                .Subscribe(_ =>
+                {
+                    _softValueO.text = _playerProgress.PlayerData.SoftValueO.ToString();
+                    _softValueX.text = _playerProgress.PlayerData.SoftValueX.ToString();
+                    shopPopup.SoftValueO.text = _playerProgress.PlayerData.SoftValueO.ToString();
+                    shopPopup.SoftValueX.text = _playerProgress.PlayerData.SoftValueX.ToString();
+                }).AddTo(this);
+            
+            OnSoftValueChanged.OnNext(Unit.Default);
             
             await UniTask.CompletedTask;
         }
@@ -81,7 +96,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             gameObject.SetActive(true);
             await UniTask.CompletedTask;
         }
-
+        
         private async UniTask InitializedEvent()
         {
             _btnOpenSetting.OnClickAsObservable().Subscribe(_ => _model.OpenPopupSetting()).AddTo(this);

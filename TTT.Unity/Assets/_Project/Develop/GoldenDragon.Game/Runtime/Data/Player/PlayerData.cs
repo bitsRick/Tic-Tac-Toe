@@ -1,4 +1,5 @@
 using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 {
@@ -19,15 +20,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
             XCount = 0;
             YCount = 0;
 
-            ShopPlayerData = new ShopPlayerData();
+            ShopPlayerData = new ShopPlayerData[]
+            {
+                new ShopPlayerData(){Id = "Default_O",TypeStyleElementShop = TypeShowElementShop.O},
+                new ShopPlayerData(){Id = "Default_X",TypeStyleElementShop = TypeShowElementShop.X},
+                new ShopPlayerData(){Id = "Default_Board",TypeStyleElementShop = TypeShowElementShop.Board},
+            };
         }
 
 
-        public ShopPlayerData ShopPlayerData;
+        public ShopPlayerData[] ShopPlayerData;
     }
 
     [Serializable]
     public class ShopPlayerData
     {
+        public string Id;
+        public TypeShowElementShop TypeStyleElementShop;
     }
 }

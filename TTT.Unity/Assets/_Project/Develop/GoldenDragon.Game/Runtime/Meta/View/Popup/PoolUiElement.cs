@@ -12,9 +12,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     {
         private List<T> _listElement = new List<T>();
         private AssetService _assetService;
-        private GameObject _prefab;
+        private readonly GameObject _prefab;
         private int _index = -1;
         private GameObject _poolRoot;
+        
         public List<T> Elements => _listElement;
 
         public PoolUiElement(AssetService assetService,GameObject prefab)
@@ -47,11 +48,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         {
             if (_listElement.Count-1 <= _index)
             {
+                ResetIndex();
                 return null;
             }
             
             _index++;
             return _listElement[_index];
+        }
+
+        public void ResetIndex()
+        {
+            _index = -1;
         }
     }
 }

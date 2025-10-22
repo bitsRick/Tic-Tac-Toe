@@ -7,6 +7,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
 using VContainer;
@@ -42,7 +43,42 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
             _popupBackground.Initialized(this);
+            InitializedShopElement();
+            
             return UniTask.CompletedTask;
+        }
+
+        private void InitializedShopElement()
+        {
+            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
+            {
+                for (int i = 0; i < _styleData.Length; i++)
+                {
+                    ElementSell element = _poolElementSellUi.GetElement();
+                    element.Construct(this);
+                    element.ImageStyle.preserveAspect = true;
+                
+                    element.ButtonBuy.OnClickAsObservable().Subscribe(_ =>
+                    {
+                        BuyStyle(element.Id,element.BuyView);
+                    }).AddTo(element);
+                
+                    element.transform.parent = popup.RootInstance.gameObject.transform;
+                
+                    RectTransform rt = element.RectTransform;
+                    rt.localScale = Vector3.one;
+                    rt.localPosition = Vector3.zero;
+                    rt.localRotation = Quaternion.identity;
+                    rt.anchoredPosition = Vector2.zero;
+                }
+            
+                popup.HorizontalLayoutGroup.childScaleHeight = true;
+                popup.HorizontalLayoutGroup.childControlHeight = true;
+            }
+            else
+            {
+                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+            }
         }
 
         public void OpenPopupSetting()
@@ -125,43 +161,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             
             popup.Construct(this,_language);
             popup.Initialized();
-            
-            foreach (var styleData in _styleData)
-            {
-                ElementSell element = _poolElementSellUi.GetElement();
-                element.Constructo(this);
-                element.Id = styleData.Id;
-                element.O = styleData.ValueO.ToString();
-                element.X = styleData.ValueX.ToString();
-                
-                element.ImageStyle.preserveAspect = true;
-                element.ImageStyle.sprite = styleData.Sprite;
-                
-                element.ButtonBuy.OnClickAsObservable().Subscribe(_ =>
-                {
-                    BuyStyle(element.Id,element.BuyView);
-                }).AddTo(element);
-                
-                element.transform.parent = popup.RootInstance.gameObject.transform;
-                
-                RectTransform rt = element.GetComponent<RectTransform>();
-                
-                rt.localScale = Vector3.one;
-                rt.localPosition = Vector3.zero;
-                rt.localRotation = Quaternion.identity;
-                
-                rt.anchoredPosition = Vector2.zero;
-                
-                
-                element.gameObject.SetActive(true);
-            }
-
-            popup.HorizontalLayoutGroup.childScaleHeight = true;
-            popup.HorizontalLayoutGroup.childControlHeight = true;
-            
+            ShowShopSellItem(TypeShowElementShop.Board);
             _popupBackground.Show();
             
             popup.Show();
+        }
+
+        public void ShowShopSellItem(TypeShowElementShop type)
+        {
+            _poolElementSellUi.ResetIndex();
+            
+            foreach (StyleData data in _styleData)
+            {
+                if (data.Type != type.ToString() ||
+                    data.Id == Constant.M.Asset.Popup.NotViewShop+type)
+                    continue;
+
+                ElementSell element = _poolElementSellUi.GetElement();
+                element.Id = data.Id;
+                element.ImageStyle.sprite = data.Sprite;
+                element.X = data.ValueX.ToString();
+                element.O = data.ValueO.ToString();
+                element.gameObject.SetActive(true);
+            }
         }
 
         public void ClosePopup()
@@ -176,7 +198,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void BuyStyle(string id, GameObject gameObject)
         {
-            throw new System.NotImplementedException();
+            gameObject.SetActive(true);
         }
 
         private bool TryGetPopup<TP>(TypePopup typePopup,out TP popupOut)

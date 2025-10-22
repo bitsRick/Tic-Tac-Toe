@@ -1,5 +1,4 @@
 ﻿using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +12,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _valueX;
         [SerializeField] private TextMeshProUGUI _valueO;
         [SerializeField] private GameObject _buy;
+        [SerializeField] private RectTransform _rectTransform;
         private Model _model;
         private string _id;
         private bool _isView;
@@ -20,7 +20,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         public Image ImageStyle => _image;
         public Button ButtonBuy => _btn;
         public GameObject BuyView => _buy;
-        
+        public RectTransform RectTransform
+        {
+            get => _rectTransform;
+            set => _rectTransform = value;
+        }
+
         public string X
         {
             get => _valueX.text;
@@ -39,7 +44,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             set => _id = value;
         }
 
-        public void Constructo(Model model)
+        public void Construct(Model model)
         {
             _model = model;
         }

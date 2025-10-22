@@ -10,17 +10,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     {
         private Dictionary<TypePopup, PopupData> _popupLists = new();
         
-        public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase
-        {
+        public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase => 
             _popupLists.Add(typePopup,new PopupData(popup));
-        }
 
         public async UniTask Release()
         {
-            foreach (KeyValuePair<TypePopup,PopupData> popupData in _popupLists)
-            {
+            foreach (KeyValuePair<TypePopup,PopupData> popupData in _popupLists) 
                 popupData.Value.Dispose();
-            }
 
             _popupLists = null;
 

@@ -845,7 +845,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 68
+  m_fontSize: 63.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -952,6 +952,7 @@ MonoBehaviour:
   _valueX: {fileID: 3169182360032785773}
   _valueO: {fileID: 3563696996488225339}
   _buy: {fileID: 1044632103990667914}
+  _rectTransform: {fileID: 3482635553842196528}
 --- !u!1 &4294809644669565336
 GameObject:
   m_ObjectHideFlags: 0

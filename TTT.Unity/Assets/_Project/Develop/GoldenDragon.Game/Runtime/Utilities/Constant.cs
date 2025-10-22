@@ -51,6 +51,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                     public const string Shop = "Popup_Shop";
                     public const string ShopElementBuyPrefab ="Shop_Element_Buy-Prefab";
                     public const string PoolElementUi = nameof(PoolElementUi);
+                    public const string NotViewShop = "Default_";
                 }
             }
         }
@@ -85,7 +86,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Elements
     }
 
-    public enum TypeLoadElementShop
+    public enum TypeShowElementShop
     {
         Board,
         X,

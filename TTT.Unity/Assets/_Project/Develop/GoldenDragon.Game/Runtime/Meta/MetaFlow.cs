@@ -46,9 +46,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             
             await _loadingService.BeginLoading(_styleDataLoad);
             await _loadingService.BeginLoading(_poolElementSellUi, _styleDataLoad.GetData().Length);
+            
             MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
-            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_poolElementSellUi);
             await metaRoot.Initialized();
+            await metaRoot.Show();
+
+            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_poolElementSellUi);
             
             await _loadingView.Hide();
             _audioPlayer.MetaBackground();

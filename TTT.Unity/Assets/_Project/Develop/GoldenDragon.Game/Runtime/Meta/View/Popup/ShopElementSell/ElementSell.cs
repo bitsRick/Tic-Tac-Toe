@@ -14,7 +14,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _valueO;
         [SerializeField] private GameObject _buy;
         [SerializeField] private RectTransform _rectTransform;
-        private Model _model;
         private string _id;
         private bool _isView;
         public TypeShowElementShop Type { get; set; }
@@ -44,11 +43,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         {
             get => _id;
             set => _id = value;
-        }
-
-        public void Construct(Model model)
-        {
-            _model = model;
         }
     }
 }

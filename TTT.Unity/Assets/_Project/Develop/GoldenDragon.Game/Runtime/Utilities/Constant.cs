@@ -4,6 +4,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {
     public static class Constant
     {
+        public static class StyleData
+        {
+            public const string DefaultBoard = "Default_Board";
+            public const string DefaultX = "Default_X";
+            public const string DefaultO = "Default_O";
+        }
+        
         public static class B
         {
             public const float DurationFadeRegistrationScreen = 0.5f;
@@ -50,6 +57,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                     public const string Match = "Popup_Match";
                     public const string Shop = "Popup_Shop";
                     public const string ShopElementBuyPrefab ="Shop_Element_Buy-Prefab";
+                    public const string InventoryElementStylePrefab ="Inventory_Element_Style-Prefab";
                     public const string PoolElementUi = nameof(PoolElementUi);
                     public const string NotViewShop = "Default_";
                 }

@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 926ebf8e6d5cb75408dd5e2924b5c91a
+    m_Address: Inventory_Element_Style-Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a09a9bda7a62f39449cea785d2e24091
     m_Address: MetaRoot
     m_ReadOnly: 0

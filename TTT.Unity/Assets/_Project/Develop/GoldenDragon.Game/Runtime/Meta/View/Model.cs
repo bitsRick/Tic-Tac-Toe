@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
@@ -61,7 +62,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 for (int i = 0; i < _styleData.Length; i++)
                 {
                     ElementSell element = _poolElementSellUi.GetElement();
-                    element.Construct(this);
                     element.ImageStyle.preserveAspect = true;
                 
                     element.ButtonBuy.OnClickAsObservable().Subscribe(_ =>
@@ -181,7 +181,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             foreach (StyleData data in _styleData)
             {
                 if (data.Type != type.ToString() ||
-                    data.Id == Constant.M.Asset.Popup.NotViewShop+type)
+                    data.Id == GetDefaultType(type))
                     continue;
 
                 ElementSell element = _poolElementSellUi.GetElement();
@@ -200,13 +200,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             }
         }
 
-        public void BuyStyle(string id, GameObject gameObject, TypeShowElementShop typeStyle)
-        {
-            _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
-            _playerData.PlayerData.ShopPlayerData.Add(new ShopPlayerData(){Id = id,TypeStyleElementShop = typeStyle});
-            gameObject.SetActive(true);
-        }
-
         public void ClosePopup()
         {
             _audioPlayer.Click();
@@ -216,7 +209,32 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _popupBackground.Hide();
             _activePopup = null;
         }
-        
+
+        private string GetDefaultType(TypeShowElementShop type)
+        {
+            switch (type)
+            {
+                case TypeShowElementShop.Board:
+                    return Constant.StyleData.DefaultBoard;
+                
+                case TypeShowElementShop.X:
+                    return Constant.StyleData.DefaultX;
+                
+                case TypeShowElementShop.O:
+                    return Constant.StyleData.DefaultO;
+                
+            }
+
+            return null;
+        }
+
+        private void BuyStyle(string id, GameObject gameObject, TypeShowElementShop typeStyle)
+        {
+            _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
+            _playerData.PlayerData.ShopPlayerData.Add(new ShopPlayerData(){Id = id,TypeStyleElementShop = typeStyle});
+            gameObject.SetActive(true);
+        }
+
         private bool TryGetPopup<TP>(TypePopup typePopup,out TP popupOut)
             where TP: class
         {

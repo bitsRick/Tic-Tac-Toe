@@ -13,6 +13,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         public int SoftValueO;
         public int WinCount;
         public int LoseCount;
+        public string StyleBoardEnter;
+        public string StyleXEnter;
+        public string StyleOEnter;
 
         public PlayerData(string nick)
         {
@@ -23,13 +26,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 
             ShopPlayerData = new List<ShopPlayerData>()
             {
-                new(){Id = "Default_O",TypeStyleElementShop = TypeShowElementShop.O},
-                new(){Id = "Default_X",TypeStyleElementShop = TypeShowElementShop.X},
-                new (){Id = "Default_Board",TypeStyleElementShop = TypeShowElementShop.Board},
+                new(){Id = Constant.StyleData.DefaultO,TypeStyleElementShop = TypeShowElementShop.O},
+                new(){Id = Constant.StyleData.DefaultX,TypeStyleElementShop = TypeShowElementShop.X},
+                new (){Id = Constant.StyleData.DefaultBoard,TypeStyleElementShop = TypeShowElementShop.Board},
             };
+
+            StyleBoardEnter = Constant.StyleData.DefaultBoard;
+            StyleXEnter = Constant.StyleData.DefaultX;
+            StyleOEnter = Constant.StyleData.DefaultO;
         }
-
-
+        
         public List<ShopPlayerData> ShopPlayerData;
     }
 

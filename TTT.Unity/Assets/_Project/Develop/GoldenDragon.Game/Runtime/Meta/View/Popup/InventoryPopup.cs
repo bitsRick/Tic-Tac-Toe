@@ -2,6 +2,7 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
@@ -10,9 +11,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _nameHeaderForm;
         [SerializeField] private TextMeshProUGUI _nameButtonBoard;
+        [Header("Button")]
+        [SerializeField] private Button _btnBoard;
+        [SerializeField] private Button _btnX;
+        [SerializeField] private Button _btnO;
         private string _styleEnter;
         private Model _model;
         private Lang _language;
+
+        public Button BtnBoard => _btnBoard;
+        public Button BtnX => _btnX;
+        public Button BtnO => _btnO;
         
         public void Construct(Model model,Lang l)
         {

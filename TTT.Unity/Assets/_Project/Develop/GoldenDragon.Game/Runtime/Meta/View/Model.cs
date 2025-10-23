@@ -5,6 +5,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryElement;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
@@ -28,10 +29,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private MetaRoot _metaRoot;
         private StyleData[] _styleData;
         private PoolUiElement<ElementSell> _poolElementSellUi;
+        private PoolUiElement<InventoryElementStyle> _itemInventoryStyle;
         private IPlayerProgress _playerData;
         private bool _isShopLoadData;
         private bool _isActivePopup;
-        
+
         [Inject]
         public void Construct(PopupService popupService,Lang language,AudioPlayer audioPlayer,AssetService assetService,IPlayerProgress playerData)
         {
@@ -42,20 +44,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _popupService = popupService;
         }
 
-        public UniTask Initialized(MetaRoot metaRoot, StyleData[] styleData,
-            PoolUiElement<ElementSell> poolElementSellUi)
+        public UniTask Initialized(MetaRoot metaRoot,
+            StyleData[] styleData,
+            PoolUiElement<ElementSell> poolElementSellUi,
+            PoolUiElement<InventoryElementStyle> itemInventoryStyle)
         {
+            _itemInventoryStyle = itemInventoryStyle;
             _metaRoot = metaRoot;
             _poolElementSellUi = poolElementSellUi;
             _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
             _popupBackground.Initialized(this);
-            InitializedShopElement();
+            InitializedShopItem();
+            InitializedInventoryItem();
             
             return UniTask.CompletedTask;
         }
 
-        private void InitializedShopElement()
+        private void InitializedInventoryItem()
+        {
+            
+        }
+
+        private void InitializedShopItem()
         {
             if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
             {

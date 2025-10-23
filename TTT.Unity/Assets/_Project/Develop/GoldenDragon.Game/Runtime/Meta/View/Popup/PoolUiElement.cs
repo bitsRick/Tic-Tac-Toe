@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class PoolUiElement<T> : ILoadUnit<int>,IDisposable 
+    public class PoolUiElement<T> : ILoadUnit<DataPullUiElement>,IDisposable 
     where T : class
     {
         private List<T> _listElement = new List<T>();
@@ -22,15 +22,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             _assetService = assetService;
         }
 
-        public async UniTask Load(int lenght)
+        public async UniTask Load(DataPullUiElement dataPullUiElement)
         {
-            _poolRoot = new GameObject(Constant.M.Asset.Popup.PoolElementUi);
+            _poolRoot = new GameObject(dataPullUiElement.NamePullObjectContainer);
             
-            for (int i = 0; i < lenght; i++)
+            for (int i = 0; i < dataPullUiElement.LenghtPull; i++)
             {
-                var gameObject = _assetService.Install.InstallToGameObject<GameObject>(
+                GameObject gameObject = _assetService.Install.InstallToGameObject<GameObject>(
                     _assetService.Load
-                        .GetAsset<GameObject>(TypeAsset.Elements, Constant.M.Asset.Popup.ShopElementBuyPrefab));
+                        .GetAsset<GameObject>(TypeAsset.Elements, dataPullUiElement.PrefabPath));
                     
                 gameObject.transform.parent = _poolRoot.gameObject.transform;
                 gameObject.SetActive(false);

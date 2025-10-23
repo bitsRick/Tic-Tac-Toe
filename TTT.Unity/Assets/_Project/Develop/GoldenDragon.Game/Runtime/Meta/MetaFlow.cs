@@ -3,6 +3,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryElement;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
@@ -22,7 +23,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private AudioPlayer _audioPlayer;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
-        private PoolUiElement<ElementSell> _poolElementSellUi;
+        private PoolUiElement<ElementSell> _itemShopPool;
+        private PoolUiElement<InventoryElementStyle> _itemInventoryStyle;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
             AssetService assetService,FactoryMetaUi factoryMetaUi,AudioPlayer audioPlayer,
@@ -40,16 +42,28 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            _poolElementSellUi = new PoolUiElement<ElementSell>(_assetService);
+            _itemShopPool = new PoolUiElement<ElementSell>(_assetService);
+            _itemInventoryStyle = new PoolUiElement<InventoryElementStyle>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);
-            await _loadingService.BeginLoading(_poolElementSellUi, _styleDataLoad.GetData().Length);
+            
+            await _loadingService.BeginLoading(_itemShopPool, 
+                new DataPullUiElement(
+                    Constant.M.Asset.Popup.ShopElementBuyPrefab,
+                    Constant.M.Asset.Popup.PoolElementUi,
+                    _styleDataLoad.GetData().Length));
+            
+            await _loadingService.BeginLoading(_itemInventoryStyle, 
+                new DataPullUiElement(
+                    Constant.M.Asset.Popup.InventoryElementStylePrefab,
+                    Constant.M.Asset.Popup.PoolElementUi,
+                    _styleDataLoad.GetData().Length));
             
             MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
             await metaRoot.Initialized();
             await metaRoot.Show();
-
-            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_poolElementSellUi);
+            
+            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_itemShopPool,_itemInventoryStyle);
             
             await _loadingView.Hide();
             _audioPlayer.MetaBackground();

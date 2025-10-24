@@ -18,7 +18,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         
         public TypeShowItemShop Type { get; set; }
         
-        public string Id => _id;
+        public string Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+
         public GameObject ActiveStyle => _activeStyle;
         public RectTransform RectTransform  => _rectTransform;
         public Button EnterStyle => _btnEnter;

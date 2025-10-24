@@ -8,11 +8,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     public class PlayerData
     {
         public bool IsRegistred;
-        public string Nick;
+        public int Score;
         public int SoftValueX;
         public int SoftValueO;
         public int WinCount;
         public int LoseCount;
+        public string Nick;
         public string StyleBoardEnter;
         public string StyleXEnter;
         public string StyleOEnter;
@@ -23,6 +24,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
             Nick = nick;
             SoftValueX = 0;
             SoftValueO = 0;
+            Score = 0;
 
             ShopPlayerData = new List<ShopPlayerData>()
             {

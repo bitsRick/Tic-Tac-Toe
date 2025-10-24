@@ -15,6 +15,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private ItemLeaderBoards[] _leaders;
         
         private Lang _language;
+        public ItemLeaderBoards[] Leaders => _leaders;
 
         public void Construct(Lang language)
         {

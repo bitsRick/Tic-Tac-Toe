@@ -59,8 +59,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
             _popupBackground.Initialized(this);
+            
             InitializedShopItem();
             InitializedInventoryItem();
+            InitializedEvent();
 
             return UniTask.CompletedTask;
         }
@@ -142,10 +144,62 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             ShowItemInventorStyle(TypeShowItemShop.Board);
             
-            
-            
             _popupBackground.Show();
             popup.Show();
+        }
+
+        public void OpenPopupShop()
+        {
+            _audioPlayer.Click();
+            ShopPopup popup;
+
+            if (TryGetPopup(TypePopup.Shop, out ShopPopup shopPopup))
+                popup = shopPopup;
+            else
+                return;
+
+            popup.Construct(this, _language);
+            popup.Initialized();
+            ShowItemShopSell(TypeShowItemShop.Board);
+            _popupBackground.Show();
+
+            popup.Show();
+        }
+
+
+        public void ClosePopup()
+        {
+            _audioPlayer.Click();
+            _isActivePopup = false;
+            _activePopup.Hide();
+            _popupBackground.Hide();
+            _activePopup = null;
+        }
+
+        private void ShowItemShopSell(TypeShowItemShop type)
+        {
+            _poolItemSellUi.ResetIndex();
+
+            foreach (StyleData data in _styleData)
+            {
+                if (data.Type != type.ToString() ||
+                    data.Id == GetDefaultType(type))
+                    continue;
+
+                ItemSell item = _poolItemSellUi.GetItem();
+                item.Id = data.Id;
+                item.ImageStyle.sprite = data.Sprite;
+                item.X = data.ValueX.ToString();
+                item.O = data.ValueO.ToString();
+                item.Type = type;
+
+                item.BuyView.SetActive(_playerData
+                    .PlayerData
+                    .ShopPlayerData
+                    .FirstOrDefault(key => key.Id == data.Id) != null);
+
+                item.gameObject.SetActive(true);
+            }
         }
 
         private void ShowItemInventorStyle(TypeShowItemShop type)
@@ -172,61 +226,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             }
         }
 
-        public void OpenPopupShop()
-        {
-            _audioPlayer.Click();
-            ShopPopup popup;
-
-            if (TryGetPopup(TypePopup.Shop, out ShopPopup shopPopup))
-                popup = shopPopup;
-            else
-                return;
-
-            popup.Construct(this, _language);
-            popup.Initialized();
-            ShowItemShopSell(TypeShowItemShop.Board);
-            _popupBackground.Show();
-
-            popup.Show();
-        }
-
-
-        public void ShowItemShopSell(TypeShowItemShop type)
-        {
-            _poolItemSellUi.ResetIndex();
-
-            foreach (StyleData data in _styleData)
-            {
-                if (data.Type != type.ToString() ||
-                    data.Id == GetDefaultType(type))
-                    continue;
-
-                ItemSell item = _poolItemSellUi.GetItem();
-                item.Id = data.Id;
-                item.ImageStyle.sprite = data.Sprite;
-                item.X = data.ValueX.ToString();
-                item.O = data.ValueO.ToString();
-                item.Type = type;
-
-                item.BuyView.SetActive(_playerData
-                    .PlayerData
-                    .ShopPlayerData
-                    .FirstOrDefault(key => key.Id == data.Id) != null);
-
-                item.gameObject.SetActive(true);
-            }
-        }
-
-        public void ClosePopup()
-        {
-            _audioPlayer.Click();
-
-            _isActivePopup = false;
-            _activePopup.Hide();
-            _popupBackground.Hide();
-            _activePopup = null;
-        }
-
         private void InitializedInventoryItem()
         {
             if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popup)
@@ -234,6 +233,45 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     _factory.MetaFactoryItem.CreateItemInventory(this, popup, _poolItemInventoryStyle.GetItem());
             else
                 Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+        }
+
+        private void InitializedEvent()
+        {
+            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popupShop)
+            {
+                popupShop.BtnBorder.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemShopSell(TypeShowItemShop.Board);
+                }).AddTo(popupShop);
+            
+                popupShop.BtnX.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemShopSell(TypeShowItemShop.X);
+                }).AddTo(popupShop);
+            
+                popupShop.BtnO.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemShopSell(TypeShowItemShop.O);
+                }).AddTo(popupShop);
+            }
+
+            if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popupInventory)
+            {
+                popupInventory.BtnBoard.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemInventorStyle(TypeShowItemShop.Board);
+                }).AddTo(popupInventory);
+            
+                popupInventory.BtnX.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemInventorStyle(TypeShowItemShop.X);
+                }).AddTo(popupInventory);
+            
+                popupInventory.BtnO.OnClickAsObservable().Subscribe(_ =>
+                {
+                    ShowItemInventorStyle(TypeShowItemShop.O);
+                }).AddTo(popupInventory);
+            }
         }
 
         private void InitializedShopItem()

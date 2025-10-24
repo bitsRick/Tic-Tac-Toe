@@ -31,6 +31,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         private string _sellStyle;
         private string _buyButton;
 
+        public Button BtnBorder => _btnBorder;
+        public Button BtnX => _btnX;
+        public Button BtnO => _btnO;
+
         public GameObject RootInstance => _root;
         public HorizontalLayoutGroup HorizontalLayoutGroup => _horizontalLayout;
         public TextMeshProUGUI SoftValueX => _valueX;
@@ -49,20 +53,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             _buyButton = _language.UI.POPUP.SHOP.Buy;
             _sellStyle = _language.UI.POPUP.SHOP.Sell;
             
-            _btnBorder.OnClickAsObservable().Subscribe(_ =>
-            {
-                _model.ShowItemShopSell(TypeShowItemShop.Board);
-            }).AddTo(this);
-            
-            _btnX.OnClickAsObservable().Subscribe(_ =>
-            {
-                _model.ShowItemShopSell(TypeShowItemShop.X);
-            }).AddTo(this);
-            
-            _btnO.OnClickAsObservable().Subscribe(_ =>
-            {
-                _model.ShowItemShopSell(TypeShowItemShop.O);
-            }).AddTo(this);
         }
 
         public override void Dispose()

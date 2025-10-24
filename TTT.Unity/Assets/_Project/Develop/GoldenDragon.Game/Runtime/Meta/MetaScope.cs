@@ -12,13 +12,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<Model>(Lifetime.Singleton);
             builder.Register<PopupService>(Lifetime.Singleton);
             builder.Register<StyleDataLoad>(Lifetime.Singleton);
-            
             builder.Register<MetaFactoryUi>(Lifetime.Scoped);
             builder.Register<MetaFactoryItem>(Lifetime.Scoped);
             builder.Register<MetaProviderFacadeFactory>(Lifetime.Scoped);
+
+            builder.Register<Model>(Lifetime.Singleton);
             
             builder.RegisterEntryPoint<MetaFlow>();
             

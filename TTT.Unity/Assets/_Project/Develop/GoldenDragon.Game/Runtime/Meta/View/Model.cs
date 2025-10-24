@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem;
@@ -28,14 +29,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private MetaRoot _metaRoot;
         private StyleData[] _styleData;
         private PoolUiItem<ItemSell> _poolItemSellUi;
-        private PoolUiItem<InventoryItemStyle> _itemInventoryStyle;
+        private PoolUiItem<ItemInventoryStyle> _poolItemInventoryStyle;
         private IPlayerProgress _playerData;
         private bool _isShopLoadData;
         private bool _isActivePopup;
+        private MetaProviderFacadeFactory _factory;
 
         [Inject]
-        public void Construct(PopupService popupService,Lang language,AudioPlayer audioPlayer,AssetService assetService,IPlayerProgress playerData)
+        public void Construct(PopupService popupService,Lang language,AudioPlayer audioPlayer,AssetService assetService,IPlayerProgress playerData, MetaProviderFacadeFactory metaProviderFacadeFactory)
         {
+            _factory = metaProviderFacadeFactory;
             _playerData = playerData;
             _assetService = assetService;
             _audioPlayer = audioPlayer;
@@ -46,9 +49,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         public UniTask Initialized(MetaRoot metaRoot,
             StyleData[] styleData,
             PoolUiItem<ItemSell> poolItemSellUi,
-            PoolUiItem<InventoryItemStyle> itemInventoryStyle)
+            PoolUiItem<ItemInventoryStyle> poolItemInventoryStyle)
         {
-            _itemInventoryStyle = itemInventoryStyle;
+            _poolItemInventoryStyle = poolItemInventoryStyle;
             _metaRoot = metaRoot;
             _poolItemSellUi = poolItemSellUi;
             _styleData = styleData;
@@ -60,41 +63,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             return UniTask.CompletedTask;
         }
 
-        private void InitializedInventoryItem()
+        public void EnterStyle(object id, object buyView, object type)
         {
-            // factory element
-        }
-
-        private void InitializedShopItem()
-        {
-            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
-            {
-                for (int i = 0; i < _styleData.Length; i++)
-                {
-                    ItemSell item = _poolItemSellUi.GetItem();
-                    item.ImageStyle.preserveAspect = true;
-                
-                    item.ButtonBuy.OnClickAsObservable().Subscribe(_ =>
-                    {
-                        BuyStyle(item.Id,item.BuyView,item.Type);
-                    }).AddTo(item);
-                
-                    item.transform.parent = popup.RootInstance.gameObject.transform;
-                
-                    RectTransform rt = item.RectTransform;
-                    rt.localScale = Vector3.one;
-                    rt.localPosition = Vector3.zero;
-                    rt.localRotation = Quaternion.identity;
-                    rt.anchoredPosition = Vector2.zero;
-                }
             
-                popup.HorizontalLayoutGroup.childScaleHeight = true;
-                popup.HorizontalLayoutGroup.childControlHeight = true;
-            }
-            else
-            {
-                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
-            }
         }
 
         public void OpenPopupSetting()
@@ -122,7 +93,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is LeaderBoardPopup popup)
                 {
-                    popup.Construct(this,_language);
+                    popup.Construct(_language);
                     popup.Initialized();
                     _popupBackground.Show();
                     
@@ -158,7 +129,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
-            popup.Construct(this,_language);
+            popup.Construct(_language);
             popup.Initialized();
             _popupBackground.Show();
                     
@@ -221,6 +192,24 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _activePopup = null;
         }
 
+        private void InitializedInventoryItem()
+        {
+            if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popup)
+                for (int i = 0; i < _styleData.Length; i++)
+                    _factory.MetaFactoryItem.CreateItemInventory(this, popup, _poolItemInventoryStyle.GetItem());
+            else
+                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+        }
+
+        private void InitializedShopItem()
+        {
+            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
+                for (int i = 0; i < _styleData.Length; i++)
+                    _factory.MetaFactoryItem.CreateItemShopSell(this, popup, _poolItemSellUi.GetItem());
+            else
+                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+        }
+
         private string GetDefaultType(TypeShowItemShop type)
         {
             switch (type)
@@ -239,7 +228,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             return null;
         }
 
-        private void BuyStyle(string id, GameObject gameObject, TypeShowItemShop typeStyle)
+        public void BuyStyle(string id, GameObject gameObject, TypeShowItemShop typeStyle)
         {
             _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
             _playerData.PlayerData.ShopPlayerData.Add(new ShopPlayerData(){Id = id,typeStyleItemShop = typeStyle});

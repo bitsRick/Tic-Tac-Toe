@@ -22,7 +22,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
         private PoolUiItem<ItemSell> _itemShopPool;
-        private PoolUiItem<InventoryItemStyle> _itemInventoryStyle;
+        private PoolUiItem<ItemInventoryStyle> _itemInventoryStyle;
         private MetaProviderFacadeFactory _metaProviderFacadeFactory;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
@@ -42,7 +42,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         public async void Start()
         {
             _itemShopPool = new PoolUiItem<ItemSell>(_assetService);
-            _itemInventoryStyle = new PoolUiItem<InventoryItemStyle>(_assetService);
+            _itemInventoryStyle = new PoolUiItem<ItemInventoryStyle>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);
             

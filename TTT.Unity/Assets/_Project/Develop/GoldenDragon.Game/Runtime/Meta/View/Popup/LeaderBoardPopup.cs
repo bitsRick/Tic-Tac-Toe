@@ -1,4 +1,5 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.LeaderBoardItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using TMPro;
 using UnityEngine;
@@ -10,13 +11,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _namePopupText;
 
-        private Model _model;
+        [Header("Массив мест лидеров")]
+        [SerializeField] private ItemLeaderBoards[] _leaders;
+        
         private Lang _language;
 
-        public void Construct(Model model, Lang language)
+        public void Construct(Lang language)
         {
             _language = language;
-            _model = model;
         }
 
         public void Initialized()

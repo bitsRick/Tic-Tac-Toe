@@ -15,18 +15,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private Button _btnBoard;
         [SerializeField] private Button _btnX;
         [SerializeField] private Button _btnO;
+        [Header("Container Item")]
+        [SerializeField] private GameObject _root;
         private string _styleEnter;
-        private Model _model;
         private Lang _language;
 
+        public GameObject  Root => _root;
         public Button BtnBoard => _btnBoard;
         public Button BtnX => _btnX;
         public Button BtnO => _btnO;
         
-        public void Construct(Model model,Lang l)
+        public void Construct(Lang l)
         {
             _language = l;
-            _model = model;
         }
 
         public override void Dispose()

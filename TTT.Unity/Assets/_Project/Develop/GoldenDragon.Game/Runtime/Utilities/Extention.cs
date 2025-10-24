@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {

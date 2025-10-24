@@ -94,7 +94,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Elements
     }
 
-    public enum TypeShowElementShop
+    public enum TypeShowItemShop
     {
         Board,
         X,

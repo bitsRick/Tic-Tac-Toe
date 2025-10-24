@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;

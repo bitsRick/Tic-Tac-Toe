@@ -1,4 +1,5 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+﻿using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
@@ -13,10 +14,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         {
             builder.Register<Model>(Lifetime.Singleton);
             builder.Register<PopupService>(Lifetime.Singleton);
-            builder.Register<FactoryMetaUi>(Lifetime.Singleton);
             builder.Register<StyleDataLoad>(Lifetime.Singleton);
             
+            builder.Register<MetaFactoryUi>(Lifetime.Scoped);
+            builder.Register<MetaFactoryItem>(Lifetime.Scoped);
+            builder.Register<MetaProviderFacadeFactory>(Lifetime.Scoped);
+            
             builder.RegisterEntryPoint<MetaFlow>();
+            
         }
     }
 }

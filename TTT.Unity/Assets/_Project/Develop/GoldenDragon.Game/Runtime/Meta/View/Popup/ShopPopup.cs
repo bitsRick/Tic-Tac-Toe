@@ -51,17 +51,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             
             _btnBorder.OnClickAsObservable().Subscribe(_ =>
             {
-                _model.ShowShopSellItem(TypeShowElementShop.Board);
+                _model.ShowShopSellItem(TypeShowItemShop.Board);
             }).AddTo(this);
             
             _btnX.OnClickAsObservable().Subscribe(_ =>
             {
-                _model.ShowShopSellItem(TypeShowElementShop.X);
+                _model.ShowShopSellItem(TypeShowItemShop.X);
             }).AddTo(this);
             
             _btnO.OnClickAsObservable().Subscribe(_ =>
             {
-                _model.ShowShopSellItem(TypeShowElementShop.O);
+                _model.ShowShopSellItem(TypeShowItemShop.O);
             }).AddTo(this);
         }
 

@@ -3,11 +3,10 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryElement;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryItem;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -18,22 +17,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly LoadingService _loadingService;
         private readonly LoadingView _loadingView;
         private AssetService _assetService;
-        private FactoryMetaUi _factoryMetaUi;
         private AudioService _audioService;
         private AudioPlayer _audioPlayer;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
-        private PoolUiElement<ElementSell> _itemShopPool;
-        private PoolUiElement<InventoryElementStyle> _itemInventoryStyle;
+        private PoolUiItem<ItemSell> _itemShopPool;
+        private PoolUiItem<InventoryItemStyle> _itemInventoryStyle;
+        private MetaProviderFacadeFactory _metaProviderFacadeFactory;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
-            AssetService assetService,FactoryMetaUi factoryMetaUi,AudioPlayer audioPlayer,
-            StyleDataLoad styleDataLoad,Model modelMetaRoot)
+            AssetService assetService,AudioPlayer audioPlayer,
+            StyleDataLoad styleDataLoad,Model modelMetaRoot,MetaProviderFacadeFactory metaProviderFacadeFactory)
         {
+            _metaProviderFacadeFactory = metaProviderFacadeFactory;
             _modelMetaRoot = modelMetaRoot;
             _styleDataLoad = styleDataLoad;
             _audioPlayer = audioPlayer;
-            _factoryMetaUi = factoryMetaUi;
             _assetService = assetService;
             _loadingView = loadingView;
             _sceneManager = sceneManager;
@@ -42,24 +41,24 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            _itemShopPool = new PoolUiElement<ElementSell>(_assetService);
-            _itemInventoryStyle = new PoolUiElement<InventoryElementStyle>(_assetService);
+            _itemShopPool = new PoolUiItem<ItemSell>(_assetService);
+            _itemInventoryStyle = new PoolUiItem<InventoryItemStyle>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);
             
             await _loadingService.BeginLoading(_itemShopPool, 
-                new DataPullUiElement(
+                new DataPullUiItem(
                     Constant.M.Asset.Popup.ShopElementBuyPrefab,
                     Constant.M.Asset.Popup.PoolElementUi,
                     _styleDataLoad.GetData().Length));
             
             await _loadingService.BeginLoading(_itemInventoryStyle, 
-                new DataPullUiElement(
+                new DataPullUiItem(
                     Constant.M.Asset.Popup.InventoryElementStylePrefab,
                     Constant.M.Asset.Popup.PoolElementUi,
                     _styleDataLoad.GetData().Length));
             
-            MetaRoot metaRoot = _factoryMetaUi.CreateMetaRoot<MetaRoot>();
+            MetaRoot metaRoot = _metaProviderFacadeFactory.MetaFactoryUi.CreateMetaRoot<MetaRoot>();
             await metaRoot.Initialized();
             await metaRoot.Show();
             

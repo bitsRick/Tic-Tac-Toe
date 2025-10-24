@@ -7,35 +7,36 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class PoolUiElement<T> : ILoadUnit<DataPullUiElement>,IDisposable 
+    public class PoolUiItem<T> : ILoadUnit<DataPullUiItem>,IDisposable 
     where T : class
     {
-        private List<T> _listElement = new List<T>();
+        private List<T> _listItem = new List<T>();
         private AssetService _assetService;
         private int _index = -1;
         private GameObject _poolRoot;
         
-        public List<T> Elements => _listElement;
+        public List<T> Item => _listItem;
 
-        public PoolUiElement(AssetService assetService)
+        public PoolUiItem(AssetService assetService)
         {
             _assetService = assetService;
         }
 
-        public async UniTask Load(DataPullUiElement dataPullUiElement)
+        public async UniTask Load(DataPullUiItem dataPullUiItem)
         {
-            _poolRoot = new GameObject(dataPullUiElement.NamePullObjectContainer);
+            _poolRoot = new GameObject(dataPullUiItem.NamePullObjectContainer);
             
-            for (int i = 0; i < dataPullUiElement.LenghtPull; i++)
+            for (int i = 0; i < dataPullUiItem.LenghtPull; i++)
             {
                 GameObject gameObject = _assetService.Install.InstallToGameObject<GameObject>(
                     _assetService.Load
-                        .GetAsset<GameObject>(TypeAsset.Elements, dataPullUiElement.PrefabPath));
+                        .GetAsset<GameObject>(TypeAsset.Elements, dataPullUiItem.PrefabPath));
                     
                 gameObject.transform.parent = _poolRoot.gameObject.transform;
                 gameObject.SetActive(false);
-                var newElement = gameObject.GetComponent<T>();
-                _listElement.Add(newElement);
+                
+                var newItem = gameObject.GetComponent<T>();
+                _listItem.Add(newItem);
                 
                 if (i % 5 == 0) await UniTask.Yield();
             }
@@ -43,18 +44,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             await UniTask.CompletedTask;
         }
         
-        public void Dispose() => _listElement = null;
+        public void Dispose() => _listItem = null;
 
         public T GetItem()
         {
-            if (_listElement.Count-1 <= _index)
+            if (_listItem.Count-1 <= _index)
             {
                 ResetIndex();
                 return null;
             }
             
             _index++;
-            return _listElement[_index];
+            return _listItem[_index];
         }
 
         public void ResetIndex()

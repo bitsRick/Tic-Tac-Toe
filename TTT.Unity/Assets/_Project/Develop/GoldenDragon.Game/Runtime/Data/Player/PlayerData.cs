@@ -26,9 +26,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 
             ShopPlayerData = new List<ShopPlayerData>()
             {
-                new(){Id = Constant.StyleData.DefaultO,TypeStyleElementShop = TypeShowElementShop.O},
-                new(){Id = Constant.StyleData.DefaultX,TypeStyleElementShop = TypeShowElementShop.X},
-                new (){Id = Constant.StyleData.DefaultBoard,TypeStyleElementShop = TypeShowElementShop.Board},
+                new(){Id = Constant.StyleData.DefaultO,typeStyleItemShop = TypeShowItemShop.O},
+                new(){Id = Constant.StyleData.DefaultX,typeStyleItemShop = TypeShowItemShop.X},
+                new (){Id = Constant.StyleData.DefaultBoard,typeStyleItemShop = TypeShowItemShop.Board},
             };
 
             StyleBoardEnter = Constant.StyleData.DefaultBoard;
@@ -43,6 +43,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     public class ShopPlayerData
     {
         public string Id;
-        public TypeShowElementShop TypeStyleElementShop;
+        public TypeShowItemShop typeStyleItemShop;
     }
 }

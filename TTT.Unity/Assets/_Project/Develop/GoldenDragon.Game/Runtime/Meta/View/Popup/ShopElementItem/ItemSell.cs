@@ -3,8 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem
 {
     public class ItemSell : MonoBehaviour
     {
@@ -16,7 +15,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private RectTransform _rectTransform;
         private string _id;
         private bool _isView;
-        public TypeShowElementShop Type { get; set; }
+        public TypeShowItemShop Type { get; set; }
 
         public Image ImageStyle => _image;
         public Button ButtonBuy => _btn;

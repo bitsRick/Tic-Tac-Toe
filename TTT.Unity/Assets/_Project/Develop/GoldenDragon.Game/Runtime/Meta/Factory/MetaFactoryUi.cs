@@ -8,12 +8,12 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory
 {
-    public class FactoryMetaUi
+    public class MetaFactoryMetaUi
     {
         private AssetService _assetService;
         private IObjectResolver _resolver;
 
-        public FactoryMetaUi(AssetService assetService,IObjectResolver resolver)
+        public MetaFactoryMetaUi(AssetService assetService,IObjectResolver resolver)
         {
             _resolver = resolver;
             _assetService = assetService;

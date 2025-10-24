@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementSell
 {
-    public class ElementSell : MonoBehaviour
+    public class ItemSell : MonoBehaviour
     {
         [SerializeField] private Image _image;
         [SerializeField] private Button _btn;

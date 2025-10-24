@@ -45,7 +45,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         
         public void Dispose() => _listElement = null;
 
-        public T GetElement()
+        public T GetItem()
         {
             if (_listElement.Count-1 <= _index)
             {

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryElement
 {
-    public class InventoryElementStyle:MonoBehaviour
+    public class InventoryItemStyle:MonoBehaviour
     {
         [SerializeField] private Button _btnEnter;
         [SerializeField] private Image _image;

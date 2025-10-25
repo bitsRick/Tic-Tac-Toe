@@ -1,5 +1,6 @@
 ﻿using System;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class ShopPopup:PopupBase
+    public class ShopPopup:PopupBase,IItemContainer
     {
         [SerializeField] private GameObject _root;
         [SerializeField] private HorizontalLayoutGroup _horizontalLayout;
@@ -34,10 +35,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         public Button BtnBorder => _btnBorder;
         public Button BtnX => _btnX;
         public Button BtnO => _btnO;
+        
+        public GameObject Root
+        {
+            get => _root;
+            set => _root = value;
+        }
 
-        public GameObject RootInstance => _root;
         public HorizontalLayoutGroup HorizontalLayoutGroup => _horizontalLayout;
+
         public TextMeshProUGUI SoftValueX => _valueX;
+
         public TextMeshProUGUI SoftValueO => _valueO;
 
         public void Construct(Model model,Lang language)

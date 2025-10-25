@@ -1,11 +1,12 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem
 {
-    public class ItemSell : MonoBehaviour
+    public class ItemSell : MonoBehaviour,IItem
     {
         [SerializeField] private Image _image;
         [SerializeField] private Button _btn;
@@ -15,11 +16,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private RectTransform _rectTransform;
         private string _id;
         private bool _isView;
+
         public TypeShowItemShop Type { get; set; }
 
-        public Image ImageStyle => _image;
-        public Button ButtonBuy => _btn;
-        public GameObject BuyView => _buy;
+        public Image Image => _image;
+
+        public Button Btn => _btn;
+
+        public Transform Transform => transform;
+
+        public GameObject ActiveGameObject
+        {
+            get => _buy;
+            set => _buy = value;
+        }
+
         public RectTransform RectTransform
         {
             get => _rectTransform;

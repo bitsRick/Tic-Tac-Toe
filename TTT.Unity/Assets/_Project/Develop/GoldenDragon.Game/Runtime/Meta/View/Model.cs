@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
@@ -15,6 +16,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
@@ -67,8 +69,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             return UniTask.CompletedTask;
         }
 
-        public void EnterStyle(object id, object buyView, object type)
+        private void EnterStyle(object id, object buyView, object type)
         {
+            //develop
         }
 
         public void OpenPopupSetting()
@@ -163,10 +166,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             ShowItemShopSell(TypeShowItemShop.Board);
             _popupBackground.Show();
 
+            popup.HorizontalLayoutGroup.childScaleHeight = true;
+            popup.HorizontalLayoutGroup.childControlHeight = true;
+            
             popup.Show();
         }
-
-
+        
         public void ClosePopup()
         {
             _audioPlayer.Click();
@@ -188,12 +193,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
                 ItemSell item = _poolItemSellUi.GetItem();
                 item.Id = data.Id;
-                item.ImageStyle.sprite = data.Sprite;
+                item.Image.sprite = data.Sprite;
                 item.X = data.ValueX.ToString();
                 item.O = data.ValueO.ToString();
                 item.Type = type;
 
-                item.BuyView.SetActive(_playerData
+                item.ActiveGameObject.SetActive(_playerData
                     .PlayerData
                     .ShopPlayerData
                     .FirstOrDefault(key => key.Id == data.Id) != null);
@@ -220,9 +225,26 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
                 itemInventory.Type = type;
                 itemInventory.Id = data.Id;
-                itemInventory.ImageStyle.sprite = data.Sprite;
+                itemInventory.Image.sprite = data.Sprite;
 
                 itemInventory.gameObject.SetActive(true);
+            }
+        }
+
+        private void InitializedEvent()
+        {
+            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popupShop)
+            {
+                InitEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.Board);});
+                InitEventButtonClick(popupShop.BtnX, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.X);});
+                InitEventButtonClick(popupShop.BtnO, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.O);});
+            }
+
+            if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popupInventory)
+            {
+                InitEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.Board);});
+                InitEventButtonClick(popupInventory.BtnX, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.X);});
+                InitEventButtonClick(popupInventory.BtnO, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.O);});
             }
         }
 
@@ -230,47 +252,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popup)
                 for (int i = 0; i < _styleData.Length; i++)
-                    _factory.MetaFactoryItem.CreateItemInventory(this, popup, _poolItemInventoryStyle.GetItem());
+                {
+                    ItemInventoryStyle item = _factory.MetaFactoryItem.CreateItem(_poolItemInventoryStyle.GetItem(), popup);
+                    item.Btn.OnClickAsObservable().Subscribe(_ =>
+                    {
+                        EnterStyle(item.Id, item.ActiveGameObject, item.Type);
+                    }).AddTo(popup);
+                }
             else
-                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
-        }
-
-        private void InitializedEvent()
-        {
-            if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popupShop)
             {
-                popupShop.BtnBorder.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemShopSell(TypeShowItemShop.Board);
-                }).AddTo(popupShop);
-            
-                popupShop.BtnX.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemShopSell(TypeShowItemShop.X);
-                }).AddTo(popupShop);
-            
-                popupShop.BtnO.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemShopSell(TypeShowItemShop.O);
-                }).AddTo(popupShop);
-            }
-
-            if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popupInventory)
-            {
-                popupInventory.BtnBoard.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemInventorStyle(TypeShowItemShop.Board);
-                }).AddTo(popupInventory);
-            
-                popupInventory.BtnX.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemInventorStyle(TypeShowItemShop.X);
-                }).AddTo(popupInventory);
-            
-                popupInventory.BtnO.OnClickAsObservable().Subscribe(_ =>
-                {
-                    ShowItemInventorStyle(TypeShowItemShop.O);
-                }).AddTo(popupInventory);
+                Log.Meta.W($"Not load popup:{nameof(InventoryPopup)}");
             }
         }
 
@@ -278,29 +269,36 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
                 for (int i = 0; i < _styleData.Length; i++)
-                    _factory.MetaFactoryItem.CreateItemShopSell(this, popup, _poolItemSellUi.GetItem());
+                {
+                    ItemSell item = _factory.MetaFactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
+                    item.Btn.OnClickAsObservable().Subscribe(_ =>
+                    {
+                        BuyStyle(item.Id, item.ActiveGameObject, item.Type);
+                    }).AddTo(popup);
+                }
             else
+            {
                 Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+            }
         }
 
         private string GetDefaultType(TypeShowItemShop type)
         {
-            switch (type)
+            return type switch
             {
-                case TypeShowItemShop.Board:
-                    return Constant.StyleData.DefaultBoard;
-
-                case TypeShowItemShop.X:
-                    return Constant.StyleData.DefaultX;
-
-                case TypeShowItemShop.O:
-                    return Constant.StyleData.DefaultO;
-            }
-
-            return null;
+                TypeShowItemShop.Board => Constant.StyleData.DefaultBoard,
+                TypeShowItemShop.X => Constant.StyleData.DefaultX,
+                TypeShowItemShop.O => Constant.StyleData.DefaultO,
+                _ => null
+            };
         }
 
-        public void BuyStyle(string id, GameObject gameObject, TypeShowItemShop typeStyle)
+        private void InitEventButtonClick(Button btn, GameObject popup, Action showItemShopSell)
+        {
+            btn.OnClickAsObservable().Subscribe(_ => { showItemShopSell?.Invoke(); }).AddTo(popup);
+        }
+
+        private void BuyStyle(string id, GameObject gameObject, TypeShowItemShop typeStyle)
         {
             _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
             _playerData.PlayerData.ShopPlayerData.Add(new ShopPlayerData() { Id = id, typeStyleItemShop = typeStyle });
@@ -329,7 +327,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 _isActivePopup = true;
                 _activePopup = _popupService.GetPopup(typePopupOpen);
-
                 return true;
             }
 

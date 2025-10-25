@@ -1,4 +1,5 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class InventoryPopup:PopupBase
+    public class InventoryPopup:PopupBase,IItemContainer
     {
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _nameHeaderForm;
@@ -20,7 +21,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         private string _styleEnter;
         private Lang _language;
 
-        public GameObject  Root => _root;
+        public GameObject  Root
+        {
+            get => _root;
+            set => _root = value;
+        }
+
         public Button BtnBoard => _btnBoard;
         public Button BtnX => _btnX;
         public Button BtnO => _btnO;

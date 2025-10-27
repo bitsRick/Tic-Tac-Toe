@@ -24,7 +24,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
     public class Model
     {
         private PopupService _popupService;
-        private MetaBlackPopupBackground _popupBackground;
+        private BackPopupBackground _popupBackground;
         private PopupBase _activePopup;
         private Lang _language;
         private AudioPlayer _audioPlayer;
@@ -84,8 +84,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 {
                     popup.Construct(this, _language);
                     popup.Initialized();
+                    
                     _popupBackground.Show();
-
                     popup.Show();
                 }
             }
@@ -125,8 +125,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 {
                     popup.Construct(this, _language);
                     popup.Initialized();
+                    
                     _popupBackground.Show();
-
                     popup.Show();
                 }
             }
@@ -145,7 +145,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             popup.Construct(_language);
             popup.Initialized();
 
-            ShowItemInventorStyle(TypeShowItemShop.Board);
+            ShowItemInventor(TypeShowItemShop.Board);
             
             _popupBackground.Show();
             popup.Show();
@@ -163,12 +163,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             popup.Construct(this, _language);
             popup.Initialized();
-            ShowItemShopSell(TypeShowItemShop.Board);
-            _popupBackground.Show();
+            ShowItemShop(TypeShowItemShop.Board);
 
             popup.HorizontalLayoutGroup.childScaleHeight = true;
             popup.HorizontalLayoutGroup.childControlHeight = true;
-            
+
+            _popupBackground.Show();
             popup.Show();
         }
         
@@ -181,7 +181,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _activePopup = null;
         }
 
-        private void ShowItemShopSell(TypeShowItemShop type)
+        private void ShowItemShop(TypeShowItemShop type)
         {
             _poolItemSellUi.ResetIndex();
 
@@ -207,7 +207,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             }
         }
 
-        private void ShowItemInventorStyle(TypeShowItemShop type)
+        private void ShowItemInventor(TypeShowItemShop type)
         {
             _poolItemInventoryStyle.ResetIndex();
 
@@ -235,16 +235,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popupShop)
             {
-                InitEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.Board);});
-                InitEventButtonClick(popupShop.BtnX, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.X);});
-                InitEventButtonClick(popupShop.BtnO, popupShop.gameObject,() => { ShowItemShopSell(TypeShowItemShop.O);});
+                InitEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,() => { ShowItemShop(TypeShowItemShop.Board);});
+                InitEventButtonClick(popupShop.BtnX, popupShop.gameObject,() => { ShowItemShop(TypeShowItemShop.X);});
+                InitEventButtonClick(popupShop.BtnO, popupShop.gameObject,() => { ShowItemShop(TypeShowItemShop.O);});
             }
 
             if (_popupService.GetPopup(TypePopup.Inventory) is InventoryPopup popupInventory)
             {
-                InitEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.Board);});
-                InitEventButtonClick(popupInventory.BtnX, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.X);});
-                InitEventButtonClick(popupInventory.BtnO, popupInventory.gameObject,() => { ShowItemInventorStyle(TypeShowItemShop.O);});
+                InitEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,() => { ShowItemInventor(TypeShowItemShop.Board);});
+                InitEventButtonClick(popupInventory.BtnX, popupInventory.gameObject,() => { ShowItemInventor(TypeShowItemShop.X);});
+                InitEventButtonClick(popupInventory.BtnO, popupInventory.gameObject,() => { ShowItemInventor(TypeShowItemShop.O);});
             }
         }
 

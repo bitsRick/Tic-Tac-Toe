@@ -14,7 +14,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
     public class MetaRoot : MonoBehaviour
     {
         [Header("Popup Background")]
-        [SerializeField] private MetaBlackPopupBackground _popupBackground;
+        [SerializeField] private BackPopupBackground _popupBackground;
         [Header("Popup Parent")] 
         [SerializeField] private GameObject _parent;
         [Header("Button Open Popup")] 
@@ -80,7 +80,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             await UniTask.CompletedTask;
         }
 
-        public MetaBlackPopupBackground GetPopupBackground()
+        public BackPopupBackground GetPopupBackground()
         {
             return _popupBackground;
         }

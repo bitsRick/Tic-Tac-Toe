@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.EventSystems;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
     public class BackPopupBackground:UI.Core.View,IPointerClickHandler
     {

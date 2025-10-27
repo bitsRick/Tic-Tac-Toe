@@ -1,11 +1,10 @@
-using System;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.EventSystems;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class MetaBlackPopupBackground:UI.Core.View,IPointerClickHandler
+    public class BackPopupBackground:UI.Core.View,IPointerClickHandler
     {
         private Model _model;
 

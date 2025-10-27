@@ -22,8 +22,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         {
             IsRegistred = true;
             Nick = nick;
-            SoftValueX = 0;
-            SoftValueO = 0;
+            SoftValueX = 100;
+            SoftValueO = 100;
             Score = 0;
 
             ShopPlayerData = new List<StyleData>()
@@ -42,13 +42,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
             X = new StyleData()
             {
                 Id = Constant.StyleData.DefaultX,
-                Type = TypeShowItemStyle.O
+                Type = TypeShowItemStyle.X
             };
             
             O = new StyleData()
             {
                 Id = Constant.StyleData.DefaultO,
-                Type = TypeShowItemStyle.X
+                Type = TypeShowItemStyle.O
             };
         }
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -9,15 +10,13 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class PoolUiItem<T> : ILoadUnit<DataPullUiItem>,IDisposable 
-    where T : IItem
+    public class PoolUiItem<T> : ILoadUnit<DataPullUiItem>,IDisposable,IEnumerable<T>
+        where T : IItem
     {
-        private List<T> _listItem = new List<T>();
+        public List<T> _item = new List<T>();
         private AssetService _assetService;
-        private int _index = -1;
         private GameObject _poolRoot;
-        
-        public List<T> Item => _listItem;
+        private int _index = -1;
 
         public PoolUiItem(AssetService assetService)
         {
@@ -38,29 +37,48 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
                 gameObject.SetActive(false);
                 
                 var newItem = gameObject.GetComponent<T>();
-                _listItem.Add(newItem);
-                
-                if (i % 5 == 0) await UniTask.Yield();
+                _item.Add(newItem);
+
+                await UniTask.Yield();
             }
             
             await UniTask.CompletedTask;
         }
         
-        public void Dispose() => _listItem = null;
+        public void Dispose() => _item = null;
 
-        public T Find(string id) => _listItem.FirstOrDefault(key => key.Id == id);
+        public T Find(string id) => _item.FirstOrDefault(key => key.Id == id);
 
         public T GetItem()
         {
-            if (_listItem.Count-1 <= _index) ResetIndex();
+            if (_index >= _item.Count-1) Reset();
 
             _index++;
-            return _listItem[_index];
+            return _item[_index];
         }
-
-        public void ResetIndex()
+        
+        public void Reset()
         {
             _index = -1;
+        }
+        
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < _item.Count; i++)
+            {
+                _index++;
+                yield return _item[i];
+            }
+        }
+
+        public int GetIndex()
+        {
+            return _index;
         }
     }
 }

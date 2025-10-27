@@ -17,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         private string _id;
         private bool _isView;
 
-        public TypeShowItemShop Type { get; set; }
+        public TypeShowItemStyle Type { get; set; }
 
         public Image Image => _image;
 

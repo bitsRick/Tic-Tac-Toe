@@ -7,6 +7,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     [Serializable]
     public class PlayerData
     {
+        public StyleData Board;
+        public StyleData X;
+        public StyleData O;
         public bool IsRegistred;
         public int Score;
         public int SoftValueX;
@@ -14,9 +17,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         public int WinCount;
         public int LoseCount;
         public string Nick;
-        public string StyleBoardEnter;
-        public string StyleXEnter;
-        public string StyleOEnter;
 
         public PlayerData(string nick)
         {
@@ -26,25 +26,39 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
             SoftValueO = 0;
             Score = 0;
 
-            ShopPlayerData = new List<ShopPlayerData>()
+            ShopPlayerData = new List<StyleData>()
             {
-                new(){Id = Constant.StyleData.DefaultO,typeStyleItemShop = TypeShowItemShop.O},
-                new(){Id = Constant.StyleData.DefaultX,typeStyleItemShop = TypeShowItemShop.X},
-                new (){Id = Constant.StyleData.DefaultBoard,typeStyleItemShop = TypeShowItemShop.Board},
+                new(){Id = Constant.StyleData.DefaultO,Type = TypeShowItemStyle.O},
+                new(){Id = Constant.StyleData.DefaultX,Type = TypeShowItemStyle.X},
+                new (){Id = Constant.StyleData.DefaultBoard,Type = TypeShowItemStyle.Board},
             };
 
-            StyleBoardEnter = Constant.StyleData.DefaultBoard;
-            StyleXEnter = Constant.StyleData.DefaultX;
-            StyleOEnter = Constant.StyleData.DefaultO;
+            Board = new StyleData()
+            {
+                Id = Constant.StyleData.DefaultBoard,
+                Type = TypeShowItemStyle.Board
+            };
+            
+            X = new StyleData()
+            {
+                Id = Constant.StyleData.DefaultX,
+                Type = TypeShowItemStyle.O
+            };
+            
+            O = new StyleData()
+            {
+                Id = Constant.StyleData.DefaultO,
+                Type = TypeShowItemStyle.X
+            };
         }
         
-        public List<ShopPlayerData> ShopPlayerData;
+        public List<StyleData> ShopPlayerData;
     }
 
     [Serializable]
-    public class ShopPlayerData
+    public class StyleData
     {
         public string Id;
-        public TypeShowItemShop typeStyleItemShop;
+        public TypeShowItemStyle Type;
     }
 }

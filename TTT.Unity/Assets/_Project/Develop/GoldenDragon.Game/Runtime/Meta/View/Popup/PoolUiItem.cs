@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
@@ -8,7 +10,7 @@ using UnityEngine;
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
     public class PoolUiItem<T> : ILoadUnit<DataPullUiItem>,IDisposable 
-    where T : class
+    where T : IItem
     {
         private List<T> _listItem = new List<T>();
         private AssetService _assetService;
@@ -46,14 +48,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         
         public void Dispose() => _listItem = null;
 
+        public T Find(string id) => _listItem.FirstOrDefault(key => key.Id == id);
+
         public T GetItem()
         {
-            if (_listItem.Count-1 <= _index)
-            {
-                ResetIndex();
-                return null;
-            }
-            
+            if (_listItem.Count-1 <= _index) ResetIndex();
+
             _index++;
             return _listItem[_index];
         }

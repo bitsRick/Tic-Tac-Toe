@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.15
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 7035888198376608166}
-  _activeStyle: {fileID: 5081775371710665648}
+  activeGameObject: {fileID: 5081775371710665648}
   _btnEnter: {fileID: 8262385020252829817}
   _image: {fileID: 7058404091672787519}
 --- !u!1 &6198679428767898258

@@ -31,7 +31,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private AudioPlayer _audioPlayer;
         private MetaRoot _metaRoot;
         private Style.StyleData[] _styleData;
-        private PoolUiItem<ItemSell> _poolItemSellUi;
+        private PoolUiItem<ItemShop> _poolItemSellUi;
         private PoolUiItem<ItemInventoryStyle> _poolItemInventoryStyle;
         private MetaProviderFacadeFactory _factory;
         private AudioService _audioService;
@@ -51,7 +51,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public UniTask Initialized(MetaRoot metaRoot,
             Style.StyleData[] styleData,
-            PoolUiItem<ItemSell> poolItemSellUi,
+            PoolUiItem<ItemShop> poolItemSellUi,
             PoolUiItem<ItemInventoryStyle> poolItemInventoryStyle)
         {
             _poolItemInventoryStyle = poolItemInventoryStyle;
@@ -193,7 +193,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     data.Id == GetDefaultType(type))
                     continue;
 
-                ItemSell item = _poolItemSellUi.GetItem();
+                ItemShop item = _poolItemSellUi.GetItem();
                 item.Id = data.Id;
                 item.Image.sprite = data.Sprite;
                 item.X = data.ValueX.ToString();
@@ -357,7 +357,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             if (_popupService.GetPopup(TypePopup.Shop) is ShopPopup popup)
                 for (int i = 0; i < _styleData.Length; i++)
                 {
-                    ItemSell item = _factory.MetaFactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
+                    ItemShop item = _factory.MetaFactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
                     InitEventButtonClick(item.Btn, popup.gameObject, (() => BuyStyle(item.Id, item.ActiveGameObject, item.Type)));
                 }
             else

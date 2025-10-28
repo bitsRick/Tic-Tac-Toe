@@ -21,7 +21,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private AudioPlayer _audioPlayer;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
-        private PoolUiItem<ItemSell> _itemShopPool;
+        private PoolUiItem<ItemShop> _itemShopPool;
         private PoolUiItem<ItemInventoryStyle> _itemInventoryStyle;
         private MetaProviderFacadeFactory _metaProviderFacadeFactory;
 
@@ -41,7 +41,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            _itemShopPool = new PoolUiItem<ItemSell>(_assetService);
+            _itemShopPool = new PoolUiItem<ItemShop>(_assetService);
             _itemInventoryStyle = new PoolUiItem<ItemInventoryStyle>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);

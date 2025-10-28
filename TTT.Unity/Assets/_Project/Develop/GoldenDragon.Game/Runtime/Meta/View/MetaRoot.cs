@@ -55,10 +55,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             GameObject match = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Match);
             
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(setting,_parent);
+            settingPopup.Construct(_model);
+            settingPopup.Initialized();
+            
             LeaderBoardPopup leaderBoardPopup = _assetService.Install.InstallToUiPopup<LeaderBoardPopup>(leaderBoard,_parent);
+            leaderBoardPopup.Initialized();
+            
             ShopPopup shopPopup = _assetService.Install.InstallToUiPopup<ShopPopup>(shop,_parent);
+            shopPopup.Construct(_model);
+            shopPopup.Initialized();
+            
             InventoryPopup inventoryPopup = _assetService.Install.InstallToUiPopup<InventoryPopup>(inventory,_parent);
+            inventoryPopup.Initialized();
+            
             MatchPopup matchPopup = _assetService.Install.InstallToUiPopup<MatchPopup>(match,_parent);
+            matchPopup.Construct(_model);
+            matchPopup.Initialized();
             
             _popupService.AddPopupInList(TypePopup.Setting,settingPopup);
             _popupService.AddPopupInList(TypePopup.LeaderBoard,leaderBoardPopup);

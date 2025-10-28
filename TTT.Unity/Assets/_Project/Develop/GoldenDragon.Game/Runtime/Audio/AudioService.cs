@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -15,17 +16,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         [Header("Audio Source")]
         [SerializeField] private AudioSource _sfxSource;
         [SerializeField] private AudioSource _backgroundSource;
-        
         private float _currentCountSound;
         private float _currentCountMusic;
         private float _dbSound;
         private float _dbMusic;
-        
         private AudioClip _backgroundMeta;
         private AudioClip _buttonClick;
         private AudioClip _sfx2;
         private AssetLoad _assetLoad;
         private ConfigSounds _config;
+        private bool _isMuteSfx;
+        private bool _isMuteMusic;
 
         public ConfigSounds ConfigAudio => _config;
 
@@ -33,97 +34,89 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         {
             DontDestroyOnLoad(this);
         }
-
-        // private void Awake()
-        // {
-        //     DontDestroyOnLoad(this);
-        //     
-        //     if (_mixer.GetFloat(Constant.U.Audio.MusicMixerExposeName, out float valueMusic))
-        //     {
-        //         _musicSlider = Mathf.Pow(10f,valueMusic / 20f);
-        //         _dbMusic = valueMusic;
-        //     }
-        //
-        //     if (_mixer.GetFloat(Constant.U.Audio.SoundMixerExposeName, out float valueSound))
-        //     {
-        //         _sfxSlider = Mathf.Pow(10f,valueSound / 20f);
-        //         _dbSound = valueSound;
-        //     }
-        //
-        //     _currentCountMusic = _musicSlider;
-        //     _currentCountSound = _sfxSlider;
-        // }
-        //
-        //
-        // private void Update()
-        // {
-        //     if (_isPlayBackground)
-        //     {
-        //         _isPlayBackground = false;
-        //         _backgroundSource.clip = _backgroundMeta;
-        //         _backgroundSource.Play();
-        //     }
-        //
-        //     if (_isPlaySfx1)
-        //     {
-        //         _isPlaySfx1 = false;
-        //         _sfxSource.PlayOneShot(_buttonClick);
-        //     }
-        //     
-        //     if (_isPlaySfx2)
-        //     {
-        //         _isPlaySfx2 = false;
-        //         _sfxSource.PlayOneShot(_sfx2);
-        //     }
-        //     
-        //     if (_currentCountSound != _sfxSlider)
-        //     {
-        //         _currentCountSound = _sfxSlider;
-        //         _dbSound = _sfxSlider > 0.0001f ? Mathf.Log10(_sfxSlider) * 20f : -80f;
-        //         _mixer.SetFloat(Constant.U.Audio.SoundMixerExposeName, _dbSound);
-        //     }
-        //     
-        //     if (_currentCountMusic != _musicSlider)
-        //     {
-        //         _currentCountMusic = _musicSlider;
-        //         _dbMusic = _musicSlider > 0.0001f ? Mathf.Log10(_musicSlider) * 20f : -80f;
-        //         _mixer.SetFloat(Constant.U.Audio.MusicMixerExposeName, _dbMusic);
-        //     }
-        //     
-        //     if (_isMuteSfx)
-        //     {
-        //         _mixer.SetFloat(Constant.U.Audio.SoundMixerExposeName, -80f);
-        //     }
-        //     else
-        //     {
-        //         _mixer.SetFloat(Constant.U.Audio.SoundMixerExposeName, _dbSound);
-        //     }
-        //     
-        //     if (_isMuteBacground)
-        //     {
-        //         _mixer.SetFloat(Constant.U.Audio.MusicMixerExposeName, -80f);
-        //     }
-        //     else
-        //     {
-        //         _mixer.SetFloat(Constant.U.Audio.MusicMixerExposeName, _dbMusic);
-        //     }
-        // }
-
+        
         [Inject]
         public void Contructor(AssetLoad assetLoad)
         {
             _assetLoad = assetLoad;
         }
 
+        public void Initialized()
+        {
+            _currentCountSound = GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName);
+            _currentCountMusic = GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName);
+        }
+        
+        public void ChangeValue(float value, TypeValueChange type)
+        {
+            switch (type)
+            {
+                case TypeValueChange.Sound:
+                    if (_currentCountSound != value)
+                    {
+                        _currentCountSound = value;
+                        _dbSound = value > 0.0001f ? Mathf.Log10(value) * 20f : -80f;
+                        _mixer.SetFloat(Constant.U.Audio.SoundMixerExposeName, _dbSound);
+                    }
+                    break;
+                case TypeValueChange.Music:
+                    if (_currentCountMusic != value)
+                    {
+                        _currentCountMusic = value;
+                        _dbMusic = value > 0.0001f ? Mathf.Log10(value) * 20f : -80f;
+                        _mixer.SetFloat(Constant.U.Audio.MusicMixerExposeName, _dbMusic);
+                    }
+                    break;
+            }
+        }
+
+        public void SetMute(TypeValueChange type)
+        {
+            switch (type)
+            {
+                case TypeValueChange.Sound:
+                    ChangeMute(Constant.U.Audio.SoundMixerExposeName,ref _dbSound, ref _isMuteSfx);
+                    break;
+                
+                case TypeValueChange.Music:
+                    ChangeMute(Constant.U.Audio.MusicMixerExposeName, ref _dbMusic, ref _isMuteMusic);
+                    break;
+            }
+        }
+
         public UniTask Load()
         {
             _config = _assetLoad.GetAsset<ConfigSounds>(TypeAsset.Audio,Constant.B.Audio.AudioConfig);
-
+            
             if (_config == null) Log.Default.W($"Not Load config:{Constant.B.Audio.AudioConfig}");
 
             return UniTask.CompletedTask;
         }
-        
+
+        private float GetValueMixerAudio(string musicMixerExposeName)
+        {
+            if (_mixer.GetFloat(musicMixerExposeName, out float valueMusic))
+            {
+                return valueMusic;
+            }
+
+            return 0;
+        }
+
+        public float GetSliderValue(TypeValueChange type)
+        {
+            switch (type)
+            {
+                case TypeValueChange.Sound:
+                    return Mathf.Pow(10f, GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName) / 20f);
+
+                case TypeValueChange.Music:
+                    return Mathf.Pow(10f, GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName) / 20f);
+            }
+
+            return 0;
+        }
+
         public void PlaySFX(AudioClip clip)
         {
             if (clip != null)
@@ -142,6 +135,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             else
             {
                 Log.Default.W($"Not yet bacground:{clip}");
+            }
+        }
+
+        private void ChangeMute(string soundMixerExposeName, ref float db, ref bool isMute)
+        {
+            if (isMute == false)
+            {
+                isMute = true;
+                db = GetValueMixerAudio(soundMixerExposeName);
+                _mixer.SetFloat(soundMixerExposeName, -80f);
+            }
+            else
+            {
+                isMute = false;
+                _mixer.SetFloat(soundMixerExposeName, db);
             }
         }
     }

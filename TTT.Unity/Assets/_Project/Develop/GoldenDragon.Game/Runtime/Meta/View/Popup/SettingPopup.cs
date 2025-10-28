@@ -1,8 +1,11 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
@@ -12,8 +15,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private TextMeshProUGUI _soundText;
         [SerializeField] private TextMeshProUGUI _musicText;
+
+        [Header("Setting Audio")] 
+        [SerializeField]private Button _soundMute;
+        [SerializeField]private Button _musicMute;
+        [SerializeField]private Slider _musicSlider;
+        [SerializeField]private Slider _soundSlider;
         
         private Model _model;
+        
+        public Button SoundMute => _soundMute;
+        public Button MusicMute => _musicMute;
+        public Slider MusicSlider => _musicSlider;
+        public Slider SoundSlider => _soundSlider;
 
         public void Construct(Model model)
         {

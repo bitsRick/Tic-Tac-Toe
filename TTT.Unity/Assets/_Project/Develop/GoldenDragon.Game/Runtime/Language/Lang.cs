@@ -36,8 +36,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
                 public class Setting
                 {
                     public string Name = "Настройки";
-                    public string Sound = "Музыка";
-                    public string Music = "Звуки";
+                    public string Sound = "Звуки";
+                    public string Music = "Музыка";
                 }
 
                 [Serializable]

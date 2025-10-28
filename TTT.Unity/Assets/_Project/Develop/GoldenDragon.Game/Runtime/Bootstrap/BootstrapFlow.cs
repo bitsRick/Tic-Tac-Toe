@@ -36,6 +36,8 @@ namespace GoldenDragon
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
             
+            _audioService.Initialized();
+            
             await _loadingView.Initialized();
 
             // if (_saveLoadService.Data == null)

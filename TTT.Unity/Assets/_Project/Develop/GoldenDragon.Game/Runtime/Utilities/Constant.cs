@@ -73,6 +73,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             }
         }
     }
+
+    public enum TypeValueChange
+    {
+        Sound,
+        Music
+    }
     
     public enum TypePopup
     {

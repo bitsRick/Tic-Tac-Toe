@@ -29,7 +29,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private PopupService _popupService;
         private BackPopupBackground _popupBackground;
         private PopupBase _activePopup;
-        private Lang _language;
         private AudioPlayer _audioPlayer;
         private MetaRoot _metaRoot;
         private Style.StyleData[] _styleData;
@@ -41,13 +40,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private MetaProviderFacadeFactory _factory;
 
         [Inject]
-        public void Construct(PopupService popupService, Lang language, AudioPlayer audioPlayer,
+        public void Construct(PopupService popupService, AudioPlayer audioPlayer,
             IPlayerProgress playerData, MetaProviderFacadeFactory metaProviderFacadeFactory)
         {
             _factory = metaProviderFacadeFactory;
             _playerData = playerData;
             _audioPlayer = audioPlayer;
-            _language = language;
             _popupService = popupService;
         }
 

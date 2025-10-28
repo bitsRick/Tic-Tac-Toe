@@ -3,26 +3,21 @@
     //CRTP
     public abstract class Singleton<T>  where T : Singleton<T> ,new()
     {
-        private static readonly object _lock = new object();
-        
-        private static T _instance;
+        private static readonly object _lock = new();
+        private static T _i;
+
         public static T S
         {
             get
             {
-                if (S == null)
+                if (_i == null)
                 {
                     //блокировка от других потоков
-                    lock (_lock)
-                    {
-                        if (S == null)
-                        {
-                            _instance = new T();
-                        }
-                    }
+                    lock (_lock) 
+                        _i = _i ?? new T();
                 }
 
-                return _instance;
+                return _i;
             }
         }
     }

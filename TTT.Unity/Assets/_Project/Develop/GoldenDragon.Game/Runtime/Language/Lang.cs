@@ -6,6 +6,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
     [Serializable]
     public class Lang:Singleton<Lang>
     {
+        public Lang() {}
+        public Ui UI = new Ui();
+
         [Serializable]
         public class Ui
         {
@@ -78,7 +81,5 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
             public LoadingScreen LOADING_SCREEN = new LoadingScreen();
             public Popup POPUP = new ();
         }
-
-        public Ui UI = new Ui();
     }
 }

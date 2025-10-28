@@ -19,7 +19,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Container Item")]
         [SerializeField] private GameObject _root;
         private string _styleEnter;
-        private Lang _language;
 
         public GameObject  Root
         {
@@ -31,10 +30,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         public Button BtnX => _btnX;
         public Button BtnO => _btnO;
         
-        public void Construct(Lang l)
-        {
-            _language = l;
-        }
 
         public override void Dispose()
         {
@@ -43,9 +38,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public void Initialized()
         {
-            _nameHeaderForm.text = _language.UI.POPUP.INVENTORY.Header;
-            _nameButtonBoard.text = _language.UI.POPUP.INVENTORY.BoardButton;
-            _styleEnter = _language.UI.POPUP.INVENTORY.StyleEnter;
+            _nameHeaderForm.text = Lang.S.UI.POPUP.INVENTORY.Header;
+            _nameButtonBoard.text = Lang.S.UI.POPUP.INVENTORY.BoardButton;
+            _styleEnter = Lang.S.UI.POPUP.INVENTORY.StyleEnter;
         }
     }
 }

@@ -24,10 +24,10 @@ namespace GoldenDragon
             DontDestroyOnLoad(this);
         }
 
-        public async UniTask Initialized(Lang language)
+        public async UniTask Initialized()
         {
-            _loading.text = language.UI.LOADING_SCREEN.Loading;
-            _nameGame.text = language.UI.LOADING_SCREEN.Name;
+            _loading.text = Lang.S.UI.LOADING_SCREEN.Loading;
+            _nameGame.text = Lang.S.UI.LOADING_SCREEN.Name;
         }
 
         private void OnDestroy()

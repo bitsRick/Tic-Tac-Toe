@@ -28,7 +28,6 @@ namespace GoldenDragon
         [SerializeField] private Button _btn;
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
-        private Lang _language;
         private AudioService _audioService;
         private AudioPlayer _player;
 
@@ -46,10 +45,9 @@ namespace GoldenDragon
             _switchLanguage.value = 0;
         }
 
-        public void Construct(Lang lang,AudioPlayer player)
+        public void Construct(AudioPlayer player)
         {
             _player = player;
-            _language = lang;
         }
 
         public UniTask Initialized(BootstrapFlow bootstrapFlow)
@@ -65,11 +63,11 @@ namespace GoldenDragon
                 bootstrapFlow.SetRegistration(_inputField.text);
             }).AddTo(this);
             
-            _registration.text = _language.UI.REGISTRATION_SCREEN.Registration;
-            _nick.text = _language.UI.REGISTRATION_SCREEN.Nick;
-            _nickWrite.text = _language.UI.REGISTRATION_SCREEN.NickWrite;
-            _enter.text = _language.UI.REGISTRATION_SCREEN.Enter;
-            _lang.text = _language.UI.REGISTRATION_SCREEN.Language;
+            _registration.text = Lang.S.UI.REGISTRATION_SCREEN.Registration;
+            _nick.text = Lang.S.UI.REGISTRATION_SCREEN.Nick;
+            _nickWrite.text = Lang.S.UI.REGISTRATION_SCREEN.NickWrite;
+            _enter.text = Lang.S.UI.REGISTRATION_SCREEN.Enter;
+            _lang.text = Lang.S.UI.REGISTRATION_SCREEN.Language;
             
             return UniTask.CompletedTask;
         }

@@ -28,7 +28,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField]private TextMeshProUGUI _valueO;
         
         private Model _model;
-        private Lang _language;
         private string _sellStyle;
         private string _buyButton;
 
@@ -48,18 +47,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public TextMeshProUGUI SoftValueO => _valueO;
 
-        public void Construct(Model model,Lang language)
+        public void Construct(Model model)
         {
-            _language = language;
             _model = model;
         }
 
         public void Initialized()
         {
-            _nameHeader.text = _language.UI.POPUP.SHOP.Header;
-            _buttonBorder.text = _language.UI.POPUP.SHOP.BoardButton;
-            _buyButton = _language.UI.POPUP.SHOP.Buy;
-            _sellStyle = _language.UI.POPUP.SHOP.Sell;
+            _nameHeader.text = Lang.S.UI.POPUP.SHOP.Header;
+            _buttonBorder.text = Lang.S.UI.POPUP.SHOP.BoardButton;
+            _buyButton = Lang.S.UI.POPUP.SHOP.Buy;
+            _sellStyle = Lang.S.UI.POPUP.SHOP.Sell;
             
         }
 

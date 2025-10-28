@@ -1,9 +1,10 @@
 ﻿using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
 {
     [Serializable]
-    public class Lang
+    public class Lang:Singleton<Lang>
     {
         [Serializable]
         public class Ui

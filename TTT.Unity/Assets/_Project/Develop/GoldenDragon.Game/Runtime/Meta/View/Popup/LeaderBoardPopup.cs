@@ -14,17 +14,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Массив мест лидеров")]
         [SerializeField] private ItemLeaderBoards[] _leaders;
         
-        private Lang _language;
         public ItemLeaderBoards[] Leaders => _leaders;
-
-        public void Construct(Lang language)
-        {
-            _language = language;
-        }
-
+        
         public void Initialized()
         {
-            _namePopupText.text = _language.UI.POPUP.LEADER_BOARD.NameForm;
+            _namePopupText.text = Lang.S.UI.POPUP.LEADER_BOARD.NameForm;
         }
 
         public override void Dispose()

@@ -78,7 +78,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is SettingPopup popup)
                 {
-                    popup.Construct(this, _language);
+                    popup.Construct(this);
                     popup.Initialized();
 
                     _popupBackground.Show();
@@ -96,8 +96,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 popup = leaderBoardPopup;
             else
                 return;
-
-            popup.Construct(_language);
+            
             popup.Initialized();
 
             PlayerData playerData = _playerData.PlayerData;
@@ -138,7 +137,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             {
                 if (_activePopup is MatchPopup popup)
                 {
-                    popup.Construct(this, _language);
+                    popup.Construct(this);
                     popup.Initialized();
 
                     _popupBackground.Show();
@@ -156,8 +155,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 popup = inventoryPopup;
             else
                 return;
-
-            popup.Construct(_language);
+            
             popup.Initialized();
 
             ShowItemInventor(TypeShowItemStyle.Board);
@@ -176,7 +174,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
 
-            popup.Construct(this, _language);
+            popup.Construct(this);
             popup.Initialized();
             ShowItemShop(TypeShowItemStyle.Board);
 

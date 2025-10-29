@@ -1,7 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using System.Text;
+using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using Newtonsoft.Json;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
@@ -9,9 +12,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     {
         private IPlayerProgress _playerProgress;
         private PlayerData _playerData;
-
-        public PlayerData Data => _playerProgress.PlayerData;
-
+        private string _key = "1024";
+        
         public SaveLoadService(IPlayerProgress playerProgress)
         {
             _playerProgress = playerProgress;
@@ -32,6 +34,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         public UniTask SaveProgress()
         {
             Log.Loading.D($"{nameof(SaveLoadService)} is save progress");
+
+            var playerDataJson = JsonConvert.SerializeObject(_playerData);
+            
+            byte[] bytes = Encoding.UTF8.GetBytes(playerDataJson);
+            var convert = Convert.ToBase64String(bytes);
+            
+            
             return UniTask.CompletedTask;
         }
 

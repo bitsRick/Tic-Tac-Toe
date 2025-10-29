@@ -12,5 +12,12 @@ namespace _Project.Develop.GoldenDragon.Game.Editor.Utility
             Lang lang = new Lang();
             Debug.Log(JsonUtility.ToJson(lang));
         }
+        
+        [MenuItem("Tools/Save/ClearPrefs")]
+        public static void ClearPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+        }
     }
 }

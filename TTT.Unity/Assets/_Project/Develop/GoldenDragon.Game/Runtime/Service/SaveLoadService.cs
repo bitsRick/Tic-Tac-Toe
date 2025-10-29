@@ -1,19 +1,18 @@
-﻿using System;
-using System.Text;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
     public class SaveLoadService:ILoadUnit
     {
-        private IPlayerProgress _playerProgress;
-        private PlayerData _playerData;
-        private string _key = "1024";
+        private const string Key = "1024";
         
+        private IPlayerProgress _playerProgress;
+
         public SaveLoadService(IPlayerProgress playerProgress)
         {
             _playerProgress = playerProgress;
@@ -23,9 +22,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         {
             Log.Loading.D($"{nameof(SaveLoadService)} is loading ...");
 
-            if (_playerProgress.PlayerData == null)
+            var playerDataCode64 = PlayerPrefs.GetString(Key);
+            var encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
+            var convertPlayerData = JsonConvert.DeserializeObject<PlayerData>(encodePlayerData);
+
+            if (convertPlayerData == null)
             {
                 Log.Loading.D("[Player Data]:Empty");
+            }
+            else
+            {
+                Log.Loading.D("[Player Data]:Load");
+                _playerProgress.PlayerData = convertPlayerData;
             }
             
             return UniTask.CompletedTask;
@@ -35,11 +43,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         {
             Log.Loading.D($"{nameof(SaveLoadService)} is save progress");
 
-            var playerDataJson = JsonConvert.SerializeObject(_playerData);
+            var playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
+            var code64PlayerData = Coding.GetCodingBase64(playerDataJson);
             
-            byte[] bytes = Encoding.UTF8.GetBytes(playerDataJson);
-            var convert = Convert.ToBase64String(bytes);
-            
+            PlayerPrefs.SetString(Key,code64PlayerData);
             
             return UniTask.CompletedTask;
         }

@@ -28,8 +28,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             PlayerData playerDataSave = new PlayerData(nick);
             var playerDataJson = JsonConvert.SerializeObject(playerDataSave);
             PlayerPrefs.SetString(key,playerDataJson);
-            
             var load = PlayerPrefs.GetString(key);
+            
             var playerDataLoad = JsonConvert.DeserializeObject<PlayerData>(load);
             
             Assert.True(playerDataLoad.Nick == nick);
@@ -42,14 +42,10 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             string nick = "Dummy";
             PlayerData playerDataSave = new PlayerData(nick);
             var playerDataJson = JsonConvert.SerializeObject(playerDataSave);
-            
             byte[] bytes = Encoding.UTF8.GetBytes(playerDataJson);
             var base64String = Convert.ToBase64String(bytes);
-            
             PlayerPrefs.SetString(key,base64String);
-            
             var load = PlayerPrefs.GetString(key);
-            
             byte[] decodedBytes = Convert.FromBase64String(load);
             string decodedText = Encoding.UTF8.GetString(decodedBytes);
             

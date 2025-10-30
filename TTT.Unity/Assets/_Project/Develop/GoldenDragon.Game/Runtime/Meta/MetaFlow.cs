@@ -18,7 +18,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly LoadingView _loadingView;
         private AssetService _assetService;
         private AudioService _audioService;
-        private AudioPlayer _audioPlayer;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
         private PoolUiItem<ItemShop> _itemShopPool;
@@ -26,13 +25,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private MetaProviderFacadeFactory _metaProviderFacadeFactory;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
-            AssetService assetService,AudioPlayer audioPlayer,
+            AssetService assetService,
             StyleDataLoad styleDataLoad,Model modelMetaRoot,MetaProviderFacadeFactory metaProviderFacadeFactory)
         {
             _metaProviderFacadeFactory = metaProviderFacadeFactory;
             _modelMetaRoot = modelMetaRoot;
             _styleDataLoad = styleDataLoad;
-            _audioPlayer = audioPlayer;
             _assetService = assetService;
             _loadingView = loadingView;
             _sceneManager = sceneManager;
@@ -65,7 +63,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_itemShopPool,_itemInventoryStyle);
             
             await _loadingView.Hide();
-            _audioPlayer.MetaBackground();
+            AudioPlayer.MetaBackground();
         }
 
         public async void StartMatch()

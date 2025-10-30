@@ -26,26 +26,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
     public class Model
     {
+        private Style.StyleData[] _styleData;
         private PopupService _popupService;
         private BackPopupBackground _popupBackground;
-        private AudioPlayer _audioPlayer;
         private MetaRoot _metaRoot;
-        private Style.StyleData[] _styleData;
         private PoolUiItem<ItemShop> _poolItemSellUi;
         private PoolUiItem<ItemInventoryStyle> _poolItemInventoryStyle;
         private MetaProviderFacadeFactory _factory;
-        private AudioService _audioService;
-        private IPlayerProgress _playerData;
+        private SaveLoadService _saveLoadService;
         private bool _isShopLoadData;
+        private IPlayerProgress _playerData;
 
         [Inject]
-        public void Construct(PopupService popupService, AudioPlayer audioPlayer,
-            IPlayerProgress playerData, MetaProviderFacadeFactory metaProviderFacadeFactory, AudioService audioService)
+        public void Construct(
+            PopupService popupService,
+            IPlayerProgress playerData, 
+            MetaProviderFacadeFactory metaProviderFacadeFactory,
+            SaveLoadService saveLoadService)
         {
-            _audioService = audioService;
+            _saveLoadService = saveLoadService;
             _factory = metaProviderFacadeFactory;
             _playerData = playerData;
-            _audioPlayer = audioPlayer;
             _popupService = popupService;
         }
 
@@ -70,7 +71,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupSetting()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             SettingPopup popup;
 
             if (_popupService.TryGetPopup(TypePopup.Setting, out SettingPopup settingPopup))
@@ -78,8 +79,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
-            popup.MusicSlider.value = _audioService.GetSliderValue(TypeValueChange.Music);
-            popup.SoundSlider.value = _audioService.GetSliderValue(TypeValueChange.Sound);
+            popup.MusicSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Music);
+            popup.SoundSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Sound);
             
             _popupBackground.Show();
             popup.Show();
@@ -87,7 +88,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupLeaderBoard()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             LeaderBoardPopup popup;
 
             if (_popupService.TryGetPopup(TypePopup.LeaderBoard, out LeaderBoardPopup leaderBoardPopup))
@@ -129,7 +130,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupMatch()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             MatchPopup popup;
 
             if (_popupService.TryGetPopup(TypePopup.Match, out MatchPopup matchPopup))
@@ -143,7 +144,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupInventory()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             InventoryPopup popup;
 
             if (_popupService.TryGetPopup(TypePopup.Inventory, out InventoryPopup inventoryPopup))
@@ -159,7 +160,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupShop()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             ShopPopup popup;
 
             if (_popupService.TryGetPopup(TypePopup.Shop, out ShopPopup shopPopup))
@@ -178,9 +179,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void ClosePopup()
         {
-            _audioPlayer.Click();
+            AudioPlayer.Click();
             _popupService.Rest();
             _popupBackground.Hide();
+            _saveLoadService.SaveProgress();
         }
 
         private void ShowItemShop(TypeShowItemStyle type)
@@ -250,6 +252,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             currentStylePlayer.Id = item.Id;
 
             item.ActiveGameObject.SetActive(true);
+            
+            _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
         }
 
         private StyleData GetStyleCurrentPlayer(TypeShowItemStyle type)
@@ -311,12 +315,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         private void SetMuteAudio(TypeValueChange type, Button btn)
         {
-            _audioService.SetMute(type);
+            AudioPlayer.Mute(type);
+            _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
         }
 
         private void SetValueChange(float value, TypeValueChange type)
         {
-            _audioService.ChangeValue(value, type);
+            AudioPlayer.ChangeValue(value, type);
+            _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
         }
 
         private void BuyStyle(string id, GameObject gameObject, TypeShowItemStyle typeStyle)
@@ -336,6 +342,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
             _playerData.PlayerData.ShopPlayerData.Add(new StyleData() { Id = id, Type = typeStyle });
             gameObject.SetActive(true);
+            
+            _saveLoadService.SaveProgress(true);
         }
 
         private void InitializedInventoryItem()

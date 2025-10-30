@@ -28,8 +28,6 @@ namespace GoldenDragon
         [SerializeField] private Button _btn;
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
-        private AudioService _audioService;
-        private AudioPlayer _player;
 
         private void Awake()
         {
@@ -44,17 +42,12 @@ namespace GoldenDragon
             
             _switchLanguage.value = 0;
         }
-
-        public void Construct(AudioPlayer player)
-        {
-            _player = player;
-        }
-
+        
         public UniTask Initialized(BootstrapFlow bootstrapFlow)
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
-                _player.Click();
+                AudioPlayer.Click();
                 
                 if (_isActive)
                     return;

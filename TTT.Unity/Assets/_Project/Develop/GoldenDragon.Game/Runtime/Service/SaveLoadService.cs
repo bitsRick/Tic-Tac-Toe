@@ -3,6 +3,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using Newtonsoft.Json;
+using UniRx;
 using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
@@ -10,8 +11,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     public class SaveLoadService:ILoadUnit
     {
         private const string Key = "1024";
-        
         private IPlayerProgress _playerProgress;
+        private bool _isSaveData = false;
+        public PlayerData PlayerData => _playerProgress.PlayerData;
+        public Subject<Unit> OnPlayerDataChanged = new Subject<Unit>();
 
         public SaveLoadService(IPlayerProgress playerProgress)
         {
@@ -35,26 +38,41 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
                 Log.Loading.D("[Player Data]:Load");
                 _playerProgress.PlayerData = convertPlayerData;
             }
+
+            OnPlayerDataChanged.Subscribe((_) =>
+            {
+                SetData();
+            });
             
             return UniTask.CompletedTask;
         }
 
-        public UniTask SaveProgress()
+        public UniTask SaveProgress(bool isFastSave = false)
         {
+            if (isFastSave == false)
+                if (_isSaveData == false)
+                {
+                    Log.Loading.D($"{nameof(SaveLoadService)} is not write data");
+                    return UniTask.CompletedTask;
+                }
+
             Log.Loading.D($"{nameof(SaveLoadService)} is save progress");
 
             var playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
             var code64PlayerData = Coding.GetCodingBase64(playerDataJson);
             
             PlayerPrefs.SetString(Key,code64PlayerData);
-            
+            _isSaveData = false;
             return UniTask.CompletedTask;
         }
 
         public async UniTask CreateNewData(string name)
         {
             _playerProgress.PlayerData = new PlayerData(name);
+            SetData();
             await SaveProgress();
         }
+
+        private void SetData() => _isSaveData = true;
     }
 }

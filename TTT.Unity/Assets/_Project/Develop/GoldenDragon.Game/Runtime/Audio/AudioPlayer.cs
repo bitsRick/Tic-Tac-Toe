@@ -1,22 +1,85 @@
-﻿namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
-{
-    public class AudioPlayer
-    {
-        private readonly AudioService _audioService;
+﻿using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
-        public AudioPlayer(AudioService audioService)
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
+{
+    public static class AudioPlayer
+    {
+        private static AudioService _audioService;
+        private static IPlayerProgress _playerProgress;
+
+        public static void Construct(AudioService audioService, IPlayerProgress playerProgress)
         {
+            _playerProgress = playerProgress;
             _audioService = audioService;
         }
 
-        public void Click()
+        public static void Initialized()
+        {
+            PlayerData data = _playerProgress.PlayerData;
+            
+            if (data == null)
+            {
+                _audioService.InitializedDefault();
+                return;
+            }
+
+            AudioSetting setting = data.AudioSetting;
+            
+            _audioService.ChangeValue(setting.VolumeMusic,TypeValueChange.Music);
+            _audioService.ChangeValue(setting.VolumeSound,TypeValueChange.Sound);
+
+            if (setting.IsMusicMute) _audioService.SetMute(TypeValueChange.Music);
+            if (setting.IsSounfMute) _audioService.SetMute(TypeValueChange.Sound);
+        }
+
+        public static void Click()
         {
             _audioService.PlaySFX(_audioService.ConfigAudio.Click);
         }
 
-        public void MetaBackground()
+        public static void MetaBackground()
         {
             _audioService.PlayBackground(_audioService.ConfigAudio.MetaBackground);
+        }
+
+        public static void Mute(TypeValueChange type)
+        {
+            _audioService.SetMute(type);
+            
+            switch (type)
+            {
+                case TypeValueChange.Sound:
+                    _playerProgress.PlayerData.AudioSetting.IsSounfMute = _audioService.IsMuteSound;
+                    break;
+                
+                case TypeValueChange.Music:
+                    _playerProgress.PlayerData.AudioSetting.IsMusicMute = _audioService.IsMuteMusic;
+                    break;
+            }
+        }
+
+        public static void ChangeValue(float value, TypeValueChange type)
+        {
+            _audioService.ChangeValue(value, type);
+
+            switch (type)
+            {
+                case TypeValueChange.Sound:
+                    _playerProgress.PlayerData.AudioSetting.VolumeSound = value;
+                    break;
+                
+                case TypeValueChange.Music:
+                    _playerProgress.PlayerData.AudioSetting.VolumeMusic = value;
+                    break;
+            }
+        }
+
+        public static float GetSliderValue(TypeValueChange music)
+        {
+            return _audioService.GetSliderValue(music);
         }
     }
 }

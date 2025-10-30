@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using VContainer.Unity;
@@ -16,13 +15,13 @@ namespace GoldenDragon
         private SaveLoadService _saveLoadService;
         private LoadingView _loadingView;
         private AudioService _audioService;
-        private AudioPlayer _audioPlayer;
+        private IPlayerProgress _progress;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,AudioService audioService,AudioPlayer audioPlayer)
+            LoadingView loadingView,AudioService audioService,IPlayerProgress progress)
         {
-            _audioPlayer = audioPlayer;
+            _progress = progress;
             _audioService = audioService;
             _loadingView = loadingView;
             _saveLoadService = saveLoadService;
@@ -33,27 +32,24 @@ namespace GoldenDragon
 
         public async void Start()
         {
+            
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
             
-            _audioService.Initialized();
+            AudioPlayer.Construct(_audioService,_progress);
+            AudioPlayer.Initialized();
             
             await _loadingView.Initialized();
 
-            // if (_saveLoadService.Data == null)
-            // {
-            //     _registrationScreen.Construct(_lang,_audioPlayer);
-            //     await _registrationScreen.Initialized(this);
-            //     await _registrationScreen.Show();
-            // }
-            // else
-            // {
-            //     _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
-            // }
-            
-            await _saveLoadService.CreateNewData("Dodo");
-            
-            _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
+            if (_saveLoadService.PlayerData == null)
+            {
+                await _registrationScreen.Initialized(this);
+                await _registrationScreen.Show();
+            }
+            else
+            {
+                _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
+            }
         }
 
         public async void SetRegistration(string inputFieldText)

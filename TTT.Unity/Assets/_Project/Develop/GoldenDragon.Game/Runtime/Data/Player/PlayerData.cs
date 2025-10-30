@@ -10,6 +10,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         public StyleData Board;
         public StyleData X;
         public StyleData O;
+        public AudioSetting AudioSetting;
         public bool IsRegistred;
         public int Score;
         public int SoftValueX;
@@ -53,6 +54,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
         }
         
         public List<StyleData> ShopPlayerData;
+    }
+
+    [Serializable]
+    public class AudioSetting
+    {
+        public bool IsMusicMute;
+        public bool IsSounfMute;
+        public float VolumeMusic;
+        public float VolumeSound;
     }
 
     [Serializable]

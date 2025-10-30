@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
@@ -13,8 +14,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
     {
         [Header("Mixer")]
         [SerializeField] private AudioMixer _mixer;
+
         [Header("Audio Source")]
         [SerializeField] private AudioSource _sfxSource;
+
         [SerializeField] private AudioSource _backgroundSource;
         private float _currentCountSound;
         private float _currentCountMusic;
@@ -30,6 +33,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public ConfigSounds ConfigAudio => _config;
 
+        public bool IsMuteSound => _isMuteSfx;
+        public bool IsMuteMusic => _isMuteMusic;
+        public float CurrentVolumeSound => _currentCountSound;
+        public float CurrentVolumeMusic => _currentCountMusic;
+
         private void Awake()
         {
             DontDestroyOnLoad(this);
@@ -41,7 +49,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             _assetLoad = assetLoad;
         }
 
-        public void Initialized()
+        public void InitializedDefault()
         {
             _currentCountSound = GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName);
             _currentCountMusic = GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName);

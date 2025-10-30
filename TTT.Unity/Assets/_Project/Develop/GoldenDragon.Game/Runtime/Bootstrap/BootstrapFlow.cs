@@ -32,7 +32,6 @@ namespace GoldenDragon
 
         public async void Start()
         {
-            
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
             

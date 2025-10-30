@@ -35,8 +35,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public bool IsMuteSound => _isMuteSfx;
         public bool IsMuteMusic => _isMuteMusic;
-        public float CurrentVolumeSound => _currentCountSound;
-        public float CurrentVolumeMusic => _currentCountMusic;
 
         private void Awake()
         {

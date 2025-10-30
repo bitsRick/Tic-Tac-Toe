@@ -51,6 +51,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
                 Id = Constant.StyleData.DefaultO,
                 Type = TypeShowItemStyle.O
             };
+
+            AudioSetting = new AudioSetting(false,false,1f,1f);
         }
         
         public List<StyleData> ShopPlayerData;
@@ -60,9 +62,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     public class AudioSetting
     {
         public bool IsMusicMute;
-        public bool IsSounfMute;
+        public bool IsSoundMute;
         public float VolumeMusic;
         public float VolumeSound;
+
+        public AudioSetting(bool isMusicMute, bool isSoundMute, float volumeMusic, float volumeSound)
+        {
+            IsMusicMute = isMusicMute;
+            IsSoundMute = isSoundMute;
+            VolumeMusic = volumeMusic;
+            VolumeSound = volumeSound;
+        }
     }
 
     [Serializable]

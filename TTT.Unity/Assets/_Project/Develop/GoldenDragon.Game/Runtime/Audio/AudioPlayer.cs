@@ -1,5 +1,4 @@
-﻿using System;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
@@ -12,8 +11,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public static void Construct(AudioService audioService, IPlayerProgress playerProgress)
         {
-            _playerProgress = playerProgress;
             _audioService = audioService;
+            _playerProgress = playerProgress;
         }
 
         public static void Initialized()
@@ -26,13 +25,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
                 return;
             }
 
-            AudioSetting setting = data.AudioSetting;
-            
+            AudioSetting setting = data.AudioSetting ?? new AudioSetting(false, false, 1f, 1f);
+
             _audioService.ChangeValue(setting.VolumeMusic,TypeValueChange.Music);
             _audioService.ChangeValue(setting.VolumeSound,TypeValueChange.Sound);
 
             if (setting.IsMusicMute) _audioService.SetMute(TypeValueChange.Music);
-            if (setting.IsSounfMute) _audioService.SetMute(TypeValueChange.Sound);
+            if (setting.IsSoundMute) _audioService.SetMute(TypeValueChange.Sound);
         }
 
         public static void Click()
@@ -52,7 +51,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             switch (type)
             {
                 case TypeValueChange.Sound:
-                    _playerProgress.PlayerData.AudioSetting.IsSounfMute = _audioService.IsMuteSound;
+                    _playerProgress.PlayerData.AudioSetting.IsSoundMute = _audioService.IsMuteSound;
                     break;
                 
                 case TypeValueChange.Music:

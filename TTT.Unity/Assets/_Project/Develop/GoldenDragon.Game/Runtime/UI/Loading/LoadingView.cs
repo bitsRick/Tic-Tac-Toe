@@ -37,6 +37,7 @@ namespace GoldenDragon
 
         public override UniTask Show()
         {
+            _canvasGroup.alpha = 1f;
             gameObject.SetActive(true);
             return UniTask.CompletedTask;
         }

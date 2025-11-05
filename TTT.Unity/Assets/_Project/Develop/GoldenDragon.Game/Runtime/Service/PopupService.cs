@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -9,10 +8,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     public class PopupService
     {
         private Dictionary<TypePopup, PopupData> _popupLists = new();
-        private bool _isActivePopup;
         private PopupBase _activePopup;
-        
-        
+        private bool _isActivePopup;
+
         public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase => 
             _popupLists.Add(typePopup,new PopupData(popup));
 
@@ -26,12 +24,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             await UniTask.CompletedTask;
         }
 
-        public PopupBase GetPopup(TypePopup typePopup)
+        public bool TryGetPopup<T>(TypePopup typePopup, out T popup) where T : class
         {
-            return _popupLists.TryGetValue(typePopup,out PopupData popup) ? popup.GetPopup() : null;
+            popup = default;
+    
+            if (_popupLists.TryGetValue(typePopup, out PopupData popupData))
+            {
+                popup = popupData.GetPopup() as T;
+                return true;
+            }
+    
+            return false;
         }
-        
-        public bool TryGetPopup<TP>(TypePopup typePopup, out TP popupOut)
+
+        public bool TryOpenPopup<TP>(TypePopup typePopup, out TP popupOut)
             where TP : class
         {
             if (IsNotOpenPopup(typePopup))
@@ -64,6 +70,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             }
 
             return false;
+        }
+
+        private PopupBase GetPopup(TypePopup typePopup)
+        {
+            return _popupLists.TryGetValue(typePopup,out PopupData popup) ? popup.GetPopup() : null;
         }
     }
 }

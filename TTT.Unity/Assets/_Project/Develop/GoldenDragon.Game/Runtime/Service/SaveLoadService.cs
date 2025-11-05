@@ -13,6 +13,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         private const string Key = "1024";
         private IPlayerProgress _playerProgress;
         private bool _isSaveData = false;
+        
         public PlayerData PlayerData => _playerProgress.PlayerData;
         public Subject<Unit> OnPlayerDataChanged = new Subject<Unit>();
 

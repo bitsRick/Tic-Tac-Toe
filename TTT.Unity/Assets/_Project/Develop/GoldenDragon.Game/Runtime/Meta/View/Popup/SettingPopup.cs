@@ -22,18 +22,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField]private Slider _musicSlider;
         [SerializeField]private Slider _soundSlider;
         
-        private Model _model;
-        
         public Button SoundMute => _soundMute;
         public Button MusicMute => _musicMute;
         public Slider MusicSlider => _musicSlider;
         public Slider SoundSlider => _soundSlider;
-
-        public void Construct(Model model)
-        {
-            _model = model;
-        }
-
+        
         public void Initialized()
         {
             _headerText.text = Lang.S.UI.POPUP.SETTING.Name;

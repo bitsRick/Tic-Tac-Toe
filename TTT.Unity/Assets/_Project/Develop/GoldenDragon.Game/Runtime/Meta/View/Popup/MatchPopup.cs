@@ -2,6 +2,7 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
@@ -10,13 +11,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _playerVsBot;
         [SerializeField] private TextMeshProUGUI _playerVsPlayer;
-        private Model _model;
 
-        public void Construct(Model model)
-        {
-            _model = model;
-        }
+        [Header("Single player")]
+        [SerializeField] private Button _x; 
+        [SerializeField] private Button _o;
+        [Header("Coop")] 
+        [SerializeField] private Button _coop;
 
+        public Button X => _x;
+        public Button O => _o;
+        public Button Coop => _coop;
+            
         public void Initialized()
         {
             _playerVsBot.text = Lang.S.UI.POPUP.MATCH_POPUP.VsBot;

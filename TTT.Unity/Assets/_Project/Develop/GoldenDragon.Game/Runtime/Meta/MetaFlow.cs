@@ -6,6 +6,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
 using VContainer.Unity;
 
@@ -23,11 +24,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private PoolUiItem<ItemShop> _itemShopPool;
         private PoolUiItem<ItemInventoryStyle> _itemInventoryStyle;
         private MetaProviderFacadeFactory _metaProviderFacadeFactory;
+        private SessionDataMatch _sessionDataMatch;
 
-        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,LoadingView loadingView,
-            AssetService assetService,
-            StyleDataLoad styleDataLoad,Model modelMetaRoot,MetaProviderFacadeFactory metaProviderFacadeFactory)
+        public MetaFlow(SceneManager sceneManager, LoadingService loadingService,
+            LoadingView loadingView,AssetService assetService,
+            StyleDataLoad styleDataLoad,Model modelMetaRoot,
+            MetaProviderFacadeFactory metaProviderFacadeFactory,SessionDataMatch sessionDataMatch)
         {
+            _sessionDataMatch = sessionDataMatch;
             _metaProviderFacadeFactory = metaProviderFacadeFactory;
             _modelMetaRoot = modelMetaRoot;
             _styleDataLoad = styleDataLoad;
@@ -43,7 +47,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             _itemInventoryStyle = new PoolUiItem<ItemInventoryStyle>(_assetService);
             
             await _loadingService.BeginLoading(_styleDataLoad);
-            
+            await _loadingService.BeginLoading(_sessionDataMatch);
             await _loadingService.BeginLoading(_itemShopPool, 
                 new DataPullUiItem(
                     Constant.M.Asset.Popup.ShopElementBuyPrefab,
@@ -60,7 +64,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             await metaRoot.Initialized();
             await metaRoot.Show();
             
-            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_itemShopPool,_itemInventoryStyle);
+            await _modelMetaRoot.Initialized(metaRoot,_styleDataLoad.GetData(),_itemShopPool,_itemInventoryStyle,this);
             
             await _loadingView.Hide();
             AudioPlayer.MetaBackground();
@@ -68,6 +72,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void StartMatch()
         {
+            await _loadingView.Show();
             await _sceneManager.LoadScene(RuntimeConstants.Scene.Core);
         }
     }

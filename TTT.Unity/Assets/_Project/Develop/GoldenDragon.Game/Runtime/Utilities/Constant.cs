@@ -106,4 +106,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         X,
         O
     }
+
+    public enum TypeSessionMatch
+    {
+        None,
+        X,
+        O,
+        Coop
+    }
 }

@@ -1,6 +1,4 @@
-using System;
 using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
@@ -14,38 +12,31 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
     {
         [Header("Mixer")]
         [SerializeField] private AudioMixer _mixer;
-
+        
         [Header("Audio Source")]
         [SerializeField] private AudioSource _sfxSource;
-
         [SerializeField] private AudioSource _backgroundSource;
-        private float _currentCountSound;
-        private float _currentCountMusic;
-        private float _dbSound;
-        private float _dbMusic;
+        
         private AudioClip _backgroundMeta;
         private AudioClip _buttonClick;
         private AudioClip _sfx2;
         private AssetLoad _assetLoad;
         private ConfigSounds _config;
+        private float _currentCountSound;
+        private float _currentCountMusic;
+        private float _dbSound;
+        private float _dbMusic;
         private bool _isMuteSfx;
         private bool _isMuteMusic;
 
         public ConfigSounds ConfigAudio => _config;
-
         public bool IsMuteSound => _isMuteSfx;
         public bool IsMuteMusic => _isMuteMusic;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
-        
+        private void Awake() => DontDestroyOnLoad(this);
+
         [Inject]
-        public void Contructor(AssetLoad assetLoad)
-        {
-            _assetLoad = assetLoad;
-        }
+        public void Contructor(AssetLoad assetLoad) => _assetLoad = assetLoad;
 
         public void InitializedDefault()
         {
@@ -59,19 +50,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             {
                 case TypeValueChange.Sound:
                     if (_currentCountSound != value)
-                    {
-                        _currentCountSound = value;
-                        _dbSound = value > 0.0001f ? Mathf.Log10(value) * 20f : -80f;
-                        _mixer.SetFloat(Constant.U.Audio.SoundMixerExposeName, _dbSound);
-                    }
+                        SetValue(Constant.U.Audio.SoundMixerExposeName, value, ref _currentCountSound, ref _dbSound);
                     break;
+                
                 case TypeValueChange.Music:
                     if (_currentCountMusic != value)
-                    {
-                        _currentCountMusic = value;
-                        _dbMusic = value > 0.0001f ? Mathf.Log10(value) * 20f : -80f;
-                        _mixer.SetFloat(Constant.U.Audio.MusicMixerExposeName, _dbMusic);
-                    }
+                        SetValue(Constant.U.Audio.MusicMixerExposeName, value, ref _currentCountMusic, ref _dbMusic);
                     break;
             }
         }
@@ -157,6 +141,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
                 isMute = false;
                 _mixer.SetFloat(soundMixerExposeName, db);
             }
+        }
+
+        private void SetValue(string soundMixerExposeName, float value,ref float currentAudio, ref float dbAudio)
+        {
+            currentAudio = value;
+            dbAudio = value > 0.0001f ? Mathf.Log10(value) * 20f : -80f;
+            _mixer.SetFloat(soundMixerExposeName, dbAudio);
         }
     }
 }

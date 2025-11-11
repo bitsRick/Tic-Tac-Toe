@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
 {
     public abstract class PopupBase:DisposableView
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.SimulationData
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData
 {
     public class SimulatorLeaderBoard
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service

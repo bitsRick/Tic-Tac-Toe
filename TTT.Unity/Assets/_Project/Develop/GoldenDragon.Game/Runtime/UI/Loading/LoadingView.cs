@@ -13,7 +13,6 @@ namespace GoldenDragon
         [Header("Lang")] 
         [SerializeField] private TextMeshProUGUI _loading;
         [SerializeField] private TextMeshProUGUI _nameGame;
-        
         [SerializeField] private CanvasGroup _canvasGroup;
         private readonly float _countNegativeAlpha = 0.05f;
         private int _timeReduceAlpha;

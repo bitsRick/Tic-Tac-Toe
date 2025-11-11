@@ -1,0 +1,20 @@
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Win;
+using UnityEngine;
+
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation
+{
+    public class DataMatchPlayerUi:MonoBehaviour
+    {
+        [Header("имя игрока")]
+        [SerializeField] private string _name;
+        [Header("подсветка во время хода")]
+        [SerializeField] private Color _actionRound;
+        [SerializeField] private Color _noActionRound;
+        [Header("1 победа")]
+        [SerializeField] private WinImageUi _winOne;
+        [Header("2 победа")]
+        [SerializeField] private WinImageUi _winTwo;
+        [Header("3 победа")]
+        [SerializeField] private WinImageUi _winThree;
+    }
+}

@@ -9,6 +9,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             public const string DefaultBoard = "Default_Board";
             public const string DefaultX = "Default_X";
             public const string DefaultO = "Default_O";
+            
+            public static string GetDefaultType(TypeShowItemStyle type)
+            {
+                return type switch
+                {
+                    TypeShowItemStyle.Board => Constant.StyleData.DefaultBoard,
+                    TypeShowItemStyle.X => Constant.StyleData.DefaultX,
+                    TypeShowItemStyle.O => Constant.StyleData.DefaultO,
+                    _ => null
+                };
+            }
         }
         
         public static class B
@@ -113,5 +124,41 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         X,
         O,
         Coop
+    }
+
+    public enum TypeBot
+    {
+        X,
+        O
+    }
+    
+    public enum TypePlayingField
+    {
+        None,
+        X,
+        O
+    }
+
+    public enum TypePositionElementWin
+    {
+        None,
+        
+        HorizontalTopLine,
+        HorizontalMiddleLine,
+        HorizontalBottomLine,
+        
+        VerticalLeftLine,
+        VerticalCenterLine,
+        VerticalRightLine,
+        
+        Slash,
+        Backslash
+    }
+
+    public enum TypePositionElementToField
+    {
+        TopLeft = 0,TopCenter = 1,TopRight = 2,
+        MiddleLeft = 3,MiddleCenter = 4,MiddleRight = 5,
+        BottomLeft = 6,BottomCenter = 7,BottomRight = 8,
     }
 }

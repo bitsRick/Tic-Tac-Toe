@@ -6,13 +6,14 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.LeaderBoardItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
@@ -201,7 +202,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             foreach (Style.StyleData data in _styleData)
             {
                 if (data.Type != type.ToString() ||
-                    data.Id == GetDefaultType(type))
+                    data.Id == Constant.StyleData.GetDefaultType(type))
                     continue;
 
                 ItemShop item = _poolItemSellUi.GetItem();
@@ -280,21 +281,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             if (_popupService.TryGetPopup<ShopPopup>(TypePopup.Shop,out ShopPopup popupShop))
             {
-                InitEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,
+                EventUniRx.CreateEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,
                     () => { OnShowItemShop(TypeShowItemStyle.Board); });
-                InitEventButtonClick(popupShop.BtnX, popupShop.gameObject,
+                EventUniRx.CreateEventButtonClick(popupShop.BtnX, popupShop.gameObject,
                     () => { OnShowItemShop(TypeShowItemStyle.X); });
-                InitEventButtonClick(popupShop.BtnO, popupShop.gameObject,
+                EventUniRx.CreateEventButtonClick(popupShop.BtnO, popupShop.gameObject,
                     () => { OnShowItemShop(TypeShowItemStyle.O); });
             }
 
             if (_popupService.TryGetPopup<InventoryPopup>(TypePopup.Inventory,out InventoryPopup popupInventory))
             {
-                InitEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,
+                EventUniRx.CreateEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,
                     () => { OnShowItemInventor(TypeShowItemStyle.Board); });
-                InitEventButtonClick(popupInventory.BtnX, popupInventory.gameObject,
+                EventUniRx.CreateEventButtonClick(popupInventory.BtnX, popupInventory.gameObject,
                     () => { OnShowItemInventor(TypeShowItemStyle.X); });
-                InitEventButtonClick(popupInventory.BtnO, popupInventory.gameObject,
+                EventUniRx.CreateEventButtonClick(popupInventory.BtnO, popupInventory.gameObject,
                     () => { OnShowItemInventor(TypeShowItemStyle.O); });
             }
             
@@ -307,7 +308,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
                 popupSetting.MusicMute.onClick.AsObservable().Subscribe((_) =>
                 {
-                    OnSetMuteAudio(TypeValueChange.Music,popupSetting.MusicMute);
+                    OnSetMuteAudio(TypeValueChange.Music);
                 }).AddTo(popupSetting);
                 
                 popupSetting.SoundSlider.onValueChanged.AsObservable().Subscribe( value =>
@@ -317,7 +318,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
                 popupSetting.SoundMute.onClick.AsObservable().Subscribe((_) =>
                 {
-                    OnSetMuteAudio(TypeValueChange.Sound,popupSetting.SoundMute);
+                    OnSetMuteAudio(TypeValueChange.Sound);
                 }).AddTo(popupSetting);
             }
 
@@ -329,7 +330,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             }
         }
 
-        private void OnSetMuteAudio(TypeValueChange type, Button btn)
+        private void OnSetMuteAudio(TypeValueChange type)
         {
             AudioPlayer.Mute(type);
             _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
@@ -368,7 +369,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 for (int i = 0; i < _styleData.Length; i++)
                 {
                     ItemInventoryStyle item =_factory.MetaFactoryItem.CreateItem(_poolItemInventoryStyle.GetItem(), popup);
-                    InitEventButtonClick(item.Btn, popup.gameObject, (() =>  EnterStyle(item)));
+                    EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() =>  EnterStyle(item)));
                 }
             else
             {
@@ -382,28 +383,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 for (int i = 0; i < _styleData.Length; i++)
                 {
                     ItemShop item = _factory.MetaFactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
-                    InitEventButtonClick(item.Btn, popup.gameObject, (() => BuyStyle(item.Id, item.ActiveGameObject, item.Type)));
+                    EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() => BuyStyle(item.Id, item.ActiveGameObject, item.Type)));
                 }
             else
             {
                 Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
             }
-        }
-
-        private string GetDefaultType(TypeShowItemStyle type)
-        {
-            return type switch
-            {
-                TypeShowItemStyle.Board => Constant.StyleData.DefaultBoard,
-                TypeShowItemStyle.X => Constant.StyleData.DefaultX,
-                TypeShowItemStyle.O => Constant.StyleData.DefaultO,
-                _ => null
-            };
-        }
-
-        private void InitEventButtonClick(Button btn, GameObject popup, Action showItemShopSell)
-        {
-            btn.OnClickAsObservable().Subscribe(_ => { showItemShopSell?.Invoke(); }).AddTo(popup);
         }
     }
 }

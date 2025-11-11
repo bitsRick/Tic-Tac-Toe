@@ -1,5 +1,5 @@
 ﻿using System;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Popup;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {

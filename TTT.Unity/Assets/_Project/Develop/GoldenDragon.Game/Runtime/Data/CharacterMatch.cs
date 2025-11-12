@@ -7,6 +7,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data
         protected bool _isWinOne;
         protected bool _isWinTwo;
         protected bool _isWinThree;
-        protected TypePlayingField _typeBot;
+        protected TypePlayingField _TypeField;
     }
 }

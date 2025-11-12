@@ -1,4 +1,5 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Win;
+using TMPro;
 using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation
@@ -6,7 +7,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Top
     public class DataMatchPlayerUi:MonoBehaviour
     {
         [Header("имя игрока")]
-        [SerializeField] private string _name;
+        [SerializeField] private TextMeshProUGUI _name;
         [Header("подсветка во время хода")]
         [SerializeField] private Color _actionRound;
         [SerializeField] private Color _noActionRound;

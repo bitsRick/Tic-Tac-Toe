@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.InventoryItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.LeaderBoardItem;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.ShopElementItem;
@@ -18,7 +16,6 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
-using UnityEngine.UI;
 using VContainer;
 using StyleData = GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player.StyleData;
 
@@ -32,23 +29,23 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private MetaRoot _metaRoot;
         private PoolUiItem<ItemShop> _poolItemSellUi;
         private PoolUiItem<ItemInventoryStyle> _poolItemInventoryStyle;
-        private MetaProviderFacadeFactory _factory;
+        private ProviderUiFactory _uiFactory;
         private SaveLoadService _saveLoadService;
-        private bool _isShopLoadData;
-        private IPlayerProgress _playerData;
         private SessionDataMatch _sessionDataMatch;
         private MetaFlow _metaFlow;
+        private IPlayerProgress _playerData;
+        private bool _isShopLoadData;
 
         [Inject]
         public void Construct(
             PopupService popupService,
             IPlayerProgress playerData, 
-            MetaProviderFacadeFactory metaProviderFacadeFactory,
+            ProviderUiFactory providerUiFactory,
             SaveLoadService saveLoadService,SessionDataMatch sessionDataMatch)
         {
             _sessionDataMatch = sessionDataMatch;
             _saveLoadService = saveLoadService;
-            _factory = metaProviderFacadeFactory;
+            _uiFactory = providerUiFactory;
             _playerData = playerData;
             _popupService = popupService;
         }
@@ -368,7 +365,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             if (_popupService.TryGetPopup<InventoryPopup>(TypePopup.Inventory, out InventoryPopup popup))
                 for (int i = 0; i < _styleData.Length; i++)
                 {
-                    ItemInventoryStyle item =_factory.MetaFactoryItem.CreateItem(_poolItemInventoryStyle.GetItem(), popup);
+                    ItemInventoryStyle item =_uiFactory.FactoryItem.CreateItem(_poolItemInventoryStyle.GetItem(), popup);
                     EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() =>  EnterStyle(item)));
                 }
             else
@@ -382,7 +379,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             if (_popupService.TryGetPopup<ShopPopup>(TypePopup.Shop,out ShopPopup popup))
                 for (int i = 0; i < _styleData.Length; i++)
                 {
-                    ItemShop item = _factory.MetaFactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
+                    ItemShop item = _uiFactory.FactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
                     EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() => BuyStyle(item.Id, item.ActiveGameObject, item.Type)));
                 }
             else

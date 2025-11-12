@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +11,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 {
     public class PlayingField:MonoBehaviour,ILoadUnit
     {
+        [Header("Массив элементов")]
         [SerializeField] private Field[] _fields;
+        [Header("Рамка")]
+        [SerializeField] private Image _border;
+        [Header("Задний фон Рамки")]
+        [SerializeField] private Image _background;
+        private PlayerMatchData _playerMatchData;
 
         public Field[] Fields => _fields;
+        public Subject<Unit> OnPlayerActionEnd = new Subject<Unit>(); 
+
+        public void Construct(PlayerMatchData playerMatchData)
+        {
+            _playerMatchData = playerMatchData;
+        }
         
         public async UniTask Load()
         {
@@ -18,55 +33,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
             {
                 Field field = _fields[i];
 
+                field.Click.onClick.AsObservable().Subscribe((_) =>
+                {
+                    if (field.TrySetElement(_playerMatchData.Field)) OnPlayerActionEnd.OnNext(Unit.Default);
+                }).AddTo(this);
+
                 TypePositionElementToField type =
                     (TypePositionElementToField)Enum.GetValues(typeof(TypePositionElementToField)).GetValue(i);
                 
                 field.Initialized(type);
                 await field.Load();
             }
-        }
 
-        private void FixedUpdate()
-        {
-            
-        }
-    }
-
-    public class Field:MonoBehaviour,ILoadUnit
-    {
-        [SerializeField] private Image _x;
-        [SerializeField] private Image _o;
-        private TypePlayingField _playingField;
-
-        public TypePlayingField Type => _playingField;
-        public TypePositionElementToField Position;
-        
-        public async UniTask Load()
-        {
-            _x.gameObject.SetActive(false);
-            _o.gameObject.SetActive(false);
-            await UniTask.CompletedTask;
-        }
-
-        public void SetElement(TypePlayingField type)
-        {
-            switch (type)
-            {
-                case TypePlayingField.X:
-                    _x.gameObject.SetActive(true);
-                    break;
-                
-                case TypePlayingField.O:
-                    _o.gameObject.SetActive(true);
-                    break;
-            }
-
-            _playingField = type == TypePlayingField.X ? TypePlayingField.X : TypePlayingField.O;
-        }
-
-        public void Initialized(TypePositionElementToField typePosition)
-        {
-            Position = typePosition;
+            await Task.CompletedTask;
         }
     }
 }

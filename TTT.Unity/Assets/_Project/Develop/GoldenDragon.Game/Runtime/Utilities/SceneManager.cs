@@ -26,7 +26,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 
             bool needLoadEmpty =
                 toLoadIndex == RuntimeConstants.Scene.Meta ||
-                toLoadIndex == RuntimeConstants.Scene.Core ||
+                toLoadIndex == RuntimeConstants.Scene.Match ||
                 toLoadIndex == RuntimeConstants.Scene.Loading;
 
             if (needLoadEmpty)

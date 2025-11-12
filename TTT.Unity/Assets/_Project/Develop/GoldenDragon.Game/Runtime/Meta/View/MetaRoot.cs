@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -32,12 +33,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private AssetService _assetService;
         private IPlayerProgress _playerProgress;
         public Subject<Unit> OnSoftValueChanged = new Subject<Unit>();
-        private MetaProviderFacadeFactory _metaProviderFacadeFactory;
+        private ProviderUiFactory _providerUiFactory;
 
         [Inject]
-        public void Constructor(PopupService popupService,Model model,AssetService assetService,IPlayerProgress playerProgress,MetaProviderFacadeFactory metaProviderFacadeFactory)
+        public void Constructor(PopupService popupService,Model model,AssetService assetService,IPlayerProgress playerProgress,ProviderUiFactory providerUiFactory)
         {
-            _metaProviderFacadeFactory = metaProviderFacadeFactory;
+            _providerUiFactory = providerUiFactory;
             _playerProgress = playerProgress;
             _assetService = assetService;
             _model = model;
@@ -48,11 +49,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             await InitializedEvent();
             
-            GameObject setting = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
-            GameObject leaderBoard = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.LeaderBoard);
-            GameObject shop = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Shop);
-            GameObject inventory = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Inventory);
-            GameObject match = await _metaProviderFacadeFactory.MetaFactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Match);
+            GameObject setting = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
+            GameObject leaderBoard = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.LeaderBoard);
+            GameObject shop = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Shop);
+            GameObject inventory = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Inventory);
+            GameObject match = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Match);
             
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(setting,_parent);
             settingPopup.Initialized();

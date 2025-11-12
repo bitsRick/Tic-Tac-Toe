@@ -124,7 +124,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             {
                 //arange
                 var assetService = new AssetService(new AssetInstall(),new AssetLoad());
-                var hudObject = assetService.Load.GetAsset<GameObject>(TypeAsset.Meta_UI, Constant.M.Asset.Ui.MetaRoot);
+                var hudObject = assetService.Load.GetAsset<GameObject>(TypeAsset.Meta_Root_Ui, Constant.M.Asset.Ui.MetaRoot);
                 
                 //act
                 var metaRoot = assetService.Install.InstallToRoot<GameObject>(hudObject).GetComponent<MetaRoot>();

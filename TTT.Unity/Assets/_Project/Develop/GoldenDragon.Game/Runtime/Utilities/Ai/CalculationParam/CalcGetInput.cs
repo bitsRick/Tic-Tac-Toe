@@ -5,7 +5,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public class CalcGetInput
     {
-        public TypePositionElementWin HorizontalTopLine(Bot bot, Field field)
+        public TypePositionElementWin HorizontalTopLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopCenter or 
@@ -13,7 +13,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.TopRight ? TypePositionElementWin.HorizontalTopLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin HorizontalMiddleLine(Bot bot, Field field)
+        public TypePositionElementWin HorizontalMiddleLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.MiddleCenter or 
@@ -21,7 +21,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.MiddleRight ? TypePositionElementWin.HorizontalMiddleLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin HorizontalBottomLine(Bot bot, Field field)
+        public TypePositionElementWin HorizontalBottomLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.BottomCenter or 
@@ -29,7 +29,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.BottomRight ? TypePositionElementWin.HorizontalBottomLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin VerticalLeftLine(Bot bot, Field field)
+        public TypePositionElementWin VerticalLeftLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopLeft or 
@@ -37,7 +37,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.MiddleLeft ? TypePositionElementWin.VerticalLeftLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin VerticalRightLine(Bot bot, Field field)
+        public TypePositionElementWin VerticalRightLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopRight or 
@@ -45,7 +45,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.BottomRight ? TypePositionElementWin.VerticalRightLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin VerticalCenterLine(Bot bot, Field field)
+        public TypePositionElementWin VerticalCenterLine(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopCenter or 
@@ -53,7 +53,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.MiddleCenter ? TypePositionElementWin.VerticalCenterLine : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin Slash(Bot bot, Field field)
+        public TypePositionElementWin Slash(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopLeft or 
@@ -61,7 +61,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 TypePositionElementToField.BottomRight ? TypePositionElementWin.Slash : TypePositionElementWin.None;
         }
 
-        public TypePositionElementWin BackSlash(Bot bot, Field field)
+        public TypePositionElementWin BackSlash(BotMatchData botMatchData, Field field)
         {
             return field.Position is 
                 TypePositionElementToField.TopRight or 

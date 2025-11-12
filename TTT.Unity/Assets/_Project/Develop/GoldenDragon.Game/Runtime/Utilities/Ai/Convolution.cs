@@ -9,8 +9,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     {
         public void Add(
             Func<Field, bool> appliesTo,
-            Func<Bot, Field, TypePositionElementWin> getInput,
-            Func<TypePositionElementWin,Bot, Field, float> score,
+            Func<BotMatchData, Field, TypePositionElementWin> getInput,
+            Func<TypePositionElementWin,BotMatchData, Field, float> score,
             string name
             )
         {

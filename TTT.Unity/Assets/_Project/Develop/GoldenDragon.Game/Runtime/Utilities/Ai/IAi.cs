@@ -4,6 +4,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public interface IAi
     {
-        BotAction MakeBestDecision(Bot bot);
+        BotAction MakeBestDecision(BotMatchData botMatchData);
     }
 }

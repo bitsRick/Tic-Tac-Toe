@@ -1,9 +1,7 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 

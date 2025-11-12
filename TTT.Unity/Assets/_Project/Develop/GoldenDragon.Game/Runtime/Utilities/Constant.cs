@@ -58,6 +58,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                 public static class Ui
                 {
                     public const string MetaRoot = "MetaRoot";
+                    public const string MatchRoot = "MatchRoot";
                 } 
                 
                 public static class Popup
@@ -103,7 +104,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     
     public enum TypeAsset
     {
-        Meta_UI,
+        Meta_Root_Ui,
+        Match_Root_Ui,
         Popup,
         Audio,
         Json,
@@ -137,6 +139,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         None,
         X,
         O
+    }
+
+    public enum MatchMode
+    {
+        Pause,
+        PlayerAction,
+        BotAction,
+        PlayerTwoAction
     }
 
     public enum TypePositionElementWin

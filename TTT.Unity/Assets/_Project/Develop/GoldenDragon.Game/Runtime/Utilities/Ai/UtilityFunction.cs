@@ -7,14 +7,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     public class UtilityFunction : IUtilityFunction
     {
         private readonly Func< Field, bool> _appliesTo;
-        private readonly Func<TypePositionElementWin,Bot, Field, float> _score;
-        private readonly Func<Bot, Field, TypePositionElementWin> _getInput;
+        private readonly Func<TypePositionElementWin,BotMatchData, Field, float> _score;
+        private readonly Func<BotMatchData, Field, TypePositionElementWin> _getInput;
         public string Name { get; set; }
 
         public UtilityFunction(
             Func<Field,bool> appliesTo,
-            Func<Bot,Field,TypePositionElementWin> getInput,
-            Func<TypePositionElementWin,Bot,Field,float> score,
+            Func<BotMatchData,Field,TypePositionElementWin> getInput,
+            Func<TypePositionElementWin,BotMatchData,Field,float> score,
             string name
         )
         {
@@ -24,10 +24,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             Name = name;
         }
 
-        public TypePositionElementWin GetInput(Bot bot, Field field) => _getInput(bot, field);
+        public TypePositionElementWin GetInput(BotMatchData botMatchData, Field field) => _getInput(botMatchData, field);
 
         public bool AppliesTo(Field field) => _appliesTo( field);
 
-        public float Score(TypePositionElementWin typeAction,Bot bot, Field field) => _score(typeAction,bot, field);
+        public float Score(TypePositionElementWin typeAction,BotMatchData botMatchData, Field field) => _score(typeAction,botMatchData, field);
     }
 }

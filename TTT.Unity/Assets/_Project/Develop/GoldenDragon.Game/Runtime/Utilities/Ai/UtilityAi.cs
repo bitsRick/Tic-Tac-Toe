@@ -19,30 +19,30 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             _utilityFunction = new Brains(calculation).GetUtilityFunction();
         }
 
-        public BotAction MakeBestDecision(Bot bot)
+        public BotAction MakeBestDecision(BotMatchData botMatchData)
         {
-            IEnumerable<ScoreAction> choisec = GetScoreBotAction(bot);
+            IEnumerable<ScoreAction> choisec = GetScoreBotAction(botMatchData);
 
             return choisec.FindMax(x => x.Score);
         }
 
-        private IEnumerable<ScoreAction> GetScoreBotAction(Bot bot)
+        private IEnumerable<ScoreAction> GetScoreBotAction(BotMatchData botMatchData)
         {
             foreach (Field field in _playingField.Fields)
             {
-                float score = CalculateScore(bot,field);
+                float score = CalculateScore(botMatchData,field);
 
-                yield return new ScoreAction(score,field,bot.Type);
+                yield return new ScoreAction(score,field,botMatchData.Type);
             }
         }
 
-        private float CalculateScore(Bot bot, Field field)
+        private float CalculateScore(BotMatchData botMatchData, Field field)
         {
             IEnumerable<ScoreFactor> scoreFactor = 
                 (from utilityFunction in _utilityFunction
                 where utilityFunction.AppliesTo(field)
-                let input = utilityFunction.GetInput(bot, field)
-                let score = utilityFunction.Score(input, bot,field)
+                let input = utilityFunction.GetInput(botMatchData, field)
+                let score = utilityFunction.Score(input, botMatchData,field)
                 select new ScoreFactor(utilityFunction.Name, score));
 
             return scoreFactor.Select(x => x.Score).Sum();

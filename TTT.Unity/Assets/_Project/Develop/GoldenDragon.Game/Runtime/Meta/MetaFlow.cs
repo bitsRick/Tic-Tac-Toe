@@ -1,5 +1,6 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
@@ -8,6 +9,8 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Sh
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style;
+using UnityEngine;
+using VContainer;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
@@ -17,22 +20,26 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly SceneManager _sceneManager;
         private readonly LoadingService _loadingService;
         private readonly LoadingView _loadingView;
-        private AssetService _assetService;
-        private AudioService _audioService;
+        private readonly AssetService _assetService;
         private StyleDataLoad _styleDataLoad;
         private Model _modelMetaRoot;
         private PoolUiItem<ItemShop> _itemShopPool;
         private PoolUiItem<ItemInventoryStyle> _itemInventoryStyle;
-        private MetaProviderFacadeFactory _metaProviderFacadeFactory;
+        private ProviderUiFactory _providerUiFactory;
         private SessionDataMatch _sessionDataMatch;
+        private PopupService _popupService;
+        private IPlayerProgress _playerProgress;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,
             LoadingView loadingView,AssetService assetService,
             StyleDataLoad styleDataLoad,Model modelMetaRoot,
-            MetaProviderFacadeFactory metaProviderFacadeFactory,SessionDataMatch sessionDataMatch)
+            ProviderUiFactory providerUiFactory,
+            SessionDataMatch sessionDataMatch,PopupService popupService,IPlayerProgress playerProgress)
         {
+            _playerProgress = playerProgress;
+            _popupService = popupService;
             _sessionDataMatch = sessionDataMatch;
-            _metaProviderFacadeFactory = metaProviderFacadeFactory;
+            _providerUiFactory = providerUiFactory;
             _modelMetaRoot = modelMetaRoot;
             _styleDataLoad = styleDataLoad;
             _assetService = assetService;
@@ -60,7 +67,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
                     Constant.M.Asset.Popup.PoolElementUi,
                     _styleDataLoad.GetData().Length));
             
-            MetaRoot metaRoot = _metaProviderFacadeFactory.MetaFactoryUi.CreateMetaRoot<MetaRoot>();
+            MetaRoot metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, Constant.M.Asset.Ui.MetaRoot);
+            metaRoot.Constructor(_popupService,_modelMetaRoot,_assetService,_playerProgress,_providerUiFactory);
+            
             await metaRoot.Initialized();
             await metaRoot.Show();
             
@@ -73,7 +82,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         public async void StartMatch()
         {
             await _loadingView.Show();
-            await _sceneManager.LoadScene(RuntimeConstants.Scene.Core);
+            await _sceneManager.LoadScene(RuntimeConstants.Scene.Match);
         }
     }
 }

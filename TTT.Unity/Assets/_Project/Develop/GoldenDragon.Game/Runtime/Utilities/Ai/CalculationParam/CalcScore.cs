@@ -17,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             _playingField = playingField;
         }
 
-        public Func<TypePositionElementWin,Bot,Field,float> ScaleBy(int scoreUp)
+        public Func<TypePositionElementWin,BotMatchData,Field,float> ScaleBy(int scoreUp)
         {
             return (position, bot, field) =>
             {

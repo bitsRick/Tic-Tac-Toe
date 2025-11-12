@@ -3,9 +3,9 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData
 {
-    public class Bot:CharacterMatch
+    public class BotMatchData:CharacterMatch
     {
         private string _name;
-        public TypePlayingField Type => _typeBot;
+        public TypePlayingField Type => _TypeField;
     }
 }

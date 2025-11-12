@@ -1,9 +1,9 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using UnityEngine;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.Factory
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui
 {
-    public class MetaFactoryItem
+    public class FactoryItem
     {
         public TItem CreateItem<TItem,TItemContainer>(TItem itemPool,TItemContainer container) 
             where TItem : IItem

@@ -1,6 +1,9 @@
+using System;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -12,7 +15,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class MetaRoot : MonoBehaviour
+    public class MetaRoot : MonoBehaviour,IUiRoot
     {
         [Header("Popup Background")]
         [SerializeField] private BackPopupBackground _popupBackground;
@@ -31,12 +34,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private PopupService _popupService;
         private Model _model;
         private AssetService _assetService;
-        private IPlayerProgress _playerProgress;
+        private PlayerData _playerProgress;
         public Subject<Unit> OnSoftValueChanged = new Subject<Unit>();
         private ProviderUiFactory _providerUiFactory;
 
         [Inject]
-        public void Constructor(PopupService popupService,Model model,AssetService assetService,IPlayerProgress playerProgress,ProviderUiFactory providerUiFactory)
+        public void Constructor(PopupService popupService,Model model,AssetService assetService,PlayerData playerProgress,ProviderUiFactory providerUiFactory)
         {
             _providerUiFactory = providerUiFactory;
             _playerProgress = playerProgress;
@@ -44,11 +47,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _model = model;
             _popupService = popupService;
         }
-        
+
         public async UniTask Initialized()
         {
+            await InitializedPopup();
             await InitializedEvent();
+
+            OnSoftValueChanged.OnNext(Unit.Default);
             
+            await UniTask.CompletedTask;
+        }
+
+        public async UniTask InitializedPopup()
+        {
             GameObject setting = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
             GameObject leaderBoard = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.LeaderBoard);
             GameObject shop = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Shop);
@@ -75,17 +86,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _popupService.AddPopupInList(TypePopup.Shop,shopPopup);
             _popupService.AddPopupInList(TypePopup.Inventory,inventoryPopup);
             _popupService.AddPopupInList(TypePopup.Match,matchPopup);
+        }
 
-            OnSoftValueChanged
-                .Subscribe(_ =>
-                {
-                    _softValueO.text = _playerProgress.PlayerData.SoftValueO.ToString();
-                    _softValueX.text = _playerProgress.PlayerData.SoftValueX.ToString();
-                    shopPopup.SoftValueO.text = _playerProgress.PlayerData.SoftValueO.ToString();
-                    shopPopup.SoftValueX.text = _playerProgress.PlayerData.SoftValueX.ToString();
-                }).AddTo(this);
+        public async UniTask InitializedEvent()
+        {
+            _btnOpenSetting.OnClickAsObservable().Subscribe(_ => _model.OpenPopupSetting()).AddTo(this);
+            _btnOpenLeaderBoard.OnClickAsObservable().Subscribe(_ => _model.OpenPopupLeaderBoard()).AddTo(this);
+            _btnOpenMatch.OnClickAsObservable().Subscribe(_ => _model.OpenPopupMatch()).AddTo(this);
+            _btnOpenInventory.OnClickAsObservable().Subscribe(_ => _model.OpenPopupInventory()).AddTo(this);
+            _btnOpenShop.OnClickAsObservable().Subscribe(_ => _model.OpenPopupShop()).AddTo(this);
             
-            OnSoftValueChanged.OnNext(Unit.Default);
+            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
+            
+           if( _popupService.TryGetPopup(TypePopup.Shop,out ShopPopup shopPopup))
+            {
+                OnSoftValueChanged
+                    .Subscribe(_ =>
+                    {
+                        _softValueO.text = _playerProgress.SoftValueO.ToString();
+                        _softValueX.text = _playerProgress.SoftValueX.ToString();
+                        shopPopup.SoftValueO.text = _playerProgress.SoftValueO.ToString();
+                        shopPopup.SoftValueX.text = _playerProgress.SoftValueX.ToString();
+                    }).AddTo(this);
+            }
             
             await UniTask.CompletedTask;
         }
@@ -95,25 +118,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             return _popupBackground;
         }
 
-        public async UniTask Release()
-        {
-            await _popupService.Release();
-            await UniTask.CompletedTask;
-        }
-
         public async UniTask Show()
         {
             gameObject.SetActive(true);
-            await UniTask.CompletedTask;
-        }
-        
-        private async UniTask InitializedEvent()
-        {
-            _btnOpenSetting.OnClickAsObservable().Subscribe(_ => _model.OpenPopupSetting()).AddTo(this);
-            _btnOpenLeaderBoard.OnClickAsObservable().Subscribe(_ => _model.OpenPopupLeaderBoard()).AddTo(this);
-            _btnOpenMatch.OnClickAsObservable().Subscribe(_ => _model.OpenPopupMatch()).AddTo(this);
-            _btnOpenInventory.OnClickAsObservable().Subscribe(_ => _model.OpenPopupInventory()).AddTo(this);
-            _btnOpenShop.OnClickAsObservable().Subscribe(_ => _model.OpenPopupShop()).AddTo(this);
             await UniTask.CompletedTask;
         }
     }

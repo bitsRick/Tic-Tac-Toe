@@ -1,22 +1,19 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using UniRx;
 using UnityEngine.EventSystems;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
     public class BackPopupBackground:UI.Core.View,IPointerClickHandler
     {
-        private Model _model;
-
-        public void Initialized(Model model)
-        {
-            _model = model;
-        }
-
+        public Subject<Unit> OnEvenPointClickBackground = new Subject<Unit>();
+        
         public void OnPointerClick(PointerEventData eventData)
         {
             Log.Meta.D("Close Popup");
-            _model.ClosePopup();
+            Hide();
+            OnEvenPointClickBackground.OnNext(Unit.Default);
         }
 
         public override UniTask Show()

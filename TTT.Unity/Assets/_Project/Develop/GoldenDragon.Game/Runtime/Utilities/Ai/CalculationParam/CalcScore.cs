@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public class CalcScore
     {
-        private const int StandartScore = 100;
+        private const int DefaultScore = 100;
         private const int UltraScore = 150;
         private PlayingField _playingField;
 
@@ -17,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             _playingField = playingField;
         }
 
-        public Func<TypePositionElementWin,BotMatchData,Field,float> ScaleBy(int scoreUp)
+        public Func<TypePositionElementWin, CharacterMatch, Field, float> ScaleBy(int scoreUp)
         {
             return (position, bot, field) =>
             {
@@ -28,19 +28,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                     if (field.Position == fieldLazy.Position)
                         continue;
 
-                    if (fieldLazy.Type == bot.Type)
+                    if (fieldLazy.Type == bot.Field)
                     {
                         score += UltraScore;
+                        continue;
                     }
+
+                    if (fieldLazy.Type == TypePlayingField.None)
+                        score += DefaultScore;
                     else
-                    {
-                        if (fieldLazy.Type == TypePlayingField.None)
-                            score += StandartScore;
-                        else
-                            score -= StandartScore;
-                    }
+                        score -= DefaultScore;
                 }
-                
+
                 return score * scoreUp;
             };
         }
@@ -51,68 +50,68 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             {
                 case TypePositionElementWin.None:
                     break;
-                
+
                 case TypePositionElementWin.HorizontalTopLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.TopCenter 
-                            or TypePositionElementToField.TopLeft 
+                        x.Position
+                            is TypePositionElementToField.TopCenter
+                            or TypePositionElementToField.TopLeft
                             or TypePositionElementToField.TopRight
                     );
-                
+
                 case TypePositionElementWin.HorizontalMiddleLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
+                        x.Position
                             is TypePositionElementToField.MiddleLeft
-                            or TypePositionElementToField.MiddleRight 
+                            or TypePositionElementToField.MiddleRight
                             or TypePositionElementToField.MiddleCenter
                     );
-                
+
                 case TypePositionElementWin.HorizontalBottomLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.BottomLeft 
-                            or TypePositionElementToField.BottomRight 
+                        x.Position
+                            is TypePositionElementToField.BottomLeft
+                            or TypePositionElementToField.BottomRight
                             or TypePositionElementToField.BottomCenter
                     );
-                
+
                 case TypePositionElementWin.VerticalLeftLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.TopLeft 
-                            or TypePositionElementToField.MiddleLeft 
+                        x.Position
+                            is TypePositionElementToField.TopLeft
+                            or TypePositionElementToField.MiddleLeft
                             or TypePositionElementToField.BottomLeft
                     );
-                
+
                 case TypePositionElementWin.VerticalCenterLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.BottomCenter 
-                            or TypePositionElementToField.MiddleCenter 
+                        x.Position
+                            is TypePositionElementToField.BottomCenter
+                            or TypePositionElementToField.MiddleCenter
                             or TypePositionElementToField.TopCenter
                     );
-                
+
                 case TypePositionElementWin.VerticalRightLine:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.BottomRight 
-                            or TypePositionElementToField.MiddleRight 
+                        x.Position
+                            is TypePositionElementToField.BottomRight
+                            or TypePositionElementToField.MiddleRight
                             or TypePositionElementToField.TopRight
                     );
-                
+
                 case TypePositionElementWin.Slash:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.TopLeft 
-                            or TypePositionElementToField.MiddleCenter 
+                        x.Position
+                            is TypePositionElementToField.TopLeft
+                            or TypePositionElementToField.MiddleCenter
                             or TypePositionElementToField.BottomRight
                     );
-                
+
                 case TypePositionElementWin.Backslash:
                     return _playingField.Fields.Where(x =>
-                        x.Position 
-                            is TypePositionElementToField.TopRight 
-                            or TypePositionElementToField.MiddleCenter 
+                        x.Position
+                            is TypePositionElementToField.TopRight
+                            or TypePositionElementToField.MiddleCenter
                             or TypePositionElementToField.BottomLeft
                     );
             }

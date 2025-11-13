@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
@@ -10,8 +10,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     {
         private Dictionary<TypePopup, PopupData> _popupLists = new();
         private PopupBase _activePopup;
+        private SaveLoadService _saveLoadService;
         private bool _isActivePopup;
 
+        public PopupService(SaveLoadService saveLoadService)
+        {
+            _saveLoadService = saveLoadService;
+        }
+        
         public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase => 
             _popupLists.Add(typePopup,new PopupData(popup));
 
@@ -54,7 +60,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             return false;
         }
 
-        public void Rest()
+        public void Close()
+        {
+            AudioPlayer.Click();
+            Rest();
+            _saveLoadService.SaveProgress();
+        }
+
+        private void Rest()
         {
             _isActivePopup = false;
             _activePopup.Hide();

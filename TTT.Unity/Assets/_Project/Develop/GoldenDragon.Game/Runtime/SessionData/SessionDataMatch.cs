@@ -5,7 +5,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData
 {
     public class SessionDataMatch:ILoadUnit
     {
-        private CurrentSessionMatch _currentSessionMatch;
+        private TypeSessionMatch _typeSessionMatch;
         
         public UniTask Load()
         {
@@ -14,13 +14,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData
             return UniTask.CompletedTask;
         }
 
-        public void SetTypeSession(TypeSessionMatch typeSessionMatch) => _currentSessionMatch.TypeSessionMatch = typeSessionMatch;
+        public void SetTypeSession(TypeSessionMatch typeSessionMatch) => _typeSessionMatch = typeSessionMatch;
 
-        private void Reset() => _currentSessionMatch = new CurrentSessionMatch();
-    }
+        public TypeSessionMatch PlayerType() => _typeSessionMatch;
 
-    public class CurrentSessionMatch
-    {
-        public TypeSessionMatch TypeSessionMatch;
+        private void Reset() => _typeSessionMatch = TypeSessionMatch.None;
     }
+    
 }

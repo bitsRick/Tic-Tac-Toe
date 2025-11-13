@@ -1,4 +1,4 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
@@ -9,8 +9,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
     public class RoundManager:ITickable
     {
         private IAi _ai;
-        private PlayerMatchData _player;
-        private BotMatchData _botMatchData;
+        private CharacterMatch _player;
+        private CharacterMatch _botMatchData;
         private bool _isStart;
         private bool _isFinish;
         private bool _isTimerPause;
@@ -18,14 +18,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private WinService _winService;
 
         public MatchMode Mode => MatchMode.Pause;
-
-        public RoundManager(IAi ai, PlayerMatchData player, BotMatchData botMatchData)
+        
+        public void Initialized(IAi ai, CharacterMatch player, CharacterMatch botMatchData)
         {
             _ai = ai;
             _player = player;
             _botMatchData = botMatchData;
         }
-
+        
         public void Tick()
         {
             if (_isStart == false ||
@@ -51,7 +51,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public void ActionBotRound()
         {
             BotAction botAction = _ai.MakeBestDecision(_botMatchData);
-            botAction.Field.TrySetElement(_botMatchData.Type);
+            botAction.Field.TrySetElement(_botMatchData.Field);
         }
     }
 }

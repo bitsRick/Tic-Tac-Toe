@@ -6,12 +6,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     public static class EnumerableExtensions
     {
         public static T FindMax<T, TResult>(this IEnumerable<T> source,
-            Func<T, TResult> selector) where TResult: IComparable<TResult>
-        {
-            return Find(source, selector, false);
-        }
-        
-        private static T Find<T, TComp>(IEnumerable<T> enumerable, Func<T, TComp> selector, bool selectMin) where TComp : IComparable<TComp>
+            Func<T, TResult> selector) where TResult: IComparable<TResult> =>
+            Find(source, selector, false);
+
+        private static T Find<T, TComp>(IEnumerable<T> enumerable, Func<T, TComp> selector, bool selectMin)
+            where TComp : IComparable<TComp>
         {
             if (enumerable == null)
                 return default;
@@ -23,6 +22,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             foreach (T current in enumerable)
             {
                 TComp comp = selector(current);
+                
                 if (first)
                 {
                     first = false;

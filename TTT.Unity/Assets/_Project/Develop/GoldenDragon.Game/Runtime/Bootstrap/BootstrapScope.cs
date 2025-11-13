@@ -3,6 +3,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 using VContainer;
@@ -41,7 +42,8 @@ namespace GoldenDragon
             builder.Register<FactoryUi>(Lifetime.Singleton);
             builder.Register<FactoryItem>(Lifetime.Singleton);
             builder.Register<ProviderUiFactory>(Lifetime.Singleton);
-            builder.Register<PopupService>(Lifetime.Singleton);
+            
+            builder.Register<SessionDataMatch>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<BootstrapFlow>().WithParameter(registrationScreenScreen).WithParameter(_audioService);
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
@@ -21,7 +22,7 @@ using StyleData = GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.P
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class Model
+    public class Model:ILoadUnit
     {
         private Style.StyleData[] _styleData;
         private PopupService _popupService;
@@ -38,7 +39,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         [Inject]
         public void Construct(
-            PopupService popupService,
             IPlayerProgress playerData, 
             ProviderUiFactory providerUiFactory,
             SaveLoadService saveLoadService,SessionDataMatch sessionDataMatch)
@@ -47,27 +47,37 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _saveLoadService = saveLoadService;
             _uiFactory = providerUiFactory;
             _playerData = playerData;
-            _popupService = popupService;
         }
 
         public UniTask Initialized(MetaRoot metaRoot,
             Style.StyleData[] styleData,
             PoolUiItem<ItemShop> poolItemSellUi,
-            PoolUiItem<ItemInventoryStyle> poolItemInventoryStyle, MetaFlow metaFlow)
+            PoolUiItem<ItemInventoryStyle> poolItemInventoryStyle, PopupService popupService,MetaFlow metaFlow)
         {
+            _popupService = popupService;
             _metaFlow = metaFlow;
             _poolItemInventoryStyle = poolItemInventoryStyle;
             _metaRoot = metaRoot;
             _poolItemSellUi = poolItemSellUi;
             _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
-            _popupBackground.Initialized(this);
+            
+            return UniTask.CompletedTask;
+        }
 
+        public UniTask Load()
+        {
             InitializedShopItem();
             InitializedInventoryItem();
             InitializedEvent();
-
+            
             return UniTask.CompletedTask;
+        }
+
+        public async UniTask Release()
+        {
+            _styleData = null;
+            await Task.CompletedTask;
         }
 
         public void OpenPopupSetting()
@@ -176,14 +186,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             _popupBackground.Show();
             popup.Show();
-        }
-
-        public void ClosePopup()
-        {
-            AudioPlayer.Click();
-            _popupService.Rest();
-            _popupBackground.Hide();
-            _saveLoadService.SaveProgress();
         }
 
         private void OnStartMatch(TypeSessionMatch typeSessionMatch)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
@@ -9,8 +9,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     {
         public void Add(
             Func<Field, bool> appliesTo,
-            Func<BotMatchData, Field, TypePositionElementWin> getInput,
-            Func<TypePositionElementWin,BotMatchData, Field, float> score,
+            Func<CharacterMatch, Field, TypePositionElementWin> getInput,
+            Func<TypePositionElementWin,CharacterMatch, Field, float> score,
             string name
             )
         {

@@ -12,7 +12,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         public CalcScore Score => _calcScore;
         public CalcGetInput GetInput => _calcGetInput;
         
-        public void Constructor(PlayingField playingField)
+        public Calculation(PlayingField playingField)
         {
             _calcScore = new CalcScore(playingField);
             _calcWhen = new CalcWhen();

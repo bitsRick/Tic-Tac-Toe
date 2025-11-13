@@ -1,4 +1,5 @@
-﻿using VContainer;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
+using VContainer;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
@@ -7,6 +8,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.Register<RoundManager>(Lifetime.Singleton);
             builder.RegisterEntryPoint<MatchFlow>();
         }
     }

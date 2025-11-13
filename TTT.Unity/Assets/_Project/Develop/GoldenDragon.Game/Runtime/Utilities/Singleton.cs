@@ -1,6 +1,5 @@
 ﻿namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {
-    //CRTP
     public abstract class Singleton<T>  where T : Singleton<T> ,new()
     {
         private static readonly object _lock = new();

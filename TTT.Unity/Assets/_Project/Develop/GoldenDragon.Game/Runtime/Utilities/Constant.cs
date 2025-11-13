@@ -53,6 +53,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         
         public static class M
         {
+            public const string BotName = "Bot_Goga";
+
             public static class Asset
             {
                 public static class Ui
@@ -84,6 +86,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                 public const string SoundMixerExposeName = "SFXValue"; 
             }
         }
+    }
+
+    public enum TypeColorMatchAction
+    {
+        Active,
+        NoActive
     }
 
     public enum TypeValueChange

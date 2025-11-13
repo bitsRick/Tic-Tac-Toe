@@ -32,9 +32,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             return UniTask.CompletedTask;
         }
 
-        public IEnumerable<IUtilityFunction> GetUtilityFunction()
-        {
-            return _convolution;
-        }
+        public IEnumerable<IUtilityFunction> GetUtilityFunction() => _convolution;
     }
 }

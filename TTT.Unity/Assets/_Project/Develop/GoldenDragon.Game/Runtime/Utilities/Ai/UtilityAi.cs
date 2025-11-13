@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 
@@ -10,33 +11,30 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         private PlayingField _playingField;
         private IEnumerable<IUtilityFunction> _utilityFunction;
 
-        public UtilityAi(PlayingField playingField, Calculation calculation,IEnumerable<IUtilityFunction> utilityFunction)
+        public UtilityAi(PlayingField playingField, Calculation calculation,Brains brains)
         {
             _playingField = playingField;
-            _utilityFunction = utilityFunction;
-
-            
-            _utilityFunction = new Brains(calculation).GetUtilityFunction();
+            _utilityFunction = brains.GetUtilityFunction();
         }
 
-        public BotAction MakeBestDecision(BotMatchData botMatchData)
+        public BotAction MakeBestDecision(CharacterMatch botMatchData)
         {
             IEnumerable<ScoreAction> choisec = GetScoreBotAction(botMatchData);
 
             return choisec.FindMax(x => x.Score);
         }
 
-        private IEnumerable<ScoreAction> GetScoreBotAction(BotMatchData botMatchData)
+        private IEnumerable<ScoreAction> GetScoreBotAction(CharacterMatch botMatchData)
         {
             foreach (Field field in _playingField.Fields)
             {
                 float score = CalculateScore(botMatchData,field);
 
-                yield return new ScoreAction(score,field,botMatchData.Type);
+                yield return new ScoreAction(score,field,botMatchData.Field);
             }
         }
 
-        private float CalculateScore(BotMatchData botMatchData, Field field)
+        private float CalculateScore(CharacterMatch botMatchData, Field field)
         {
             IEnumerable<ScoreFactor> scoreFactor = 
                 (from utilityFunction in _utilityFunction

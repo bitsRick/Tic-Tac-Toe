@@ -1,4 +1,5 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
@@ -16,11 +17,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private bool _isTimerPause;
         private bool _isTurnTimePaused;
         private WinService _winService;
+        private MatchUiRoot _matchUiRoot;
 
         public MatchMode Mode => MatchMode.Pause;
         
-        public void Initialized(IAi ai, CharacterMatch player, CharacterMatch botMatchData)
+        public void Initialized(IAi ai, CharacterMatch player, CharacterMatch botMatchData,MatchUiRoot matchUiRoot)
         {
+            _matchUiRoot = matchUiRoot;
             _ai = ai;
             _player = player;
             _botMatchData = botMatchData;
@@ -51,7 +54,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public void ActionBotRound()
         {
             BotAction botAction = _ai.MakeBestDecision(_botMatchData);
-            botAction.Field.TrySetElement(_botMatchData.Field);
+            _matchUiRoot.SetField(_botMatchData,botAction.Field);
         }
     }
 }

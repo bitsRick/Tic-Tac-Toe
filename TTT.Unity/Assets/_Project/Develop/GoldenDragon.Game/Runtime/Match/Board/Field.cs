@@ -1,55 +1,47 @@
-﻿using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 {
-    public class Field:MonoBehaviour,ILoadUnit
+    public class Field:MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private Image _x;
         [SerializeField] private Image _o;
-        [SerializeField] private Button _click;
-        private TypePlayingField _playingField;
-
-        public Button Click => _click;
-        public TypePlayingField Type => _playingField;
+        [SerializeField] private Image _empty;
+        [SerializeField] private Button btn;
         
-        [field:HideInInspector]public TypePositionElementToField Position;
+        private TypePositionElementToField _positionElementToField;
+        private TypePlayingField _currentCurrentPlayingFieldPlayingField;
+        private PlayingField _playingField;
+        public Image X => _x;
+        public Image O => _o;
+        public Image Empty => _empty;
         
-        public async UniTask Load()
+        public Button Btn => btn;
+        public TypePlayingField CurrentPlayingField
         {
-            _x.gameObject.SetActive(false);
-            _o.gameObject.SetActive(false);
-            await UniTask.CompletedTask;
+            get => _currentCurrentPlayingFieldPlayingField;
+            set => _currentCurrentPlayingFieldPlayingField = value;
         }
 
-        public bool TrySetElement(TypePlayingField type)
+        public TypePositionElementToField Position => _positionElementToField; 
+        
+        public void Initialized(TypePositionElementToField typePosition, PlayingField playingField)
         {
-            if (_playingField != TypePlayingField.None)
-            {
-                return false;
-            }
-
-            switch (type)
-            {
-                case TypePlayingField.X:
-                    _x.gameObject.SetActive(true);
-                    break;
-                
-                case TypePlayingField.O:
-                    _o.gameObject.SetActive(true);
-                    break;
-            }
-
-            _playingField = type == TypePlayingField.X ? TypePlayingField.X : TypePlayingField.O;
-
-            return true;
+            _playingField = playingField;
+            _positionElementToField = typePosition;
+        }
+        
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _playingField.OnMouseEnterField(this);
         }
 
-        public void Initialized(TypePositionElementToField typePosition)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            Position = typePosition;
+            _playingField.OnMouseExitField(this);
         }
     }
 }

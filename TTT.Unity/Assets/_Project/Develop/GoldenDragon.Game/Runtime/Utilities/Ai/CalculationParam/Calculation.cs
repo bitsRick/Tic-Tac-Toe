@@ -1,4 +1,5 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
@@ -12,9 +13,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         public CalcScore Score => _calcScore;
         public CalcGetInput GetInput => _calcGetInput;
         
-        public Calculation(PlayingField playingField)
+        public Calculation(MatchUiRoot matchUiRoot)
         {
-            _calcScore = new CalcScore(playingField);
+            _calcScore = new CalcScore(matchUiRoot);
             _calcWhen = new CalcWhen();
             _calcGetInput = new CalcGetInput();
         }

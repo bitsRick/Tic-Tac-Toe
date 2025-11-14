@@ -56,16 +56,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             matchUi.Constructor(botMatchData,playerMatchData,_popupService,_assetService,_providerUiFactory);
             
             await _loadingService.BeginLoading(matchUi);
-
-            PlayingField field = matchUi.GetPlayingField();
-            Calculation calculation = new Calculation(field);
-            Brains brainsBot = new Brains(calculation);
-
-            await brainsBot.Load();
-
-            IAi aiBot =  new UtilityAi(field,calculation,brainsBot);
-
-            _roundManager.Initialized(aiBot,playerMatchData,botMatchData);
+            
+            UtilityAi aiBot =  new UtilityAi(matchUi);
+            await aiBot.Load();
+            
+            _roundManager.Initialized(aiBot,playerMatchData,botMatchData,matchUi);
             
             await _loadingView.Hide();
         }

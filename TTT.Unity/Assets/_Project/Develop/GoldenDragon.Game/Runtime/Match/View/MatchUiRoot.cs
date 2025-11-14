@@ -8,7 +8,9 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using R3;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,7 +62,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             InitDataView(_playerVisualDataLeft, _playerMatchData);
             InitDataView(_playerVisualDataRight, _botMatchData);
             
-            await InitializedPlayingField();
+            _playingField.Initialized(_playerMatchData);
+            
+            await _playingField.Load();
             await InitializedPopup();
             await InitializedEvent();
             
@@ -79,9 +83,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public UniTask InitializedEvent()
         {
-            _setting.onClick.AsObservable().Subscribe((_) => { OpenSetting(); });
-
-            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close());
+            _setting.onClick.AsObservable().Subscribe((_) => { OpenSetting(); }).AddTo(this);
+            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
+            
             return UniTask.CompletedTask;
         }
 
@@ -89,6 +93,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             gameObject.SetActive(true);
             return UniTask.CompletedTask;
+        }
+
+        public void SetField(CharacterMatch botMatchData, Field botActionField)
+        {
+            _playingField.OnSetTypeInField(botMatchData,botActionField);
         }
 
         private void OpenSetting()
@@ -112,39 +121,5 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             viewData.Name.text = matchData.Name;
         }
-
-        private async UniTask InitializedPlayingField()
-        {
-            var fields = _playingField.Fields;
-
-            TypePositionElementToField[] enumValues = Enum.GetValues(typeof(TypePositionElementToField))
-                .Cast<TypePositionElementToField>()
-                .ToArray();
-            
-            for (var i = 0; i < fields.GetLength(0); i++)
-            {
-                Field field = fields[i];
-
-                field.Click.onClick.AsObservable().Subscribe((_) => { OnSetTypeInField(field); }).AddTo(this);
-
-                TypePositionElementToField type = enumValues[i];
-
-                field.Initialized(type);
-                await field.Load();
-            }
-        }
-
-        private void OnSetTypeInField(Field field)
-        {
-            if (field.TrySetElement(_playerMatchData.Field))
-                _playingField.OnPlayerActionEnd.OnNext(Unit.Default);
-        }
-    }
-
-    public interface IUiRoot
-    {
-        UniTask InitializedPopup();
-        UniTask InitializedEvent();
-        UniTask Show();
     }
 }

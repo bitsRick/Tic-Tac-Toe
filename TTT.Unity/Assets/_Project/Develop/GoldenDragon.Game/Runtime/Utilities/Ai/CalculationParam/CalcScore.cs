@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
@@ -12,9 +13,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         private const int UltraScore = 150;
         private PlayingField _playingField;
 
-        public CalcScore(PlayingField playingField)
+        public CalcScore(MatchUiRoot matchUi)
         {
-            _playingField = playingField;
+            _playingField = matchUi.GetPlayingField();
         }
 
         public Func<TypePositionElementWin, CharacterMatch, Field, float> ScaleBy(int scoreUp)
@@ -28,13 +29,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                     if (field.Position == fieldLazy.Position)
                         continue;
 
-                    if (fieldLazy.Type == bot.Field)
+                    if (fieldLazy.CurrentPlayingField == bot.Field)
                     {
                         score += UltraScore;
                         continue;
                     }
 
-                    if (fieldLazy.Type == TypePlayingField.None)
+                    if (fieldLazy.CurrentPlayingField == TypePlayingField.None)
                         score += DefaultScore;
                     else
                         score -= DefaultScore;

@@ -6,7 +6,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     {
         public bool IsNotEmpty(Field field)
         {
-            return field.Type == TypePlayingField.None;
+            return field.CurrentPlayingField == TypePlayingField.None;
         }
     }
 }

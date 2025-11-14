@@ -5,68 +5,28 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public class CalcGetInput
     {
-        public TypePositionElementWin HorizontalTopLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopCenter or 
-                TypePositionElementToField.TopLeft or
-                TypePositionElementToField.TopRight ? TypePositionElementWin.HorizontalTopLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin HorizontalTopLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalTopLine(field.Position) ? TypePositionElementWin.HorizontalTopLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin HorizontalMiddleLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.MiddleCenter or 
-                TypePositionElementToField.MiddleLeft or
-                TypePositionElementToField.MiddleRight ? TypePositionElementWin.HorizontalMiddleLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin HorizontalMiddleLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalMiddleLine(field.Position) ? TypePositionElementWin.HorizontalMiddleLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin HorizontalBottomLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.BottomCenter or 
-                TypePositionElementToField.BottomLeft or
-                TypePositionElementToField.BottomRight ? TypePositionElementWin.HorizontalBottomLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin HorizontalBottomLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalBottomLine(field.Position) ? TypePositionElementWin.HorizontalBottomLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin VerticalLeftLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopLeft or 
-                TypePositionElementToField.BottomLeft or
-                TypePositionElementToField.MiddleLeft ? TypePositionElementWin.VerticalLeftLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin VerticalLeftLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalLeftLine(field.Position)? TypePositionElementWin.VerticalLeftLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin VerticalRightLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopRight or 
-                TypePositionElementToField.MiddleRight or
-                TypePositionElementToField.BottomRight ? TypePositionElementWin.VerticalRightLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin VerticalRightLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalRightLine(field.Position) ? TypePositionElementWin.VerticalRightLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin VerticalCenterLine(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopCenter or 
-                TypePositionElementToField.BottomCenter or
-                TypePositionElementToField.MiddleCenter ? TypePositionElementWin.VerticalCenterLine : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin VerticalCenterLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalCenterLine(field.Position)? TypePositionElementWin.VerticalCenterLine : TypePositionElementWin.None;
 
-        public TypePositionElementWin Slash(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopLeft or 
-                TypePositionElementToField.MiddleCenter or
-                TypePositionElementToField.BottomRight ? TypePositionElementWin.Slash : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin Slash(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetSlash(field.Position) ? TypePositionElementWin.Slash : TypePositionElementWin.None;
 
-        public TypePositionElementWin BackSlash(CharacterMatch botMatchData, Field field)
-        {
-            return field.Position is 
-                TypePositionElementToField.TopRight or 
-                TypePositionElementToField.MiddleCenter or
-                TypePositionElementToField.BottomLeft ? TypePositionElementWin.Backslash : TypePositionElementWin.None;
-        }
+        public TypePositionElementWin BackSlash(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetBackslash(field.Position) ? TypePositionElementWin.Backslash : TypePositionElementWin.None;
     }
 }

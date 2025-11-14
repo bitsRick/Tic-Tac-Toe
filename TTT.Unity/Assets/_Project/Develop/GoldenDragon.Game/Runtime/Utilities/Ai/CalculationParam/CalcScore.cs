@@ -13,16 +13,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         private const int UltraScore = 150;
         private PlayingField _playingField;
 
-        public CalcScore(MatchUiRoot matchUi)
+        public CalcScore(UtilityAi matchUi)
         {
             _playingField = matchUi.GetPlayingField();
         }
 
-        public Func<TypePositionElementWin, CharacterMatch, Field, float> ScaleBy(int scoreUp)
+        public Func<TypePositionElementWin, CharacterMatchData, Field, float> ScaleBy(int scoreUp)
         {
             return (position, bot, field) =>
             {
                 float score = 0;
+
+                if (position == TypePositionElementWin.None)
+                    return 0;
 
                 foreach (Field fieldLazy in GetFields(position))
                 {
@@ -31,7 +34,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 
                     if (fieldLazy.CurrentPlayingField == bot.Field)
                     {
-                        score += UltraScore;
+                        score *= UltraScore;
                         continue;
                     }
 
@@ -53,68 +56,28 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                     break;
 
                 case TypePositionElementWin.HorizontalTopLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.TopCenter
-                            or TypePositionElementToField.TopLeft
-                            or TypePositionElementToField.TopRight
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalTopLine(x.Position));
 
                 case TypePositionElementWin.HorizontalMiddleLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.MiddleLeft
-                            or TypePositionElementToField.MiddleRight
-                            or TypePositionElementToField.MiddleCenter
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalMiddleLine(x.Position));
 
                 case TypePositionElementWin.HorizontalBottomLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.BottomLeft
-                            or TypePositionElementToField.BottomRight
-                            or TypePositionElementToField.BottomCenter
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalBottomLine(x.Position));
 
                 case TypePositionElementWin.VerticalLeftLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.TopLeft
-                            or TypePositionElementToField.MiddleLeft
-                            or TypePositionElementToField.BottomLeft
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetVerticalLeftLine(x.Position));
 
                 case TypePositionElementWin.VerticalCenterLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.BottomCenter
-                            or TypePositionElementToField.MiddleCenter
-                            or TypePositionElementToField.TopCenter
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetVerticalCenterLine(x.Position));
 
                 case TypePositionElementWin.VerticalRightLine:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.BottomRight
-                            or TypePositionElementToField.MiddleRight
-                            or TypePositionElementToField.TopRight
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetVerticalRightLine(x.Position));
 
                 case TypePositionElementWin.Slash:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.TopLeft
-                            or TypePositionElementToField.MiddleCenter
-                            or TypePositionElementToField.BottomRight
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetSlash(x.Position));
 
                 case TypePositionElementWin.Backslash:
-                    return _playingField.Fields.Where(x =>
-                        x.Position
-                            is TypePositionElementToField.TopRight
-                            or TypePositionElementToField.MiddleCenter
-                            or TypePositionElementToField.BottomLeft
-                    );
+                    return _playingField.Fields.Where(x => MathTypeFind.GetBackslash(x.Position));
             }
 
             return null;

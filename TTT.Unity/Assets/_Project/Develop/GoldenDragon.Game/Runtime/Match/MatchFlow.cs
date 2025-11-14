@@ -49,18 +49,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _popupService = new PopupService(_saveLoadService);
             
-            CharacterMatch botMatchData = new CharacterMatch(Constant.M.BotName,Support.GetBotTypeFieldAction(_sessionDataMatch.PlayerType()));
-            CharacterMatch playerMatchData = new CharacterMatch(_playerProgress.PlayerData.Nick,Support.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()));
+            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,Support.GetBotTypeFieldAction(_sessionDataMatch.PlayerType()),true);
+            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,Support.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()),false);
             
             MatchUiRoot matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
-            matchUi.Constructor(botMatchData,playerMatchData,_popupService,_assetService,_providerUiFactory);
+            matchUi.Constructor(botMatchDataData,playerMatchDataData,_popupService,_assetService,_providerUiFactory);
             
             await _loadingService.BeginLoading(matchUi);
             
             UtilityAi aiBot =  new UtilityAi(matchUi);
             await aiBot.Load();
             
-            _roundManager.Initialized(aiBot,playerMatchData,botMatchData,matchUi);
+            _roundManager.Initialized(aiBot,playerMatchDataData,botMatchDataData,matchUi);
             
             await _loadingView.Hide();
         }

@@ -1,4 +1,5 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
         private TypePositionElementToField _positionElementToField;
         private TypePlayingField _currentCurrentPlayingFieldPlayingField;
         private PlayingField _playingField;
+        private MatchUiRoot _matchUiRoot;
         public Image X => _x;
         public Image O => _o;
         public Image Empty => _empty;
@@ -28,20 +30,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 
         public TypePositionElementToField Position => _positionElementToField; 
         
-        public void Initialized(TypePositionElementToField typePosition, PlayingField playingField)
+        public void Initialized(TypePositionElementToField typePosition, MatchUiRoot matchUiRoot)
         {
-            _playingField = playingField;
+            _matchUiRoot = matchUiRoot;
             _positionElementToField = typePosition;
         }
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            _playingField.OnMouseEnterField(this);
+            _matchUiRoot.OnMouseEnterField(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            _playingField.OnMouseExitField(this);
+            _matchUiRoot.OnMouseExitField(this);
         }
     }
 }

@@ -3,6 +3,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
+using UniRx;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
@@ -10,8 +11,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
     public class RoundManager:ITickable
     {
         private IAi _ai;
-        private CharacterMatch _player;
-        private CharacterMatch _botMatchData;
+        private CharacterMatchData _player;
+        private CharacterMatchData _botMatchDataData;
         private bool _isStart;
         private bool _isFinish;
         private bool _isTimerPause;
@@ -21,12 +22,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
         public MatchMode Mode => MatchMode.Pause;
         
-        public void Initialized(IAi ai, CharacterMatch player, CharacterMatch botMatchData,MatchUiRoot matchUiRoot)
+        public void Initialized(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,MatchUiRoot matchUiRoot)
         {
             _matchUiRoot = matchUiRoot;
             _ai = ai;
             _player = player;
-            _botMatchData = botMatchData;
+            _botMatchDataData = botMatchDataData;
+
+            matchUiRoot.OnPlayerActionEnd.Subscribe((_) => { ActionBotRound(); });
         }
         
         public void Tick()
@@ -43,8 +46,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         {
             if (_isTurnTimePaused)
                 return;
-            
-            
         }
 
         public void Start() => _isStart = true;
@@ -53,8 +54,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
         public void ActionBotRound()
         {
-            BotAction botAction = _ai.MakeBestDecision(_botMatchData);
-            _matchUiRoot.SetField(_botMatchData,botAction.Field);
+            BotAction botAction = _ai.MakeBestDecision(_botMatchDataData);
+            _matchUiRoot.SetField(_botMatchDataData,botAction.Field);
         }
     }
 }

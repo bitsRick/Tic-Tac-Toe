@@ -7,14 +7,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     public class UtilityFunction : IUtilityFunction
     {
         private readonly Func< Field, bool> _appliesTo;
-        private readonly Func<TypePositionElementWin,CharacterMatch, Field, float> _score;
-        private readonly Func<CharacterMatch, Field, TypePositionElementWin> _getInput;
+        private readonly Func<TypePositionElementWin,CharacterMatchData, Field, float> _score;
+        private readonly Func<CharacterMatchData, Field, TypePositionElementWin> _getInput;
         public string Name { get; set; }
 
         public UtilityFunction(
             Func<Field,bool> appliesTo,
-            Func<CharacterMatch,Field,TypePositionElementWin> getInput,
-            Func<TypePositionElementWin,CharacterMatch,Field,float> score,
+            Func<CharacterMatchData,Field,TypePositionElementWin> getInput,
+            Func<TypePositionElementWin,CharacterMatchData,Field,float> score,
             string name
         )
         {
@@ -24,10 +24,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             Name = name;
         }
 
-        public TypePositionElementWin GetInput(CharacterMatch botMatchData, Field field) => _getInput(botMatchData, field);
+        public TypePositionElementWin GetInput(CharacterMatchData botMatchDataData, Field field) => _getInput(botMatchDataData, field);
 
         public bool AppliesTo(Field field) => _appliesTo( field);
 
-        public float Score(TypePositionElementWin typeAction,CharacterMatch botMatchData, Field field) => _score(typeAction,botMatchData, field);
+        public float Score(TypePositionElementWin typeAction,CharacterMatchData botMatchDataData, Field field) => _score(typeAction,botMatchDataData, field);
     }
 }

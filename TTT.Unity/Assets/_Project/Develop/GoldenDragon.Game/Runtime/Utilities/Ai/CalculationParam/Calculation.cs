@@ -13,9 +13,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         public CalcScore Score => _calcScore;
         public CalcGetInput GetInput => _calcGetInput;
         
-        public Calculation(MatchUiRoot matchUiRoot)
+        public Calculation(UtilityAi utilityAi)
         {
-            _calcScore = new CalcScore(matchUiRoot);
+            _calcScore = new CalcScore(utilityAi);
             _calcWhen = new CalcWhen();
             _calcGetInput = new CalcGetInput();
         }

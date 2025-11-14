@@ -6,8 +6,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
     public class WinService
     {
-        private CharacterMatch _botMatchData;
-        private CharacterMatch _player;
+        private CharacterMatchData _botMatchDataData;
+        private CharacterMatchData _player;
         
         public void ProcessWin()
         {

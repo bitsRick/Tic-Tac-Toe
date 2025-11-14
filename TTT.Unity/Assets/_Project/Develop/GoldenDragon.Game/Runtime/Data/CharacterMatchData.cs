@@ -2,19 +2,22 @@
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data
 {
-    public class CharacterMatch
+    public class CharacterMatchData
     {
         private  string _name;
         private  bool _isWinOne;
         private  bool _isWinTwo;
         private  bool _isWinThree;
         private TypePlayingField _typeField;
+        private bool _isBot;
 
         public string Name => _name;
         public TypePlayingField Field => _typeField;
+        public bool IsBot => _isBot;
 
-        public CharacterMatch(string name,TypePlayingField typeField)
+        public CharacterMatchData(string name,TypePlayingField typeField, bool isBot)
         {
+            _isBot = isBot;
             _name = name;
             _typeField = typeField;
             

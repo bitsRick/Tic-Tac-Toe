@@ -13,7 +13,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
         [SerializeField] private Image _empty;
         [SerializeField] private Button btn;
         
-        private TypePositionElementToField _positionElementToField;
+        private PositionElementToField _positionElementToField;
         private TypePlayingField _currentCurrentPlayingFieldPlayingField;
         private PlayingField _playingField;
         private MatchUiRoot _matchUiRoot;
@@ -28,12 +28,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
             set => _currentCurrentPlayingFieldPlayingField = value;
         }
 
-        public TypePositionElementToField Position => _positionElementToField; 
+        public PositionElementToField Position => _positionElementToField; 
         
-        public void Initialized(TypePositionElementToField typePosition, MatchUiRoot matchUiRoot)
+        public void Initialized(PositionElementToField position, MatchUiRoot matchUiRoot)
         {
             _matchUiRoot = matchUiRoot;
-            _positionElementToField = typePosition;
+            _positionElementToField = position;
         }
         
         public void OnPointerEnter(PointerEventData eventData)

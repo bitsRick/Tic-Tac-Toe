@@ -1,27 +1,27 @@
 ﻿namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {
-    public static class Support
+    public static class SupportMatchAction
     {
-        public static TypePlayingField GetBotTypeFieldAction(TypeSessionMatch playerType)
+        public static TypePlayingField GetBotTypeFieldAction(SessionMatch player)
         {
-            switch (playerType)
+            switch (player)
             {
-                case TypeSessionMatch.X:
+                case SessionMatch.X:
                     return TypePlayingField.O;
-                case TypeSessionMatch.O:
+                case SessionMatch.O:
                     return TypePlayingField.X;
             }
 
             return TypePlayingField.None;
         }
 
-        public static TypePlayingField GetPlayerTypeFieldAction(TypeSessionMatch playerType)
+        public static TypePlayingField GetPlayerTypeFieldAction(SessionMatch player)
         {
-            switch (playerType)
+            switch (player)
             {
-                case TypeSessionMatch.X:
+                case SessionMatch.X:
                     return TypePlayingField.X;
-                case TypeSessionMatch.O:
+                case SessionMatch.O:
                     return TypePlayingField.O;
             }
 

@@ -29,27 +29,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 
             ShopPlayerData = new List<StyleData>()
             {
-                new(){Id = Constant.StyleData.DefaultO,Type = TypeShowItemStyle.O},
-                new(){Id = Constant.StyleData.DefaultX,Type = TypeShowItemStyle.X},
-                new (){Id = Constant.StyleData.DefaultBoard,Type = TypeShowItemStyle.Board},
+                new(){Id = Constant.StyleData.DefaultO,Type = ShowItemStyle.O},
+                new(){Id = Constant.StyleData.DefaultX,Type = ShowItemStyle.X},
+                new (){Id = Constant.StyleData.DefaultBoard,Type = ShowItemStyle.Board},
             };
 
             Board = new StyleData()
             {
                 Id = Constant.StyleData.DefaultBoard,
-                Type = TypeShowItemStyle.Board
+                Type = ShowItemStyle.Board
             };
             
             X = new StyleData()
             {
                 Id = Constant.StyleData.DefaultX,
-                Type = TypeShowItemStyle.X
+                Type = ShowItemStyle.X
             };
             
             O = new StyleData()
             {
                 Id = Constant.StyleData.DefaultO,
-                Type = TypeShowItemStyle.O
+                Type = ShowItemStyle.O
             };
 
             AudioSetting = new AudioSetting(false,false,1f,1f);
@@ -79,6 +79,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     public class StyleData
     {
         public string Id;
-        public TypeShowItemStyle Type;
+        public ShowItemStyle Type;
     }
 }

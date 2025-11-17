@@ -1,12 +1,10 @@
-﻿using System;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Win;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation.Win;
 using TMPro;
 using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation
 {
-    public class DataMatchPlayerUi:MonoBehaviour
+    public class TopProgressViewWinUi:MonoBehaviour
     {
         [Header("имя игрока")]
         [SerializeField] private TextMeshProUGUI _name;
@@ -24,15 +22,5 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Top
         public WinImageUi WinOne => _winOne;
         public WinImageUi WinTwo => _winTwo;
         public WinImageUi WinThree => _winThree;
-
-        public void SetColor(TypeColorMatchAction color)
-        {
-            _name.color = color switch
-            {
-                TypeColorMatchAction.Active => _actionRound,
-                TypeColorMatchAction.NoActive => _noActionRound,
-                _ => _name.color
-            };
-        }
     }
 }

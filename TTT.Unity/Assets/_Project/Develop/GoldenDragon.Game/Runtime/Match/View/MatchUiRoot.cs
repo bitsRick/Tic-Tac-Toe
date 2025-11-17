@@ -6,11 +6,13 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,8 +28,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         [SerializeField] private Button _setting;
         
         [Header("Визуальнаые данные игроков")] 
-        [SerializeField]private DataMatchPlayerUi _playerVisualDataLeft;
-        [SerializeField]private DataMatchPlayerUi _playerVisualDataRight;
+        [SerializeField]private TopProgressViewWinUi _playerVisualDataLeft;
+        [SerializeField]private TopProgressViewWinUi _botVisualDataRight;
         
         [Header("Контейнер для окон")] 
         [SerializeField]private GameObject _parrent;
@@ -40,32 +42,31 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private PopupService _popupService;
         private AssetService _assetService;
         private ProviderUiFactory _providerUiFactory;
-
-        public Subject<Unit> OnPlayerActionEnd = new Subject<Unit>();
-        public Subject<Unit> OnBotActionEnd = new Subject<Unit>();
-
+        private RoundManager _roundManager;
+        
         public PlayingField PlayingField => _playingField;
 
         public void Constructor(CharacterMatchData botMatchDataData, CharacterMatchData playerMatchDataData,
             PopupService popupService, AssetService assetService,
-            ProviderUiFactory providerUiFactory)
+            ProviderUiFactory providerUiFactory,RoundManager roundManager)
         {
             _providerUiFactory = providerUiFactory;
             _assetService = assetService;
             _popupService = popupService;
             _playerMatchData = playerMatchDataData;
             _botMatchDataData = botMatchDataData;
+            _roundManager = roundManager;
         }
         
         public async UniTask Load()
         {
             InitDataView(_playerVisualDataLeft, _playerMatchData);
-            InitDataView(_playerVisualDataRight, _botMatchDataData);
+            InitDataView(_botVisualDataRight, _botMatchDataData);
 
             await InitializedPlayingField();
             await InitializedPopup();
             await InitializedEvent();
-
+            
             await UniTask.CompletedTask;
         }
 
@@ -84,7 +85,66 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _setting.onClick.AsObservable().Subscribe((_) => { OpenSetting(); }).AddTo(this);
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
 
+            _roundManager.OnWin.Subscribe((SetWin)).AddTo(this);
+            _roundManager.OnButtonInteractive.Subscribe( SetInteractiveFieldButton).AddTo(this);
+            
             return UniTask.CompletedTask;
+        }
+
+        private void SetInteractiveFieldButton(bool isFlag)
+        {
+            foreach (Field field in _playingField.Fields) field.Btn.interactable = isFlag;
+        }
+
+        private void SetWin(MatchWin winner)
+        {
+            if (_roundManager.RoundData.IsNotEndWin())
+            {
+                _roundManager.Reset();
+                ResetFields();
+                SetViewWin(winner);
+                _roundManager.Start();
+            }
+            else
+            {
+                
+            }
+        }
+
+        private void SetViewWin(MatchWin winner)
+        {
+            switch (winner)
+            {
+                case MatchWin.Player:
+                    UpdateProgressWinUi(_playerVisualDataLeft);
+                    break;
+                
+                case MatchWin.Bot:
+                    UpdateProgressWinUi(_botVisualDataRight);
+                    break;
+            }
+        }
+
+        private void UpdateProgressWinUi(TopProgressViewWinUi data)
+        {
+           var winImageUi = new[] { data.WinOne, data.WinTwo, data.WinThree }
+                .FirstOrDefault(win => win.IsNotWin);
+
+            if (winImageUi != null)
+            {
+                winImageUi.Default.gameObject.SetActive(false);
+                winImageUi.Win.gameObject.SetActive(true);
+                winImageUi.IsNotWin = false;
+            }
+        }
+
+        private void ResetFields()
+        {
+            foreach (Field field in _playingField.Fields)
+            {
+                field.CurrentPlayingField = TypePlayingField.None;
+                SetViewField(field, false);
+            }
         }
 
         public UniTask Show()
@@ -92,12 +152,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             gameObject.SetActive(true);
             return UniTask.CompletedTask;
         }
-
-        public void SetField(CharacterMatchData character, Field botActionField)
-        {
-            OnSetTypeInField(character, botActionField);
-        }
-
+        
         public void OnMouseEnterField(Field fieldData)
         {
             SetViewField(fieldData, true);
@@ -125,38 +180,36 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             popup.Show();
         }
 
-        private void InitDataView(DataMatchPlayerUi viewData, CharacterMatchData matchDataData)
+        private void InitDataView(TopProgressViewWinUi viewData, CharacterMatchData matchDataData)
         {
             viewData.Name.text = matchDataData.Name;
         }
 
-        private void OnSetTypeInField(CharacterMatchData characterMatchData, Field field)
+        public void SetTypeInField(CharacterMatchData characterMatchData, Field field)
         {
-            if (TrySetField(characterMatchData, field))
-            {
-                if (characterMatchData.IsBot)
-                    OnBotActionEnd.OnNext(Unit.Default);
-                else
-                    OnPlayerActionEnd.OnNext(Unit.Default);
-            }
+            if (TrySetField(characterMatchData, field)) 
+                _roundManager.NextTurn();
         }
 
         private async UniTask InitializedPlayingField()
         {
-            TypePositionElementToField[] enumValues = Enum.GetValues(typeof(TypePositionElementToField))
-                .Cast<TypePositionElementToField>()
+            PositionElementToField[] enumValues = Enum.GetValues(typeof(PositionElementToField))
+                .Cast<PositionElementToField>()
                 .ToArray();
 
             for (var i = 0; i < _playingField.Fields.GetLength(0); i++)
             {
-                TypePositionElementToField type = enumValues[i];
+                PositionElementToField type = enumValues[i];
 
                 Field field = _playingField.Fields[i];
                 field.X.gameObject.SetActive(false);
                 field.O.gameObject.SetActive(false);
 
                 field.Initialized(type, this);
-                field.Btn.onClick.AsObservable().Subscribe((_) => { OnSetTypeInField(_playerMatchData, field); })
+                field.Btn.onClick.AsObservable().Subscribe((_) =>
+                    {
+                        SetTypeInField(_playerMatchData, field);
+                    })
                     .AddTo(this);
 
                 await Task.CompletedTask;

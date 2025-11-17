@@ -10,13 +10,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             public const string DefaultX = "Default_X";
             public const string DefaultO = "Default_O";
             
-            public static string GetDefaultType(TypeShowItemStyle type)
+            public static string GetDefaultType(ShowItemStyle type)
             {
                 return type switch
                 {
-                    TypeShowItemStyle.Board => Constant.StyleData.DefaultBoard,
-                    TypeShowItemStyle.X => Constant.StyleData.DefaultX,
-                    TypeShowItemStyle.O => Constant.StyleData.DefaultO,
+                    ShowItemStyle.Board => Constant.StyleData.DefaultBoard,
+                    ShowItemStyle.X => Constant.StyleData.DefaultX,
+                    ShowItemStyle.O => Constant.StyleData.DefaultO,
                     _ => null
                 };
             }
@@ -121,14 +121,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Elements
     }
 
-    public enum TypeShowItemStyle
+    public enum ShowItemStyle
     {
         Board,
         X,
         O
     }
 
-    public enum TypeSessionMatch
+    public enum SessionMatch
     {
         None,
         X,
@@ -157,7 +157,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         PlayerTwoAction
     }
 
-    public enum TypePositionElementWin
+    public enum PositionElementWin
     {
         None,
         
@@ -173,10 +173,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         Backslash
     }
 
-    public enum TypePositionElementToField
+    public enum PositionElementToField
     {
         TopLeft = 0,TopCenter = 1,TopRight = 2,
         MiddleLeft = 3,MiddleCenter = 4,MiddleRight = 5,
         BottomLeft = 6,BottomCenter = 7,BottomRight = 8,
+    }
+
+    public enum MatchWin
+    {
+        None,
+        Player,
+        Bot
     }
 }

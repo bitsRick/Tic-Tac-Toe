@@ -8,34 +8,42 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
-    public class UtilityAi:IAi,ILoadUnit
+    public class UtilityAi:IAi
     {
         private PlayingField _playingField;
+        private IEnumerable<IUtilityFunction> _utilityFunction;
         private Calculation _calculation;
         private Brains _brains;
-        private IEnumerable<IUtilityFunction> _utilityFunction;
-        private readonly MatchUiRoot _matchUiRoot;
+        private MatchUiRoot _matchUiRoot;
 
-        public UtilityAi(MatchUiRoot matchUiRoot) => _matchUiRoot = matchUiRoot;
-
-        public async UniTask Load()
+        public UtilityAi(Calculation calculation,Brains brains)
         {
+            _brains = brains;
+            _calculation = calculation;
+        }
+
+        public async UniTask Load(MatchUiRoot matchUiRoot)
+        {
+            _matchUiRoot = matchUiRoot;
             _playingField = _matchUiRoot.PlayingField;
             
-            _calculation = new Calculation(this);
-            _brains = new Brains(_calculation);
+            _calculation = new Calculation();
+            await _calculation.Score.Load(this);
             
+            _brains = new Brains(_calculation);
             await _brains.Load();
             
             _utilityFunction = _brains.GetUtilityFunction();
         }
 
-        public PlayingField GetPlayingField() => _matchUiRoot.PlayingField;
+        public void SetField(CharacterMatchData botMatchDataData, Field botActionField) => 
+            _matchUiRoot.SetTypeInField(botMatchDataData,botActionField);
+
+        public PlayingField GetPlayingField() => _playingField;
 
         public BotAction MakeBestDecision(CharacterMatchData botMatchDataData)
         {
             IEnumerable<ScoreAction> choisec = GetScoreBotAction(botMatchDataData);
-
             return choisec.FindMax(x => x.Score);
         }
 
@@ -50,12 +58,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 
         private float CalculateScore(CharacterMatchData botMatchDataData, Field field)
         {
-            IEnumerable<ScoreFactor> scoreFactor = 
+            List<ScoreFactor> scoreFactor = 
                 (from utilityFunction in _utilityFunction
                 where utilityFunction.AppliesTo(field)
                 let input = utilityFunction.GetInput(botMatchDataData, field)
                 let score = utilityFunction.Score(input, botMatchDataData,field)
-                select new ScoreFactor(utilityFunction.Name, score));
+                select new ScoreFactor(utilityFunction.Name, score)).ToList();
 
             return scoreFactor.Select(x => x.Score).Sum();
         }

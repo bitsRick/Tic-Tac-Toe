@@ -6,8 +6,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     public interface IUtilityFunction
     {
         bool AppliesTo(Field field);
-        float Score(TypePositionElementWin typeAction,CharacterMatchData botMatchDataData, Field field);
+        float Score(PositionElementWin action,CharacterMatchData botMatchDataData, Field field);
         string Name { get; set; }
-        TypePositionElementWin GetInput(CharacterMatchData botMatchDataData, Field field);
+        PositionElementWin GetInput(CharacterMatchData botMatchDataData, Field field);
     }
 }

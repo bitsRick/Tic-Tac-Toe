@@ -7,7 +7,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     public interface IItem
     {
         public string Id { get; set; }
-        public TypeShowItemStyle Type { get; set; }
+        public ShowItemStyle Type { get; set; }
         public Image Image { get; }
         public Button Btn { get; }
         public Transform Transform { get; }

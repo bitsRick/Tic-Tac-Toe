@@ -2,60 +2,60 @@
 {
     public static class MathTypeFind
     {
-        public static bool GetHorizontalTopLine(TypePositionElementToField type)
+        public static bool GetHorizontalTopLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.TopCenter
-            or TypePositionElementToField.TopLeft
-            or TypePositionElementToField.TopRight;
+            return type is PositionElementToField.TopCenter
+            or PositionElementToField.TopLeft
+            or PositionElementToField.TopRight;
         }
         
-        public static bool GetHorizontalMiddleLine(TypePositionElementToField type)
+        public static bool GetHorizontalMiddleLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.MiddleLeft
-                or TypePositionElementToField.MiddleRight
-                or TypePositionElementToField.MiddleCenter;
+            return type is PositionElementToField.MiddleLeft
+                or PositionElementToField.MiddleRight
+                or PositionElementToField.MiddleCenter;
         }
         
-        public static bool GetHorizontalBottomLine(TypePositionElementToField type)
+        public static bool GetHorizontalBottomLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.BottomLeft
-                or TypePositionElementToField.BottomRight
-                or TypePositionElementToField.BottomCenter;
+            return type is PositionElementToField.BottomLeft
+                or PositionElementToField.BottomRight
+                or PositionElementToField.BottomCenter;
         }
         
-        public static bool GetVerticalLeftLine(TypePositionElementToField type)
+        public static bool GetVerticalLeftLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.TopLeft
-                or TypePositionElementToField.MiddleLeft
-                or TypePositionElementToField.BottomLeft;
+            return type is PositionElementToField.TopLeft
+                or PositionElementToField.MiddleLeft
+                or PositionElementToField.BottomLeft;
         }
         
-        public static bool GetVerticalCenterLine(TypePositionElementToField type)
+        public static bool GetVerticalCenterLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.BottomCenter
-                or TypePositionElementToField.MiddleCenter
-                or TypePositionElementToField.TopCenter;
+            return type is PositionElementToField.BottomCenter
+                or PositionElementToField.MiddleCenter
+                or PositionElementToField.TopCenter;
         }
         
-        public static bool GetVerticalRightLine(TypePositionElementToField type)
+        public static bool GetVerticalRightLine(PositionElementToField type)
         {
-            return type is TypePositionElementToField.BottomRight
-                or TypePositionElementToField.MiddleRight
-                or TypePositionElementToField.TopRight;
+            return type is PositionElementToField.BottomRight
+                or PositionElementToField.MiddleRight
+                or PositionElementToField.TopRight;
         }
         
-        public static bool GetSlash(TypePositionElementToField type)
+        public static bool GetSlash(PositionElementToField type)
         {
-            return type is TypePositionElementToField.TopLeft
-                or TypePositionElementToField.MiddleCenter
-                or TypePositionElementToField.BottomRight;
+            return type is PositionElementToField.TopLeft
+                or PositionElementToField.MiddleCenter
+                or PositionElementToField.BottomRight;
         }
         
-        public static bool GetBackslash(TypePositionElementToField type)
+        public static bool GetBackslash(PositionElementToField type)
         {
-            return type is  TypePositionElementToField.TopRight
-                or TypePositionElementToField.MiddleCenter
-                or TypePositionElementToField.BottomLeft;
+            return type is  PositionElementToField.TopRight
+                or PositionElementToField.MiddleCenter
+                or PositionElementToField.BottomLeft;
         }
     }
 }

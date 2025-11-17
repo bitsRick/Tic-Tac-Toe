@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
-    public static class RandomRound
+    public class RandomRound
     {
         private const int PlayerAction = 0;
         private const int BotAction = 2;
 
-        public static MatchMode GetFirstCharacterAction()
+        public MatchMode GetFirstCharacterAction()
         {
             return Random.Range(PlayerAction, BotAction) == PlayerAction ? MatchMode.PlayerAction : MatchMode.BotAction;
         }

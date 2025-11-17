@@ -17,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private Image _image;
         private string _id;
 
-        public TypeShowItemStyle Type { get; set; }
+        public ShowItemStyle Type { get; set; }
         
         public RectTransform RectTransform
         {

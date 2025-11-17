@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
-    public class CalcScore
+    public class CalcScore:ILoadUnit<UtilityAi>
     {
         private const int DefaultScore = 100;
         private const int UltraScore = 150;
-        private PlayingField _playingField;
-
-        public CalcScore(UtilityAi matchUi)
+        private const int PlayerNextRoundWin = 2;
+        private Match.Board.PlayingField _playingField;
+        
+        public UniTask Load(UtilityAi utilityAi)
         {
-            _playingField = matchUi.GetPlayingField();
+            _playingField = utilityAi.GetPlayingField();
+            return UniTask.CompletedTask;
         }
 
-        public Func<TypePositionElementWin, CharacterMatchData, Field, float> ScaleBy(int scoreUp)
+        public Func<PositionElementWin, CharacterMatchData, Field, float> ScaleBy(int scoreUp)
         {
+            int countPlayerField = 0;
+            
             return (position, bot, field) =>
             {
                 float score = 0;
 
-                if (position == TypePositionElementWin.None)
+                if (position == PositionElementWin.None)
                     return 0;
 
                 foreach (Field fieldLazy in GetFields(position))
@@ -38,45 +42,56 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                         continue;
                     }
 
+                    if (countPlayerField == PlayerNextRoundWin)
+                    {
+                        score *= scoreUp;
+                        continue;
+                    }
+
                     if (fieldLazy.CurrentPlayingField == TypePlayingField.None)
+                    {
                         score += DefaultScore;
+                    }
                     else
+                    {
                         score -= DefaultScore;
+                        countPlayerField++;
+                    }
                 }
 
                 return score * scoreUp;
             };
         }
 
-        private IEnumerable<Field> GetFields(TypePositionElementWin position)
+        private IEnumerable<Field> GetFields(PositionElementWin position)
         {
             switch (position)
             {
-                case TypePositionElementWin.None:
+                case PositionElementWin.None:
                     break;
 
-                case TypePositionElementWin.HorizontalTopLine:
+                case PositionElementWin.HorizontalTopLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalTopLine(x.Position));
 
-                case TypePositionElementWin.HorizontalMiddleLine:
+                case PositionElementWin.HorizontalMiddleLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalMiddleLine(x.Position));
 
-                case TypePositionElementWin.HorizontalBottomLine:
+                case PositionElementWin.HorizontalBottomLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetHorizontalBottomLine(x.Position));
 
-                case TypePositionElementWin.VerticalLeftLine:
+                case PositionElementWin.VerticalLeftLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetVerticalLeftLine(x.Position));
 
-                case TypePositionElementWin.VerticalCenterLine:
+                case PositionElementWin.VerticalCenterLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetVerticalCenterLine(x.Position));
 
-                case TypePositionElementWin.VerticalRightLine:
+                case PositionElementWin.VerticalRightLine:
                     return _playingField.Fields.Where(x => MathTypeFind.GetVerticalRightLine(x.Position));
 
-                case TypePositionElementWin.Slash:
+                case PositionElementWin.Slash:
                     return _playingField.Fields.Where(x => MathTypeFind.GetSlash(x.Position));
 
-                case TypePositionElementWin.Backslash:
+                case PositionElementWin.Backslash:
                     return _playingField.Fields.Where(x => MathTypeFind.GetBackslash(x.Position));
             }
 

@@ -1,20 +1,16 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
 {
-    public class MatchFlow:IStartable
+    public class MatchFlow:IStartable,ITickable
     {
         private readonly SceneManager _sceneManager;
         private readonly LoadingService _loadingService;
@@ -22,18 +18,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly ProviderUiFactory _providerUiFactory;
         private SessionDataMatch _sessionDataMatch;
         private PopupService _popupService;
-        private IPlayerProgress _playerProgress;
         private AssetService _assetService;
         private SaveLoadService _saveLoadService;
         private RoundManager _roundManager;
+        private WinService _winService;
+        private IAi _utilityAi;
+        private IPlayerProgress _playerProgress;
 
         public MatchFlow(SceneManager sceneManager,
             LoadingService loadingService,LoadingView loadingView,
             ProviderUiFactory providerUiFactory,
             SessionDataMatch sessionDataMatch,
             IPlayerProgress playerProgress,
-            AssetService assetService,SaveLoadService saveLoadService,RoundManager roundManager)
+            AssetService assetService,SaveLoadService saveLoadService,
+            RoundManager roundManager,IAi utilityAi)
         {
+            _utilityAi = utilityAi;
             _roundManager = roundManager;
             _saveLoadService = saveLoadService;
             _assetService = assetService;
@@ -49,20 +49,31 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _popupService = new PopupService(_saveLoadService);
             
-            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,Support.GetBotTypeFieldAction(_sessionDataMatch.PlayerType()),true);
-            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,Support.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()),false);
+            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,SupportMatchAction.GetBotTypeFieldAction(_sessionDataMatch.PlayerType()),true);
+            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,SupportMatchAction.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()),false);
             
             MatchUiRoot matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
-            matchUi.Constructor(botMatchDataData,playerMatchDataData,_popupService,_assetService,_providerUiFactory);
-            
+            matchUi.Constructor(botMatchDataData,playerMatchDataData,_popupService,_assetService,_providerUiFactory,_roundManager);
+
             await _loadingService.BeginLoading(matchUi);
+            await _loadingService.BeginLoading(_utilityAi,matchUi);
+
+            _winService = new WinService(botMatchDataData, playerMatchDataData, matchUi);
+            await _loadingService.BeginLoading(_winService);
             
-            UtilityAi aiBot =  new UtilityAi(matchUi);
-            await aiBot.Load();
+            _roundManager.Initialized(_utilityAi,playerMatchDataData,botMatchDataData,_winService,new RandomRound());
+            _roundManager.InitializedFirstActionRound();
             
-            _roundManager.Initialized(aiBot,playerMatchDataData,botMatchDataData,matchUi);
+            matchUi.Show();
+            
+            _roundManager.Start();
             
             await _loadingView.Hide();
+        }
+
+        public void Tick()
+        {
+            _roundManager.Update();            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     {
         public float Score;
 
-        public ScoreAction(float score, Field field, TypePlayingField botType)
+        public ScoreAction(float score, Field field, TypePlayingField bot)
         {
             Field = field;
             Score = score;

@@ -5,28 +5,28 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public class CalcGetInput
     {
-        public TypePositionElementWin HorizontalTopLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetHorizontalTopLine(field.Position) ? TypePositionElementWin.HorizontalTopLine : TypePositionElementWin.None;
+        public PositionElementWin HorizontalTopLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalTopLine(field.Position) ? PositionElementWin.HorizontalTopLine : PositionElementWin.None;
 
-        public TypePositionElementWin HorizontalMiddleLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetHorizontalMiddleLine(field.Position) ? TypePositionElementWin.HorizontalMiddleLine : TypePositionElementWin.None;
+        public PositionElementWin HorizontalMiddleLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalMiddleLine(field.Position) ? PositionElementWin.HorizontalMiddleLine : PositionElementWin.None;
 
-        public TypePositionElementWin HorizontalBottomLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetHorizontalBottomLine(field.Position) ? TypePositionElementWin.HorizontalBottomLine : TypePositionElementWin.None;
+        public PositionElementWin HorizontalBottomLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetHorizontalBottomLine(field.Position) ? PositionElementWin.HorizontalBottomLine : PositionElementWin.None;
 
-        public TypePositionElementWin VerticalLeftLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetVerticalLeftLine(field.Position)? TypePositionElementWin.VerticalLeftLine : TypePositionElementWin.None;
+        public PositionElementWin VerticalLeftLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalLeftLine(field.Position)? PositionElementWin.VerticalLeftLine : PositionElementWin.None;
 
-        public TypePositionElementWin VerticalRightLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetVerticalRightLine(field.Position) ? TypePositionElementWin.VerticalRightLine : TypePositionElementWin.None;
+        public PositionElementWin VerticalRightLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalRightLine(field.Position) ? PositionElementWin.VerticalRightLine : PositionElementWin.None;
 
-        public TypePositionElementWin VerticalCenterLine(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetVerticalCenterLine(field.Position)? TypePositionElementWin.VerticalCenterLine : TypePositionElementWin.None;
+        public PositionElementWin VerticalCenterLine(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetVerticalCenterLine(field.Position)? PositionElementWin.VerticalCenterLine : PositionElementWin.None;
 
-        public TypePositionElementWin Slash(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetSlash(field.Position) ? TypePositionElementWin.Slash : TypePositionElementWin.None;
+        public PositionElementWin Slash(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetSlash(field.Position) ? PositionElementWin.Slash : PositionElementWin.None;
 
-        public TypePositionElementWin BackSlash(CharacterMatchData botMatchDataData, Field field) => 
-            MathTypeFind.GetBackslash(field.Position) ? TypePositionElementWin.Backslash : TypePositionElementWin.None;
+        public PositionElementWin BackSlash(CharacterMatchData botMatchDataData, Field field) => 
+            MathTypeFind.GetBackslash(field.Position) ? PositionElementWin.Backslash : PositionElementWin.None;
     }
 }

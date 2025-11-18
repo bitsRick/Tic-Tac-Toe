@@ -11,6 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data
         private TypePlayingField _field;
 
         public string Name => _name;
+        public int WinCount => _winCount;
         public TypePlayingField Field => _field;
         public bool IsBot => _isBot;
 

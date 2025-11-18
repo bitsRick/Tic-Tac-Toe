@@ -1,11 +1,10 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
 {
     public class SettingPopup : PopupBase
     {

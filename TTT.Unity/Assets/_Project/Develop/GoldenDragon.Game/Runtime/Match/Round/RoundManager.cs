@@ -1,6 +1,6 @@
 ﻿using System;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
@@ -11,7 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
     public class RoundData
     {
-        public const int MaxWin = 3;
+        public const int MaxWinMatch = 3;
         public int CurrenWin = 0;
         
         public bool IsStart;
@@ -19,7 +19,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public bool IsTimerPause;
         public bool IsTurnTimePaused;
 
-        public bool IsNotEndWin() => CurrenWin < MaxWin;
+        public int MaxWin => MaxWinMatch;
 
         public void Reset()
         {
@@ -27,6 +27,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             IsFinish = false;
             IsTimerPause = false;
             IsTurnTimePaused = false;
+        }
+        
+        public bool IsNotEndWin(CharacterMatchData playerMatchData, CharacterMatchData botMatchData)
+        {
+            return playerMatchData.WinCount < MaxWinMatch && botMatchData.WinCount < MaxWinMatch;
         }
     }
 

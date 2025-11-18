@@ -3020,7 +3020,7 @@ MonoBehaviour:
   _playingField: {fileID: 8001891425366579897}
   _setting: {fileID: 5242425766287500223}
   _playerVisualDataLeft: {fileID: 7843571808224096277}
-  _playerVisualDataRight: {fileID: 2184398755827861013}
+  _botVisualDataRight: {fileID: 2184398755827861013}
   _parrent: {fileID: 5588131505377243690}
   _popupBackground: {fileID: 6841484735403195216}
 --- !u!1 &5588131505377243690

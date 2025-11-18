@@ -70,6 +70,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                     public const string LeaderBoard = "Popup_leaderBoard";
                     public const string Match = "Popup_Match";
                     public const string Shop = "Popup_Shop";
+                    public const string StartMatchViewAction = "Popup_StartMatch";
+                    public const string WinLose = "Popup_WinLose";
                     public const string ShopElementBuyPrefab ="Shop_Element_Buy-Prefab";
                     public const string InventoryElementStylePrefab ="Inventory_Element_Style-Prefab";
                     public const string PoolElementUi = nameof(PoolElementUi);
@@ -107,7 +109,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         LeaderBoard,
         Match,
         Inventory,
-        Shop
+        Shop,
+        WinLose,
+        CharacterStartMatch
     }
     
     public enum TypeAsset

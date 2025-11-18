@@ -6,11 +6,13 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
@@ -75,15 +77,33 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             GameObject settingObject =
                 await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(settingObject, _parrent);
+
+            GameObject winLoseObject =
+                await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.WinLose);
+            WinLosePopup winLosePopup = _assetService.Install.InstallToUiPopup<WinLosePopup>(winLoseObject, _parrent);
+            
+            GameObject characterViewObject =
+                await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.StartMatchViewAction);
+            CharacterStartMatchPopup characterStartMatchPopup = _assetService.Install.InstallToUiPopup<CharacterStartMatchPopup>(characterViewObject, _parrent);
+            
             _popupService.AddPopupInList(TypePopup.Setting, settingPopup);
+            _popupService.AddPopupInList(TypePopup.WinLose, winLosePopup);
+            _popupService.AddPopupInList(TypePopup.CharacterStartMatch, characterStartMatchPopup);
 
             await UniTask.CompletedTask;
+        }
+
+        public UniTask Show()
+        {
+            gameObject.SetActive(true);
+            return UniTask.CompletedTask;
         }
 
         public UniTask InitializedEvent()
         {
             _setting.onClick.AsObservable().Subscribe((_) => { OpenSetting(); }).AddTo(this);
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
+            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).Dispose();
 
             _roundManager.OnWin.Subscribe((SetWin)).AddTo(this);
             _roundManager.OnButtonInteractive.Subscribe( SetInteractiveFieldButton).AddTo(this);
@@ -98,16 +118,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         private void SetWin(MatchWin winner)
         {
-            if (_roundManager.RoundData.IsNotEndWin())
+            ResetFields();
+
+            if (_roundManager.RoundData.IsNotEndWin(_playerMatchData,_botMatchDataData))
             {
                 _roundManager.Reset();
-                ResetFields();
                 SetViewWin(winner);
                 _roundManager.Start();
             }
             else
             {
-                
+                OpenWinLose(winner);
             }
         }
 
@@ -130,12 +151,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
            var winImageUi = new[] { data.WinOne, data.WinTwo, data.WinThree }
                 .FirstOrDefault(win => win.IsNotWin);
 
-            if (winImageUi != null)
-            {
-                winImageUi.Default.gameObject.SetActive(false);
-                winImageUi.Win.gameObject.SetActive(true);
-                winImageUi.IsNotWin = false;
-            }
+           if (winImageUi == null)
+               return;
+            
+           winImageUi.Default.gameObject.SetActive(false);
+           winImageUi.Win.gameObject.SetActive(true);
+           winImageUi.IsNotWin = false;
         }
 
         private void ResetFields()
@@ -143,16 +164,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             foreach (Field field in _playingField.Fields)
             {
                 field.CurrentPlayingField = TypePlayingField.None;
-                SetViewField(field, false);
+                field.O.gameObject.SetActive(false);
+                field.X.gameObject.SetActive(false);
+                field.Btn.targetGraphic = field.Empty;
             }
         }
 
-        public UniTask Show()
-        {
-            gameObject.SetActive(true);
-            return UniTask.CompletedTask;
-        }
-        
         public void OnMouseEnterField(Field fieldData)
         {
             SetViewField(fieldData, true);
@@ -175,6 +192,68 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
             popup.MusicSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Music);
             popup.SoundSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Sound);
+
+            _popupBackground.Show();
+            popup.Show();
+        }
+
+        private void OpenWinLose(MatchWin matchWin)
+        {
+            AudioPlayer.Click();
+            WinLosePopup popup;
+            
+            if (_popupService.TryOpenPopup(TypePopup.WinLose, out WinLosePopup winLosePopup))
+                popup = winLosePopup;
+            else
+                return;
+
+            popup.Initialized();
+
+            Log.Match.D($"[Match]:Winner {matchWin.ToString()}");
+            
+            switch (matchWin)
+            {
+                case MatchWin.Player:
+                    popup.Win.SetActive(true);
+                    break;
+                case MatchWin.Bot:
+                    popup.Lose.SetActive(true);
+                    break;
+            }
+
+            _popupBackground.Show();
+            popup.Show();
+        }
+
+        public void OpenCharacterStartMatchPopup()
+        {
+            AudioPlayer.Click();
+            CharacterStartMatchPopup popup;
+            
+            if (_popupService.TryOpenPopup(TypePopup.CharacterStartMatch, out CharacterStartMatchPopup characterStartMatch))
+                popup = characterStartMatch;
+            else
+                return;
+
+            switch (_roundManager.Mode)
+            {
+                case MatchMode.PlayerAction:
+                    popup.Name.text = _playerMatchData.Name;
+                    break;
+                
+                case MatchMode.BotAction:
+                    popup.Name.text = _botMatchDataData.Name;
+                    break;
+            }
+
+            int countEvent = 1;
+            
+            _popupBackground.OnEvenPointClickBackground
+                .Take(countEvent)
+                .Subscribe((_) =>
+                {
+                    _roundManager.Start();
+                });
 
             _popupBackground.Show();
             popup.Show();

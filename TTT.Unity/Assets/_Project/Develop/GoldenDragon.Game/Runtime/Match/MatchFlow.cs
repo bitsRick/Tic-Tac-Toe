@@ -65,8 +65,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _roundManager.InitializedFirstActionRound();
             
             matchUi.Show();
-            
-            _roundManager.Start();
+            matchUi.OpenCharacterStartMatchPopup();
             
             await _loadingView.Hide();
         }
@@ -74,6 +73,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         public void Tick()
         {
             _roundManager.Update();            
+        }
+
+        private void NextMatch()
+        {
+            
+        }
+
+        private void ToMeta()
+        {
+            
         }
     }
 }

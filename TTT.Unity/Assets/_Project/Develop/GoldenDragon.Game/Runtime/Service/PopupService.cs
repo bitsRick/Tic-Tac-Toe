@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
@@ -56,6 +57,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
                 }
             }
 
+            Log.Default.W($"[PopupService]:NOT OPEN - {typePopup.ToString()}");
+            
             popupOut = null;
             return false;
         }

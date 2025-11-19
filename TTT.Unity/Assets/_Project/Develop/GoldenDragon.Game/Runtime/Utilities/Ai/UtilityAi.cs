@@ -51,12 +51,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         {
             foreach (Field field in _playingField.Fields)
             {
-                float score = CalculateScore(botMatchDataData,field);
-                yield return new ScoreAction(score,field,botMatchDataData.Field);
+                float? score = CalculateScore(botMatchDataData,field);
+
+                if (!score.HasValue)
+                    continue;
+
+                yield return new ScoreAction(score.Value,field,botMatchDataData.Field);
             }
         }
-
-        private float CalculateScore(CharacterMatchData botMatchDataData, Field field)
+        
+        private float? CalculateScore(CharacterMatchData botMatchDataData, Field field)
         {
             List<ScoreFactor> scoreFactor = 
                 (from utilityFunction in _utilityFunction
@@ -65,7 +69,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 let score = utilityFunction.Score(input, botMatchDataData,field)
                 select new ScoreFactor(utilityFunction.Name, score)).ToList();
 
-            return scoreFactor.Select(x => x.Score).Sum();
+            return scoreFactor.Select(x => x.Score).SumOrNull();
         }
     }
 }

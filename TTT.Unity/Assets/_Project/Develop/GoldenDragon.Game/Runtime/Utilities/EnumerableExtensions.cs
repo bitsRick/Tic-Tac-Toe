@@ -44,5 +44,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 
             return selected;
         }
+        
+        public static float? SumOrNull(this IEnumerable<float> numbers)
+        {
+            float? sum = null;
+            foreach (float f in numbers)
+                sum = f + (sum ?? 0);
+
+            return sum;
+        }
     }
 }

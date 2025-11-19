@@ -13,7 +13,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
     {
         public const int MaxWinMatch = 3;
         public int CurrenWin = 0;
-        
+        public int CountSetField = -1;
+
         public bool IsStart;
         public bool IsFinish;
         public bool IsTimerPause;
@@ -27,12 +28,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             IsFinish = false;
             IsTimerPause = false;
             IsTurnTimePaused = false;
+            CountSetField = -1;
         }
         
-        public bool IsNotEndWin(CharacterMatchData playerMatchData, CharacterMatchData botMatchData)
-        {
-            return playerMatchData.WinCount < MaxWinMatch && botMatchData.WinCount < MaxWinMatch;
-        }
+        public bool IsNotEndWin(CharacterMatchData playerMatchData, CharacterMatchData botMatchData) => 
+            playerMatchData.WinCount < MaxWinMatch && botMatchData.WinCount < MaxWinMatch;
     }
 
     public class RoundManager:IDisposable
@@ -75,8 +75,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                 _roundData.IsFinish ||
                 _isPlayerAction)
                 return;
-
-            if (_winService.TryGetMatchWin(out MatchWin characterWin))
+            
+            if (_winService.TryGetMatchWin(_roundData,out MatchWin characterWin))
                 Win(characterWin);
             else
                 UpdateTurnTimer();
@@ -117,25 +117,25 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                     TurnPlayer();
                     break;
             }
-            
+
+            _roundData.CountSetField++;
             Log.Match.D($"[CurrentRoundMode]:{Mode.ToString()}");
         }
 
         private void TurnPlayer()
         {
-            OnButtonInteractive.OnNext(true);
             _mode = MatchMode.PlayerAction;
         }
 
         private void TurnBot()
         {
-            OnButtonInteractive.OnNext(false);
             _isPlayerAction = false;
             _mode = MatchMode.BotAction;
         }
 
         private void ActionBotRound()
         {
+            OnButtonInteractive.OnNext(false);
             BotAction botAction = _ai.MakeBestDecision(_bot);
             _ai.SetField(_bot,botAction.Field);
         }
@@ -143,14 +143,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private void ActionPlayerRound()
         {
             _isPlayerAction = true;
+            OnButtonInteractive.OnNext(true);
             Log.Match.D($"[Match]:Flag player action {_isPlayerAction}");
         }
 
         private void UpdateTurnTimer()
         {
-            if (_roundData.IsTurnTimePaused)
-                return;
-
             switch (Mode)
             {
                 case MatchMode.PlayerAction:

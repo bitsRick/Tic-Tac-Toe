@@ -105,7 +105,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).Dispose();
 
-            _roundManager.OnWin.Subscribe((SetWin)).AddTo(this);
+            _roundManager.OnWin.Subscribe((SetWinMatch)).AddTo(this);
             _roundManager.OnButtonInteractive.Subscribe( SetInteractiveFieldButton).AddTo(this);
             
             return UniTask.CompletedTask;
@@ -116,9 +116,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             foreach (Field field in _playingField.Fields) field.Btn.interactable = isFlag;
         }
 
-        private void SetWin(MatchWin winner)
+        private void SetWinMatch(MatchWin winner)
         {
             ResetFields();
+            
+            if (winner == MatchWin.None)
+            {
+                _roundManager.Reset();
+                _roundManager.Start();
+                return;
+            }
 
             if (_roundManager.RoundData.IsNotEndWin(_playerMatchData,_botMatchDataData))
             {
@@ -270,7 +277,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 _roundManager.NextTurn();
         }
 
-        private async UniTask InitializedPlayingField()
+        public async UniTask InitializedPlayingField()
         {
             PositionElementToField[] enumValues = Enum.GetValues(typeof(PositionElementToField))
                 .Cast<PositionElementToField>()

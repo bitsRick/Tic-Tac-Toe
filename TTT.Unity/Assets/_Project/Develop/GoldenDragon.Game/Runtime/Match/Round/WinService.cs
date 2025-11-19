@@ -49,7 +49,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             return UniTask.CompletedTask;
         }
 
-        public bool TryGetMatchWin(out MatchWin matchMode)
+        public bool TryGetMatchWin(RoundData roundData, out MatchWin matchMode)
         {
             matchMode = GetCharacterMatchWin(
                 _horizontalTopLineFields, _horizontalBottomLineFields, _horizontalMiddleFields,
@@ -57,7 +57,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                 _backSlashFields, _slashFields
             );
 
-          return matchMode != MatchWin.None;
+
+            if (matchMode == MatchWin.None
+                &&roundData.CountSetField >= 8)
+            {
+                matchMode = MatchWin.None;
+                return true;
+            }
+
+            if (matchMode != MatchWin.None)
+                return true;
+
+            return false;
         }
 
         private MatchWin GetCharacterMatchWin(params List<Field>[] listsFields)

@@ -12,7 +12,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
         private const int DefaultScore = 100;
         private const int UltraScore = 150;
         private const int PlayerNextRoundWin = 2;
-        private Match.Board.PlayingField _playingField;
+        private PlayingField _playingField;
         
         public UniTask Load(UtilityAi utilityAi)
         {

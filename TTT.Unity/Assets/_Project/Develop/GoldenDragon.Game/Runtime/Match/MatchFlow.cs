@@ -18,25 +18,32 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly ProviderUiFactory _providerUiFactory;
         private SessionDataMatch _sessionDataMatch;
         private PopupService _popupService;
-        private AssetService _assetService;
         private SaveLoadService _saveLoadService;
         private RoundManager _roundManager;
         private WinService _winService;
         private IAi _utilityAi;
         private IPlayerProgress _playerProgress;
+        private ModuleView _moduleView;
+        private ModulePlayingField _modulePlayingField;
 
-        public MatchFlow(SceneManager sceneManager,
-            LoadingService loadingService,LoadingView loadingView,
+        public MatchFlow(
+            SceneManager sceneManager,
+            LoadingService loadingService,
+            LoadingView loadingView,
             ProviderUiFactory providerUiFactory,
             SessionDataMatch sessionDataMatch,
             IPlayerProgress playerProgress,
-            AssetService assetService,SaveLoadService saveLoadService,
-            RoundManager roundManager,IAi utilityAi)
+            IAi utilityAi,
+            SaveLoadService saveLoadService,
+            RoundManager roundManager,
+            ModuleView moduleView,
+            ModulePlayingField modulePlayingField)
         {
+            _modulePlayingField = modulePlayingField;
+            _moduleView = moduleView;
             _utilityAi = utilityAi;
             _roundManager = roundManager;
             _saveLoadService = saveLoadService;
-            _assetService = assetService;
             _playerProgress = playerProgress;
             _sessionDataMatch = sessionDataMatch;
             _providerUiFactory = providerUiFactory;
@@ -53,7 +60,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,SupportMatchAction.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()),false);
             
             MatchUiRoot matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
-            matchUi.Constructor(botMatchDataData,playerMatchDataData,_popupService,_assetService,_providerUiFactory,_roundManager);
+            matchUi.Constructor(_popupService,_roundManager,_moduleView,_modulePlayingField,botMatchDataData,playerMatchDataData);
+            await matchUi.Initialized();
 
             await _loadingService.BeginLoading(matchUi);
             await _loadingService.BeginLoading(_utilityAi,matchUi);

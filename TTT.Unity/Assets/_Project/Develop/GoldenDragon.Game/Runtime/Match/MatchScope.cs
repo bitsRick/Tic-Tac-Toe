@@ -1,4 +1,5 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
 using VContainer;
 using VContainer.Unity;
@@ -9,12 +10,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<RoundManager>(Lifetime.Singleton);
+            builder.Register<RoundManager>(Lifetime.Scoped);
+            builder.Register<Convolution>(Lifetime.Scoped);
+            builder.Register<Calculation>(Lifetime.Scoped);
+            builder.Register<Brains>(Lifetime.Scoped);
+            builder.Register<IAi,UtilityAi>(Lifetime.Scoped);
 
-            builder.Register<Convolution>(Lifetime.Singleton);
-            builder.Register<Calculation>(Lifetime.Singleton);
-            builder.Register<Brains>(Lifetime.Singleton);
-            builder.Register<IAi,UtilityAi>(Lifetime.Singleton);
+            builder.Register<ModuleView>(Lifetime.Scoped);
+            builder.Register<ModulePlayingField>(Lifetime.Scoped);
             
             builder.RegisterEntryPoint<MatchFlow>();
         }

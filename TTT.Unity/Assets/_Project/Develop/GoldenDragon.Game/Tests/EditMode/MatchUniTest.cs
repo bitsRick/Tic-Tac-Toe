@@ -49,8 +49,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 ProviderUiFactory providerUiFactory = new ProviderUiFactory(new FactoryItem(),new FactoryUi(assetService));
                 PopupService popupService = new PopupService(saveLoadService);
                 MatchUiRoot matchUi = providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
-                matchUi.Constructor(botMatchDataData,playerMatchDataData,popupService,assetService,providerUiFactory,roundManager);
-                await matchUi.InitializedPlayingField();
+                //matchUi.Constructor(botMatchDataData,playerMatchDataData,popupService,assetService,providerUiFactory,roundManager);
+                //await matchUi.InitializedPlayingField();
                 
                 //act
                 foreach (var field in matchUi.PlayingField.Fields)

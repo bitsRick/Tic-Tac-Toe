@@ -16,7 +16,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
         private PositionElementToField _positionElementToField;
         private TypePlayingField _currentCurrentPlayingFieldPlayingField;
         private PlayingField _playingField;
-        private MatchUiRoot _matchUiRoot;
+        private ModulePlayingField _matchUiRoot;
         public Image X => _x;
         public Image O => _o;
         public Image Empty => _empty;
@@ -30,9 +30,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 
         public PositionElementToField Position => _positionElementToField; 
         
-        public void Initialized(PositionElementToField position, MatchUiRoot matchUiRoot)
+        public void Initialized(PositionElementToField position, ModulePlayingField modulePlayingField)
         {
-            _matchUiRoot = matchUiRoot;
+            _matchUiRoot = modulePlayingField;
             _positionElementToField = position;
         }
         

@@ -17,8 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
         public bool IsStart;
         public bool IsFinish;
-        public bool IsTimerPause;
-        public bool IsTurnTimePaused;
+
 
         public int MaxWin => MaxWinMatch;
 
@@ -26,8 +25,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         {
             IsStart = false;
             IsFinish = false;
-            IsTimerPause = false;
-            IsTurnTimePaused = false;
             CountSetField = -1;
         }
         
@@ -43,11 +40,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private WinService _winService;
         private RandomRound _randomRound;
         private RoundData _roundData = new RoundData();
-        private bool _isPlayerAction = false;
+        private bool _isPlayerAction;
         private MatchMode _mode = MatchMode.Pause;
 
         public MatchMode Mode => _mode;
-        public bool IsPlayerAction =>_isPlayerAction;
         public RoundData RoundData => _roundData;
 
         public Subject<MatchWin> OnWin = new Subject<MatchWin>();
@@ -82,25 +78,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                 UpdateTurnTimer();
         }
 
-        private void Win(MatchWin characterWin)
-        {
-            Log.Match.D($"[Match]:[{characterWin.ToString()}]");
-            
-            switch (characterWin)
-            {
-                case MatchWin.Player:
-                    _player.AddWin();
-                    break;
-                
-                case MatchWin.Bot:
-                    _bot.AddWin();
-                    break;
-            }
-            
-            End();
-            OnWin.OnNext(characterWin);
-        }
-
         public void Start() => _roundData.IsStart = true;
 
         public void End() => _roundData.IsFinish = true;
@@ -120,6 +97,36 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
             _roundData.CountSetField++;
             Log.Match.D($"[CurrentRoundMode]:{Mode.ToString()}");
+        }
+
+        public void Dispose()
+        {
+            OnNextTurn.Dispose();
+        }
+
+        public void Reset()
+        {
+            InitializedFirstActionRound();
+            _roundData.Reset();
+        }
+
+        private void Win(MatchWin characterWin)
+        {
+            Log.Match.D($"[Match]:[{characterWin.ToString()}]");
+            
+            switch (characterWin)
+            {
+                case MatchWin.Player:
+                    _player.AddWin();
+                    break;
+                
+                case MatchWin.Bot:
+                    _bot.AddWin();
+                    break;
+            }
+            
+            End();
+            OnWin.OnNext(characterWin);
         }
 
         private void TurnPlayer()
@@ -159,17 +166,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                     ActionBotRound();
                     break;
             }
-        }
-
-        public void Dispose()
-        {
-            OnNextTurn.Dispose();
-        }
-
-        public void Reset()
-        {
-            InitializedFirstActionRound();
-            _roundData.Reset();
         }
     }
 }

@@ -8,6 +8,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UniRx;
 using UnityEngine.UI;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
@@ -19,6 +20,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private RoundManager _roundManager;
         private MatchUiRoot _matchUiRoot;
 
+        [Inject]
         public ModulePlayingField(RoundManager roundManager)
         {
             _roundManager = roundManager;
@@ -54,9 +56,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                         SetTypeInField(_playerMatchData, field);
                     })
                     .AddTo(_matchUiRoot);
-
-                await Task.CompletedTask;
             }
+            
+            await Task.CompletedTask;
         }
 
         public void SetInteractiveFieldButton(bool isFlag)

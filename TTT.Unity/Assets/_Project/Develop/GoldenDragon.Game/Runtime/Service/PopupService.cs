@@ -19,8 +19,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             _saveLoadService = saveLoadService;
         }
         
-        public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase => 
-            _popupLists.Add(typePopup,new PopupData(popup));
+        public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase
+        {
+            if (_popupLists.ContainsKey(typePopup))
+                return;
+
+            _popupLists.Add(typePopup, new PopupData(popup));
+        }
 
         public async UniTask Release()
         {

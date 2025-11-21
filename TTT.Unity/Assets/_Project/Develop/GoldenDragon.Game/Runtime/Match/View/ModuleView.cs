@@ -13,6 +13,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
@@ -32,12 +33,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         public ModuleView(
             ProviderUiFactory providerUiFactory, 
             AssetService assetService, 
-            PopupService popupService,
             RoundManager roundManager)
         {
             _providerUiFactory = providerUiFactory;
             _assetService = assetService;
-            _popupService = popupService;
             _roundManager = roundManager;
         }
 
@@ -46,7 +45,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             TopProgressViewWinUi playerViewData,
             TopProgressViewWinUi botViewData,
             CharacterMatchData botData,
-            CharacterMatchData playerData,GameObject parent)
+            CharacterMatchData playerData,GameObject parent,PopupService popupService)
         {
             _popupBackground = backPopupBackground;
             _playerVisualDataLeft = playerViewData;
@@ -54,6 +53,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _playerMatchData = playerData;
             _botMatchDataData = botData;
             _parent = parent;
+            _popupService = popupService;
             return UniTask.CompletedTask;
         }
         

@@ -822,10 +822,10 @@ RectTransform:
   - {fileID: 8534604474755266550}
   m_Father: {fileID: 6075605202322661716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4051041462348393380
 MonoBehaviour:
@@ -949,10 +949,10 @@ RectTransform:
   - {fileID: 958657354462477069}
   m_Father: {fileID: 7765478418439269375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &224566262102772453
 MonoBehaviour:
@@ -1371,10 +1371,10 @@ RectTransform:
   - {fileID: 9064571398334073609}
   m_Father: {fileID: 7765478418439269375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7399301532699278279
 MonoBehaviour:
@@ -1835,10 +1835,10 @@ RectTransform:
   - {fileID: 5581932768192846083}
   m_Father: {fileID: 6075605202322661716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3810893416044763900
 MonoBehaviour:
@@ -2398,10 +2398,10 @@ RectTransform:
   - {fileID: 5909062886404733390}
   m_Father: {fileID: 7765478418439269375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7047160009901957194
 MonoBehaviour:
@@ -2918,7 +2918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7041335340563532234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3021,7 +3021,7 @@ MonoBehaviour:
   _setting: {fileID: 5242425766287500223}
   _playerVisualDataLeft: {fileID: 7843571808224096277}
   _botVisualDataRight: {fileID: 2184398755827861013}
-  _parrent: {fileID: 5588131505377243690}
+  _parent: {fileID: 5588131505377243690}
   _popupBackground: {fileID: 6841484735403195216}
 --- !u!1 &5588131505377243690
 GameObject:
@@ -5050,7 +5050,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -1.5}
-  m_SizeDelta: {x: 0, y: -65}
+  m_SizeDelta: {x: -34.95941, y: -65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7280246731183342981
 MonoBehaviour:
@@ -5130,7 +5130,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -1.5}
-  m_SizeDelta: {x: 0, y: -65}
+  m_SizeDelta: {x: -35.341248, y: -65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8159500352944347421
 MonoBehaviour:
@@ -6685,10 +6685,10 @@ RectTransform:
   - {fileID: 2370311966265669645}
   m_Father: {fileID: 6075605202322661716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -48.4545}
+  m_SizeDelta: {x: 100, y: 96.909}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1220859705404333875
 MonoBehaviour:

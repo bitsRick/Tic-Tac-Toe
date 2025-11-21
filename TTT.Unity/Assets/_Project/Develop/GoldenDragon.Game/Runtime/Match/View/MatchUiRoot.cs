@@ -59,7 +59,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         public async UniTask Initialized()
         {
             await _moduleView.Initialized(_popupBackground,_playerVisualDataLeft,_botVisualDataRight,
-                _botMatchDataData,_playerMatchData,_parent);
+                _botMatchDataData,_playerMatchData,_parent,_popupService);
             
             await _modulePlayingField.Initialized(_playingField,_playerMatchData,_botMatchDataData,this);
             

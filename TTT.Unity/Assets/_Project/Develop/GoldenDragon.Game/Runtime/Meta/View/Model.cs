@@ -189,9 +189,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             popup.Show();
         }
 
-        private void OnStartMatch(SessionMatch sessionMatch)
+        private void OnStartMatch(TypePlayingField typePlayingField)
         {
-            _sessionDataMatch.SetTypeSession(sessionMatch);
+            _sessionDataMatch.SetTypePlayer(typePlayingField);
             _metaFlow.StartMatch();
         }
 
@@ -324,9 +324,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             if (_popupService.TryGetPopup<MatchPopup>(TypePopup.Match,out MatchPopup matchPopup))
             {
-                matchPopup.X.onClick.AsObservable().Subscribe((_) => { OnStartMatch(SessionMatch.X); }).AddTo(matchPopup);
-                matchPopup.O.onClick.AsObservable().Subscribe((_) => { OnStartMatch(SessionMatch.O);}).AddTo(matchPopup);
-                matchPopup.Coop.onClick.AsObservable().Subscribe((_) => {OnStartMatch(SessionMatch.Coop); }).AddTo(matchPopup);
+                matchPopup.X.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.X); }).AddTo(matchPopup);
+                matchPopup.O.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.O);}).AddTo(matchPopup);
             }
         }
 

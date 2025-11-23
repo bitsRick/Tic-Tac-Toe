@@ -68,13 +68,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         
         public async UniTask Load()
         {
-            await _moduleView.Load();
-            await _modulePlayingField.Load();
-            
-            _moduleView.InitDataView(_playerVisualDataLeft, _playerMatchData);
-            _moduleView.InitDataView(_botVisualDataRight, _botMatchDataData);
-
-            await _modulePlayingField.Load();
             await InitializedPopup();
             await InitializedEvent();
             
@@ -97,10 +90,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             _setting.onClick.AsObservable().Subscribe((_) => { _moduleView.OpenSetting(); }).AddTo(this);
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
-            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).Dispose();
-
-            _roundManager.OnWin.Subscribe((_modulePlayingField.SetWinMatch)).AddTo(this);
-            _roundManager.OnButtonInteractive.Subscribe( _modulePlayingField.SetInteractiveFieldButton).AddTo(this);
+            _moduleView.InitializedEvent(this);
             
             return UniTask.CompletedTask;
         }
@@ -122,7 +112,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public void SetTypeInField(CharacterMatchData botMatchDataData, Field botActionField)
         {
-            _modulePlayingField.SetTypeInField(botMatchDataData,botActionField);
+            _modulePlayingField.SetTypeInFieldTurn(botMatchDataData,botActionField);
+        }
+
+        public void SetActiveViewColor(CharacterMatchData characterMatchData)
+        {
+            switch (characterMatchData.IsBot)
+            {
+                case true:
+                    _moduleView.OnBotAction.OnNext(true);
+                    break;
+                
+                case false:
+                    _moduleView.OnPlayerAction.OnNext(true);
+                    break;
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -25,6 +26,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private IPlayerProgress _playerProgress;
         private ModuleView _moduleView;
         private ModulePlayingField _modulePlayingField;
+        private StyleMatchData _styleMatchData;
+
 
         public MatchFlow(
             SceneManager sceneManager,
@@ -37,8 +40,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             SaveLoadService saveLoadService,
             RoundManager roundManager,
             ModuleView moduleView,
-            ModulePlayingField modulePlayingField)
+            ModulePlayingField modulePlayingField,StyleMatchData styleMatchData)
         {
+            _styleMatchData = styleMatchData;
             _modulePlayingField = modulePlayingField;
             _moduleView = moduleView;
             _utilityAi = utilityAi;
@@ -56,21 +60,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _popupService = new PopupService(_saveLoadService);
             
-            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,SupportMatchAction.GetBotTypeFieldAction(_sessionDataMatch.PlayerType()),true);
-            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,SupportMatchAction.GetPlayerTypeFieldAction(_sessionDataMatch.PlayerType()),false);
+            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,_sessionDataMatch.BotType,true);
+            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
             
             MatchUiRoot matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
             matchUi.Constructor(_popupService,_roundManager,_moduleView,_modulePlayingField,botMatchDataData,playerMatchDataData);
             await matchUi.Initialized();
 
+            await _loadingService.BeginLoading(_styleMatchData, _playerProgress);
+            
+            await _loadingService.BeginLoading(_moduleView);
+            await _loadingService.BeginLoading(_modulePlayingField,_styleMatchData);
             await _loadingService.BeginLoading(matchUi);
+            
             await _loadingService.BeginLoading(_utilityAi,matchUi);
 
             _winService = new WinService(botMatchDataData, playerMatchDataData, matchUi);
             await _loadingService.BeginLoading(_winService);
             
-            _roundManager.Initialized(_utilityAi,playerMatchDataData,botMatchDataData,_winService,new RandomRound());
+            await _roundManager.Initialized(_utilityAi,playerMatchDataData,botMatchDataData,_winService,new RandomRound());
             _roundManager.InitializedFirstActionRound();
+            _roundManager.InitializedEvent(matchUi,_modulePlayingField);
             
             matchUi.Show();
             matchUi.OpenCharacterStartMatchPopup();

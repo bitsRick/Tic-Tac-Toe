@@ -1,21 +1,19 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
-
     public class AssetService
     {
-        private AssetInstall _assetInstall;
-        private AssetLoad _assetLoad;
-
-        public AssetInstall Install => _assetInstall;
-        public AssetLoad Load => _assetLoad;
-
-        public AssetService(AssetInstall assetInstall, AssetLoad assetLoad)
+        private readonly AssetCatch _assetCatch = new AssetCatch();
+        
+        public AssetInstall Install => new AssetInstall();
+        public AssetLoad Load => new AssetLoad();
+        public AssetRelease Release => new AssetRelease();
+        
+        public void Initialized()
         {
-            _assetLoad = assetLoad;
-            _assetInstall = assetInstall;
+            Load.Initialized(_assetCatch);
+            Release.Initialized(_assetCatch);
         }
     }
 }

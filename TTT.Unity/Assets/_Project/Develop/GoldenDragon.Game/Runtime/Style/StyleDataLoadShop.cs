@@ -1,4 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
@@ -8,20 +10,20 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 {
-    public class StyleDataLoad:ILoadUnit
+    public class StyleDataLoadShop:ILoadUnit,IDisposable
     {
-        private AssetLoad _assetLoad;
         private StyleData[] _data;
+        private AssetService _assetService;
 
         [Inject]
-        public StyleDataLoad(AssetLoad assetLoad)
+        public StyleDataLoadShop(AssetService assetService)
         {
-            _assetLoad = assetLoad;
+            _assetService = assetService;
         }
         
         public UniTask Load()
         {
-            TextAsset jsonText = _assetLoad.GetAsset<TextAsset>(TypeAsset.Json,Constant.L.Asset.DataStyleJson);
+            TextAsset jsonText = _assetService.Load.GetAsset<TextAsset>(TypeAsset.Json,Constant.L.Asset.DataStyleJson);
             _data = JsonConvert.DeserializeObject<StyleData[]>(jsonText.text);
 
             if (_data == null)
@@ -32,7 +34,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 
             foreach (StyleData styleData in _data)
             {
-                Sprite sprite = _assetLoad.GetAsset<Sprite>(TypeAsset.Sprite,styleData.Id);
+                Sprite sprite = _assetService.Load.GetAsset<Sprite>(TypeAsset.Sprite,styleData.Id);
 
                 if (sprite == null)
                 {
@@ -45,7 +47,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
             
             return UniTask.CompletedTask;
         }
-
+        
+        
         public StyleData[] GetData()
         {
             if (_data == null)
@@ -55,6 +58,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
             }
             
             return _data;
+        }
+
+        public void Dispose()
+        {
+            foreach (StyleData data in _data)
+            {
+                data.Sprite = null;
+                data.Id = null;
+                data.Type = null;
+            }
+
+            _data = null;
+            _assetService.Release.ReleaseAsset<TextAsset>(TypeAsset.Json, Constant.L.Asset.DataStyleJson);
         }
     }
 }

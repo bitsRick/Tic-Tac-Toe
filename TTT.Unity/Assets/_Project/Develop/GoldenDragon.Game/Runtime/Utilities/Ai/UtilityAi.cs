@@ -43,21 +43,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 
         public BotAction MakeBestDecision(CharacterMatchData botMatchDataData)
         {
-            IEnumerable<ScoreAction> choisec = GetScoreBotAction(botMatchDataData);
+            List<ScoreAction> choisec = GetScoreBotAction(botMatchDataData);
             return choisec.FindMax(x => x.Score);
         }
 
-        private IEnumerable<ScoreAction> GetScoreBotAction(CharacterMatchData botMatchDataData)
+        private List<ScoreAction> GetScoreBotAction(CharacterMatchData botMatchDataData)
         {
-            foreach (Field field in _playingField.Fields)
-            {
-                float? score = CalculateScore(botMatchDataData,field);
+            return _playingField.Fields
+                .Select(field => new{field,score = CalculateScore(botMatchDataData, field)})
+                .Where(x => x.score.HasValue)
+                .Select(x => new ScoreAction(x.score.Value, x.field, botMatchDataData.Field))
+                .ToList();
 
-                if (!score.HasValue)
-                    continue;
-
-                yield return new ScoreAction(score.Value,field,botMatchDataData.Field);
-            }
+            // foreach (Field field in _playingField.Fields)
+            // {
+            //     float? score = CalculateScore(botMatchDataData,field);
+            //
+            //     if (!score.HasValue)
+            //         continue;
+            //
+            //     yield return new ScoreAction(score.Value,field,botMatchDataData.Field);
+            // }
         }
         
         private float? CalculateScore(CharacterMatchData botMatchDataData, Field field)

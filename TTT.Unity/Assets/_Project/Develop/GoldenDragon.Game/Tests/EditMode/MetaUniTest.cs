@@ -60,8 +60,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             return UniTask.ToCoroutine(async () =>
             {
                 //arange
-                var assetService = new AssetService(new AssetInstall(),new AssetLoad());
-                var styleData = new StyleDataLoad(assetService.Load);
+                var assetService = new AssetService();
+                var styleData = new StyleDataLoadShop(assetService);
                 
                 //act
                 await styleData.Load();
@@ -77,9 +77,9 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             return UniTask.ToCoroutine(async () =>
             {
                 //arange
-                var assetService = new AssetService(new AssetInstall(),new AssetLoad());
+                var assetService = new AssetService();
                 var pull = new PoolUiItem<ItemInventoryStyle>(assetService);
-                var styleData = new StyleDataLoad(assetService.Load);
+                var styleData = new StyleDataLoadShop(assetService);
                 
                 //act
                 await styleData.Load();
@@ -100,9 +100,9 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             return UniTask.ToCoroutine(async () =>
             {
                 //arange
-                var assetService = new AssetService(new AssetInstall(),new AssetLoad());
+                var assetService = new AssetService();
                 var pull = new PoolUiItem<ItemShop>(assetService);
-                var styleData = new StyleDataLoad(assetService.Load);
+                var styleData = new StyleDataLoadShop(assetService);
                 
                 //act
                 await styleData.Load();
@@ -123,7 +123,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             return UniTask.ToCoroutine(async () =>
             {
                 //arange
-                var assetService = new AssetService(new AssetInstall(),new AssetLoad());
+                var assetService = new AssetService();
                 var hudObject = assetService.Load.GetAsset<GameObject>(TypeAsset.Meta_Root_Ui, Constant.M.Asset.Ui.MetaRoot);
                 
                 //act

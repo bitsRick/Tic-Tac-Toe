@@ -16,11 +16,13 @@ namespace GoldenDragon
         private LoadingView _loadingView;
         private AudioService _audioService;
         private IPlayerProgress _progress;
+        private AssetService _assetService;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,AudioService audioService,IPlayerProgress progress)
+            LoadingView loadingView,AudioService audioService,IPlayerProgress progress,AssetService assetService)
         {
+            _assetService = assetService;
             _progress = progress;
             _audioService = audioService;
             _loadingView = loadingView;
@@ -34,7 +36,8 @@ namespace GoldenDragon
         {
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
-            
+            _assetService.Initialized();
+
             AudioPlayer.Construct(_audioService,_progress);
             AudioPlayer.Initialized();
             

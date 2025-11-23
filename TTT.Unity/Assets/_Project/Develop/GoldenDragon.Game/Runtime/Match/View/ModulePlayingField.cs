@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UniRx;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
-    public class ModulePlayingField:ILoadUnit
+    public class ModulePlayingField:ILoadUnit<StyleMatchData>
     {
         private PlayingField _playingField;
         private CharacterMatchData _playerMatchData;
@@ -36,8 +37,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             return UniTask.CompletedTask;
         }
 
-        public async UniTask Load()
+        public async UniTask Load(StyleMatchData styleMatchData)
         {
+            _playingField.Border.sprite = styleMatchData.Board;
+            
             PositionElementToField[] enumValues = Enum.GetValues(typeof(PositionElementToField))
                 .Cast<PositionElementToField>()
                 .ToArray();
@@ -50,10 +53,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 field.X.gameObject.SetActive(false);
                 field.O.gameObject.SetActive(false);
 
+                field.X.sprite = styleMatchData.X;
+                field.O.sprite = styleMatchData.O;
+                
                 field.Initialized(type, this);
                 field.Btn.onClick.AsObservable().Subscribe((_) =>
                     {
-                        SetTypeInField(_playerMatchData, field);
+                        SetTypeInFieldTurn(_playerMatchData, field);
                     })
                     .AddTo(_matchUiRoot);
             }
@@ -94,8 +100,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             }
         }
 
-        public void SetTypeInField(CharacterMatchData characterMatchData, Field field)
+        public void SetTypeInFieldTurn(CharacterMatchData characterMatchData, Field field)
         {
+            _matchUiRoot.SetActiveViewColor(characterMatchData);
+            
             if (TrySetField(characterMatchData, field)) 
                 _roundManager.NextTurn();
         }

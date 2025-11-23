@@ -22,5 +22,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Top
         public WinImageUi WinOne => _winOne;
         public WinImageUi WinTwo => _winTwo;
         public WinImageUi WinThree => _winThree;
+
+        public Color Active => _actionRound;
+        public Color NoActive => _noActionRound;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
 using VContainer;
 using VContainer.Unity;
@@ -18,6 +19,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
 
             builder.Register<ModuleView>(Lifetime.Scoped);
             builder.Register<ModulePlayingField>(Lifetime.Scoped);
+            builder.Register<StyleMatchData>(Lifetime.Scoped);
             
             builder.RegisterEntryPoint<MatchFlow>();
         }

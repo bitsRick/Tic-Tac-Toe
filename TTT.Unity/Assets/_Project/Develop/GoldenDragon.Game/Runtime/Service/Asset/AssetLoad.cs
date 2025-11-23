@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine.AddressableAssets;
@@ -9,7 +8,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 {
     public class AssetLoad
         {
-            private readonly AssetCatch _assetCatch = new AssetCatch();
+            private AssetCatch _assetCatch;
+
+            public void Initialized(AssetCatch assetCatch)
+            {
+                _assetCatch = assetCatch;
+            }
 
             public T GetAsset<T>(TypeAsset typeAsset,string nameAsset)where T : UnityEngine.Object
             {
@@ -24,12 +28,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 return handle.WaitForCompletion();
             }
 
-            public async UniTask<T> GetAssetAsync<T>(TypeAsset typeAsset,string tagPopup) where T:UnityEngine.Object
+            public async UniTask<T> GetAssetAsync<T>(TypeAsset typeAsset,string nameAsset) where T:UnityEngine.Object
             {
-                Log.Default.D($"Loading asset[Popup] path:{tagPopup}");
+                Log.Default.D($"Loading asset[Popup] path:{nameAsset}");
+                
+                if (_assetCatch.TryGet<T>(typeAsset, nameAsset,out AsyncOperationHandle<T> handleOut))
+                    return handleOut.WaitForCompletion();
 
-                AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(tagPopup);
-                _assetCatch.Add(typeAsset,tagPopup,handle);
+                AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(nameAsset);
+                _assetCatch.Add(typeAsset,nameAsset,handle);
                 
                 return await handle.ToUniTask();
             }
@@ -40,6 +47,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 asset.Release();
 
                 await UniTask.CompletedTask;
+            }
+
+            public void ReleaseAsset<T>(TypeAsset typeAsset,string nameAsset) where T:class
+            {
+                AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
+                asset.Release();
             }
         }
 }

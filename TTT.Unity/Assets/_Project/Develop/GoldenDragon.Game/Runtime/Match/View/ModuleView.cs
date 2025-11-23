@@ -13,7 +13,6 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
-using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
@@ -29,6 +28,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchData;
         private TopProgressViewWinUi _botVisualDataRight;
+        
+        public Subject<bool> OnPlayerAction = new Subject<bool>();
+        public Subject<bool> OnBotAction = new Subject<bool>();
 
         public ModuleView(
             ProviderUiFactory providerUiFactory, 
@@ -56,7 +58,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _popupService = popupService;
             return UniTask.CompletedTask;
         }
-        
+
         public async UniTask Load()
         {
             GameObject settingObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
@@ -72,7 +74,31 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _popupService.AddPopupInList(TypePopup.WinLose, winLosePopup);
             _popupService.AddPopupInList(TypePopup.CharacterStartMatch, characterStartMatchPopup);
 
+            InitDataView(_playerVisualDataLeft,_playerMatchData);
+            InitDataView(_botVisualDataRight,_botMatchDataData);
+            
             await UniTask.CompletedTask;
+        }
+        
+        public void InitializedEvent(MatchUiRoot matchUiRoot)
+        {
+            OnPlayerAction.Subscribe((isFlag) =>
+            {
+                SetColorText(false, _botVisualDataRight);
+                SetColorText(isFlag, _playerVisualDataLeft);
+            }).AddTo(matchUiRoot);
+            
+            OnBotAction.Subscribe((isFlag) =>
+            {
+                SetColorText(false, _playerVisualDataLeft);
+                SetColorText(isFlag, _botVisualDataRight);
+            }).AddTo(matchUiRoot);
+        }
+
+        private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
+        {
+            TopProgressViewWinUi viewDataTop = topProgressViewWinUi;
+            viewDataTop.Name.color = isFlag == false ? viewDataTop.NoActive : viewDataTop.Active;
         }
 
         public void OpenWinLose(MatchWin matchWin)
@@ -120,11 +146,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             popup.Show();
         }
 
-        public void InitDataView(TopProgressViewWinUi viewData, CharacterMatchData matchDataData)
+        private void InitDataView(TopProgressViewWinUi viewData, CharacterMatchData matchDataData)
         {
             viewData.Name.text = matchDataData.Name;
         }
-        
+
         public void OpenCharacterStartMatchPopup()
         {
             AudioPlayer.Click();

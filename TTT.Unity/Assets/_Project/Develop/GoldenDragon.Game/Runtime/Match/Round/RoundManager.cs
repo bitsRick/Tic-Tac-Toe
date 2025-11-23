@@ -1,5 +1,7 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -32,7 +34,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             playerMatchData.WinCount < MaxWinMatch && botMatchData.WinCount < MaxWinMatch;
     }
 
-    public class RoundManager:IDisposable
+    public class RoundManager
     {
         private IAi _ai;
         private CharacterMatchData _player;
@@ -50,13 +52,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public Subject<Unit> OnNextTurn = new Subject<Unit>();
         public Subject<bool> OnButtonInteractive  = new Subject<bool>();
 
-        public void Initialized(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,WinService winService,RandomRound randomRound)
+        public UniTask Initialized(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,WinService winService,RandomRound randomRound)
         {
             _randomRound = randomRound;
             _ai = ai;
             _player = player;
             _bot = botMatchDataData;
             _winService = winService;
+            
+            return UniTask.CompletedTask;
+        }
+
+        public void InitializedEvent(MatchUiRoot matchUiRoot,ModulePlayingField modulePlayingField)
+        {
+            OnWin.Subscribe(modulePlayingField.SetWinMatch).AddTo(matchUiRoot);
+            OnButtonInteractive.Subscribe(modulePlayingField.SetInteractiveFieldButton).AddTo(matchUiRoot);
         }
         
         public void InitializedFirstActionRound()
@@ -98,12 +108,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             _roundData.CountSetField++;
             Log.Match.D($"[CurrentRoundMode]:{Mode.ToString()}");
         }
-
-        public void Dispose()
-        {
-            OnNextTurn.Dispose();
-        }
-
+        
         public void Reset()
         {
             InitializedFirstActionRound();
@@ -140,10 +145,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             _mode = MatchMode.BotAction;
         }
 
-        private void ActionBotRound()
+        private async void ActionBotRound()
         {
             OnButtonInteractive.OnNext(false);
             BotAction botAction = _ai.MakeBestDecision(_bot);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(15f));
             _ai.SetField(_bot,botAction.Field);
         }
 

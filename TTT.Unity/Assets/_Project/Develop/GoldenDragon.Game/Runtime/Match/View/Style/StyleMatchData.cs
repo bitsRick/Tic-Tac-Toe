@@ -7,7 +7,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Sty
 {
     public class StyleMatchData:ILoadUnit<IPlayerProgress>
     {
-        private AssetService _assetService;
+        private readonly AssetService _assetService;
 
         public Sprite X { get; private set; } 
         public Sprite O{ get; private set;}

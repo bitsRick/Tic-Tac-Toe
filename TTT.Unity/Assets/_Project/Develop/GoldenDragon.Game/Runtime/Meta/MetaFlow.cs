@@ -96,9 +96,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             _itemShopPool.Dispose();
             
             await _popupService.Release();
-            await _modelMetaRoot.Release();
 
-            _styleDataLoadShop.Dispose();
+            _styleDataLoadShop.Release();
             _metaRoot.Release();
             
             await Task.CompletedTask;

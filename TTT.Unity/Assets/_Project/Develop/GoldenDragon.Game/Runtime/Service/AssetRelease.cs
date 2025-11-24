@@ -9,7 +9,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     {
         private AssetCatch _assetCatch;
 
-        public void Initialized(AssetCatch assetCatch)
+        public AssetRelease(AssetCatch assetCatch)
         {
             _assetCatch = assetCatch;
         }

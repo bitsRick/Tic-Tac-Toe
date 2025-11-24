@@ -1,7 +1,5 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using Newtonsoft.Json;
@@ -10,7 +8,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 {
-    public class StyleDataLoadShop:ILoadUnit,IDisposable
+    public class StyleDataLoadShop:ILoadUnit
     {
         private StyleData[] _data;
         private AssetService _assetService;
@@ -60,7 +58,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
             return _data;
         }
 
-        public void Dispose()
+        public void Release()
         {
             foreach (StyleData data in _data)
             {

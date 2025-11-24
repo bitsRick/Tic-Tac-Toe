@@ -4,16 +4,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
     public class AssetService
     {
-        private readonly AssetCatch _assetCatch = new AssetCatch();
-        
-        public AssetInstall Install => new AssetInstall();
-        public AssetLoad Load => new AssetLoad();
-        public AssetRelease Release => new AssetRelease();
-        
-        public void Initialized()
+        public AssetInstall Install;
+        public AssetLoad Load;
+        public AssetRelease Release;
+
+        public AssetService(AssetInstall install, AssetLoad load, AssetRelease release)
         {
-            Load.Initialized(_assetCatch);
-            Release.Initialized(_assetCatch);
+            Install = install;
+            Load = load;
+            Release = release;
         }
     }
 }

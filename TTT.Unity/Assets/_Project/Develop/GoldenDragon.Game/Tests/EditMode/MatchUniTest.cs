@@ -45,7 +45,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 IPlayerProgress playerProgress = new ProgressService();
                 SaveLoadService saveLoadService = new SaveLoadService(playerProgress);
                 RoundManager roundManager = new RoundManager();
-                AssetService assetService = new AssetService();
+                AssetCatch assetCatch = new AssetCatch();
+                AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));
                 ProviderUiFactory providerUiFactory = new ProviderUiFactory(new FactoryItem(),new FactoryUi(assetService));
                 PopupService popupService = new PopupService(saveLoadService);
                 MatchUiRoot matchUi = providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);

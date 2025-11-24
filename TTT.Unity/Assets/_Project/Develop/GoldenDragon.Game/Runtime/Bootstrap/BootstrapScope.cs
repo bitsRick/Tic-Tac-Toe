@@ -33,6 +33,10 @@ namespace GoldenDragon
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
             
+            builder.Register<AssetCatch>(Lifetime.Singleton);
+            builder.Register<AssetInstall>(Lifetime.Singleton);
+            builder.Register<AssetLoad>(Lifetime.Singleton);
+            builder.Register<AssetRelease>(Lifetime.Singleton);
             builder.Register<AssetService>(Lifetime.Singleton);
             
             builder.Register<LangFileLoad>(Lifetime.Singleton);

@@ -21,7 +21,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             
             if (data == null)
             {
-                _audioService.InitializedDefault();
+                _audioService.InitializedDefaultAudioSetting();
                 return;
             }
 

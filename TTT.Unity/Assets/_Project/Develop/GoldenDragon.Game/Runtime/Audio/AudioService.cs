@@ -1,5 +1,5 @@
 using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine;
@@ -20,7 +20,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private AudioClip _backgroundMeta;
         private AudioClip _buttonClick;
         private AudioClip _sfx2;
-        private AssetLoad _assetLoad;
+        private AssetService _assetService;
         private ConfigSounds _config;
         private float _currentCountSound;
         private float _currentCountMusic;
@@ -36,9 +36,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private void Awake() => DontDestroyOnLoad(this);
 
         [Inject]
-        public void Contructor(AssetLoad assetLoad) => _assetLoad = assetLoad;
+        public void Contructor(AssetService assetService) => _assetService = assetService;
 
-        public void InitializedDefault()
+        public void InitializedDefaultAudioSetting()
         {
             _currentCountSound = GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName);
             _currentCountMusic = GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName);
@@ -76,7 +76,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public UniTask Load()
         {
-            _config = _assetLoad.GetAsset<ConfigSounds>(TypeAsset.Audio,Constant.B.Audio.AudioConfig);
+            _config = _assetService.Load.GetAsset<ConfigSounds>(TypeAsset.Audio,Constant.B.Audio.AudioConfig);
             
             if (_config == null) Log.Default.W($"Not Load config:{Constant.B.Audio.AudioConfig}");
 
@@ -86,9 +86,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private float GetValueMixerAudio(string musicMixerExposeName)
         {
             if (_mixer.GetFloat(musicMixerExposeName, out float valueMusic))
-            {
                 return valueMusic;
-            }
 
             return 0;
         }

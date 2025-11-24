@@ -10,7 +10,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
         {
             private AssetCatch _assetCatch;
 
-            public void Initialized(AssetCatch assetCatch)
+            public AssetLoad(AssetCatch assetCatch)
             {
                 _assetCatch = assetCatch;
             }
@@ -39,20 +39,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 _assetCatch.Add(typeAsset,nameAsset,handle);
                 
                 return await handle.ToUniTask();
-            }
-
-            public async UniTask ReleaseAssetAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class
-            {
-                AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
-                asset.Release();
-
-                await UniTask.CompletedTask;
-            }
-
-            public void ReleaseAsset<T>(TypeAsset typeAsset,string nameAsset) where T:class
-            {
-                AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
-                asset.Release();
             }
         }
 }

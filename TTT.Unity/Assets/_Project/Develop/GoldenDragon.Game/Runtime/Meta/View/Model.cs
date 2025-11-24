@@ -74,13 +74,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             
             return UniTask.CompletedTask;
         }
-
-        public async UniTask Release()
-        {
-            _styleData = null;
-            await Task.CompletedTask;
-        }
-
+        
         public void OpenPopupSetting()
         {
             AudioPlayer.Click();

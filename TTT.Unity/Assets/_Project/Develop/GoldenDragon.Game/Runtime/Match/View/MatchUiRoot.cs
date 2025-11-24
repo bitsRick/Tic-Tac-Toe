@@ -34,24 +34,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchData;
         private PopupService _popupService;
-        private RoundManager _roundManager;
         private ModulePlayingField _modulePlayingField;
         private ModuleView _moduleView;
+        private MatchFlow _matchFlow;
 
         public PlayingField PlayingField => _playingField;
 
-        public void Constructor(
-            PopupService popupService,
-            RoundManager roundManager,
-            ModuleView moduleView, 
+        public void Constructor(PopupService popupService,
+            ModuleView moduleView,
             ModulePlayingField modulePlayingField,
             CharacterMatchData botMatchDataData,
-            CharacterMatchData playerMatchDataData)
+            CharacterMatchData playerMatchDataData, MatchFlow matchFlow)
         {
+            _matchFlow = matchFlow;
             _moduleView = moduleView;
             _modulePlayingField = modulePlayingField;
             _popupService = popupService;
-            _roundManager = roundManager;
             _playerMatchData = playerMatchDataData;
             _botMatchDataData = botMatchDataData;
         }
@@ -93,6 +91,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _moduleView.InitializedEvent(this);
             
             return UniTask.CompletedTask;
+        }
+
+        public void ToMeta()
+        {
+            _matchFlow.ToMeta();
+        }
+
+        public void NextMatch()
+        {
+            _matchFlow.NextMatch();
         }
 
         public void SetViewWin(MatchWin winner)

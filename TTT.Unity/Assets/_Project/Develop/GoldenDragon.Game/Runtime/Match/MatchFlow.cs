@@ -1,4 +1,6 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
+﻿using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
@@ -27,6 +29,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private ModuleView _moduleView;
         private ModulePlayingField _modulePlayingField;
         private StyleMatchData _styleMatchData;
+        private CharacterMatchData _botMatchDataData;
+        private CharacterMatchData _playerMatchDataData;
+        private MatchUiRoot _matchUi;
 
 
         public MatchFlow(
@@ -60,30 +65,30 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _popupService = new PopupService(_saveLoadService);
             
-            CharacterMatchData botMatchDataData = new CharacterMatchData(Constant.M.BotName,_sessionDataMatch.BotType,true);
-            CharacterMatchData playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
+            _botMatchDataData = new CharacterMatchData(Constant.M.BotName,_sessionDataMatch.BotType,true);
+            _playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
             
-            MatchUiRoot matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
-            matchUi.Constructor(_popupService,_roundManager,_moduleView,_modulePlayingField,botMatchDataData,playerMatchDataData);
-            await matchUi.Initialized();
+            _matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
+            _matchUi.Constructor(_popupService,_moduleView,_modulePlayingField,_botMatchDataData,_playerMatchDataData,this);
+            await _matchUi.Initialized();
 
             await _loadingService.BeginLoading(_styleMatchData, _playerProgress);
             
             await _loadingService.BeginLoading(_moduleView);
             await _loadingService.BeginLoading(_modulePlayingField,_styleMatchData);
-            await _loadingService.BeginLoading(matchUi);
+            await _loadingService.BeginLoading(_matchUi);
             
-            await _loadingService.BeginLoading(_utilityAi,matchUi);
+            await _loadingService.BeginLoading(_utilityAi,_matchUi);
 
-            _winService = new WinService(botMatchDataData, playerMatchDataData, matchUi);
+            _winService = new WinService(_botMatchDataData, _playerMatchDataData, _matchUi);
             await _loadingService.BeginLoading(_winService);
             
-            await _roundManager.Initialized(_utilityAi,playerMatchDataData,botMatchDataData,_winService,new RandomRound());
+            await _roundManager.Initialized(_utilityAi,_playerMatchDataData,_botMatchDataData,_winService,new RandomRound());
             _roundManager.InitializedFirstActionRound();
-            _roundManager.InitializedEvent(matchUi,_modulePlayingField);
+            _roundManager.InitializedEvent(_matchUi,_modulePlayingField);
             
-            matchUi.Show();
-            matchUi.OpenCharacterStartMatchPopup();
+            _matchUi.Show();
+            _matchUi.OpenCharacterStartMatchPopup();
             
             await _loadingView.Hide();
         }
@@ -93,14 +98,30 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _roundManager.Update();            
         }
 
-        private void NextMatch()
+        public void NextMatch()
         {
+            _loadingView.Show();
             
+            _moduleView.Reset();
+            _modulePlayingField.Reset();
+            _botMatchDataData.Reset();
+            _playerMatchDataData.Reset();
+            _matchUi.OpenCharacterStartMatchPopup();
+            _loadingView.Hide();
         }
 
-        private void ToMeta()
+        public async void ToMeta()
         {
-            
+            _loadingView.Show();
+            await Release();
+            await _sceneManager.LoadScene(RuntimeConstants.Scene.Meta);
+        }
+
+        private async UniTask Release()
+        {
+            await _moduleView.Release();
+            await _popupService.Release();
+            await Task.CompletedTask;
         }
     }
 }

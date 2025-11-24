@@ -37,6 +37,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             return UniTask.CompletedTask;
         }
 
+        public void Reset()
+        {
+            ResetFields();
+        }
+
         public async UniTask Load(StyleMatchData styleMatchData)
         {
             _playingField.Border.sprite = styleMatchData.Board;

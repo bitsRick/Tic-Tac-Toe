@@ -79,7 +79,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             
             await UniTask.CompletedTask;
         }
-        
+
         public void InitializedEvent(MatchUiRoot matchUiRoot)
         {
             OnPlayerAction.Subscribe((isFlag) =>
@@ -93,7 +93,35 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 SetColorText(false, _playerVisualDataLeft);
                 SetColorText(isFlag, _botVisualDataRight);
             }).AddTo(matchUiRoot);
+
+            if (_popupService.TryGetPopup(TypePopup.WinLose,out WinLosePopup popup))
+            {
+                popup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{matchUiRoot.ToMeta();}).AddTo(popup);
+                popup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{matchUiRoot.NextMatch();}).AddTo(popup);
+            }
+            
         }
+
+        public async UniTask Release()
+        {
+            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.WinLose);
+            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.WinLose);
+            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.StartMatchViewAction);
+        }
+
+        public void Reset()
+        {
+            ResetTopViewDataWin(_botVisualDataRight);
+            ResetTopViewDataWin(_playerVisualDataLeft);
+        }
+
+        private void ResetTopViewDataWin(TopProgressViewWinUi topProgressViewWinUi)
+        {
+            topProgressViewWinUi.WinOne.Win.gameObject.SetActive(false);
+            topProgressViewWinUi.WinOne.Default.gameObject.SetActive(true);
+            topProgressViewWinUi.WinOne.IsNotWin = true;
+        }
+
 
         private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
         {
@@ -124,7 +152,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                     popup.Lose.SetActive(true);
                     break;
             }
-
+            
             _popupBackground.Show();
             popup.Show();
         }

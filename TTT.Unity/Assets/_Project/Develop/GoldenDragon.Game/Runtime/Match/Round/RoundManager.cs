@@ -16,11 +16,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public const int MaxWinMatch = 3;
         public int CurrenWin = 0;
         public int CountSetField = -1;
-
         public bool IsStart;
         public bool IsFinish;
-
-
+        
         public int MaxWin => MaxWinMatch;
 
         public void Reset()

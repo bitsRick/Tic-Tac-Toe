@@ -16,20 +16,18 @@ namespace GoldenDragon
         private LoadingView _loadingView;
         private AudioService _audioService;
         private IPlayerProgress _progress;
-        private AssetService _assetService;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,AudioService audioService,IPlayerProgress progress,AssetService assetService)
+            LoadingView loadingView,IPlayerProgress progress,AudioService audioService)
         {
-            _assetService = assetService;
             _progress = progress;
-            _audioService = audioService;
             _loadingView = loadingView;
             _saveLoadService = saveLoadService;
             _registrationScreen = registrationScreen;
             _sceneManager = sceneManager;
             _loadingService = loadingService;
+            _audioService = audioService;
         }
 
         public async void Start()

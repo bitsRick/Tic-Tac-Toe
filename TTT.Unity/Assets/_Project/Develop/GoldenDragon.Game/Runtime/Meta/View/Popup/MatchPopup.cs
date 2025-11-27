@@ -10,7 +10,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     {
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _playerVsBot;
-        [SerializeField] private TextMeshProUGUI _playerVsPlayer;
 
         [Header("Single player")]
         [SerializeField] private Button _x; 
@@ -25,7 +24,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         public void Initialized()
         {
             _playerVsBot.text = Lang.S.UI.POPUP.MATCH_POPUP.VsBot;
-            _playerVsPlayer.text = Lang.S.UI.POPUP.MATCH_POPUP.VsPlayer;
         }
 
         public override void Dispose()

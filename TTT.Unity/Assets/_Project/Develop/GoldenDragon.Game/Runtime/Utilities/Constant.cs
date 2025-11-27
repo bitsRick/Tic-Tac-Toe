@@ -132,20 +132,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         X,
         O
     }
-
-    public enum SessionMatch
-    {
-        None,
-        X,
-        O,
-        Coop
-    }
-
-    public enum TypeBot
-    {
-        X,
-        O
-    }
+    
     
     public enum TypePlayingField
     {
@@ -158,8 +145,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     {
         Pause,
         PlayerAction,
-        BotAction,
-        PlayerTwoAction
+        BotAction
     }
 
     public enum PositionElementWin
@@ -183,6 +169,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         TopLeft = 0,TopCenter = 1,TopRight = 2,
         MiddleLeft = 3,MiddleCenter = 4,MiddleRight = 5,
         BottomLeft = 6,BottomCenter = 7,BottomRight = 8,
+    }
+
+    public enum StateFlow
+    {
+        Match,
+        Meta
     }
 
     public enum MatchWin

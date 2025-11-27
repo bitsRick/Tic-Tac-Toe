@@ -65,6 +65,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             GameObject settingObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(settingObject, _parent);
+            settingPopup.Initialized(StateFlow.Match);
             
             GameObject winLoseObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.WinLose);
             WinLosePopup winLosePopup = _assetService.Install.InstallToUiPopup<WinLosePopup>(winLoseObject, _parent);

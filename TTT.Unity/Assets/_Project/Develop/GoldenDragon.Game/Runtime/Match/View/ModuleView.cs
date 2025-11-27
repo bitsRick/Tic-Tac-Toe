@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
@@ -11,6 +12,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using TMPro;
 using UniRx;
 using UnityEngine;
 
@@ -121,8 +123,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             topProgressViewWinUi.WinOne.Default.gameObject.SetActive(true);
             topProgressViewWinUi.WinOne.IsNotWin = true;
         }
-
-
+        
         private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
         {
             TopProgressViewWinUi viewDataTop = topProgressViewWinUi;
@@ -146,7 +147,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             switch (matchWin)
             {
                 case MatchWin.Player:
-                    popup.Win.SetActive(true);
+                    SetWinPlayer(popup);
                     break;
                 case MatchWin.Bot:
                     popup.Lose.SetActive(true);
@@ -238,6 +239,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             winImageUi.Default.gameObject.SetActive(false);
             winImageUi.Win.gameObject.SetActive(true);
             winImageUi.IsNotWin = false;
+        }
+
+        private void SetWinPlayer(WinLosePopup popup)
+        {
+            int softValue = _playerMatchData.WinCount * Constant.M.SoftValueWin;
+
+            TextMeshProUGUI valueWin = _playerMatchData.Field == TypePlayingField.X ? popup.X : popup.O;
+            valueWin.text = softValue.ToString();
+            
+            popup.Win.SetActive(true);
         }
     }
 }

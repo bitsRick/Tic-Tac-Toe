@@ -54,6 +54,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         public static class M
         {
             public const string BotName = "Bot_Goga";
+            public const int SoftValueWin = 10;
 
             public static class Asset
             {

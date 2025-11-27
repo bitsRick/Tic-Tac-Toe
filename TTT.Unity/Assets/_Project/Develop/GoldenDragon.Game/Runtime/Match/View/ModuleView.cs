@@ -97,12 +97,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 SetColorText(isFlag, _botVisualDataRight);
             }).AddTo(matchUiRoot);
 
-            if (_popupService.TryGetPopup(TypePopup.WinLose,out WinLosePopup popup))
+            if (_popupService.TryGetPopup(TypePopup.WinLose,out WinLosePopup winLosePopup))
             {
-                popup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{matchUiRoot.ToMeta();}).AddTo(popup);
-                popup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{matchUiRoot.NextMatch();}).AddTo(popup);
+                winLosePopup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{matchUiRoot.ToMeta();}).AddTo(winLosePopup);
+                winLosePopup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{matchUiRoot.NextMatch();}).AddTo(winLosePopup);
             }
-            
+
+            if (_popupService.TryOpenPopup(TypePopup.Setting, out SettingPopup setting))
+            {
+                setting.ToMeta.onClick.AsObservable().Subscribe((_)=> matchUiRoot.ToMeta()).AddTo(matchUiRoot);
+            }
         }
 
         public async UniTask Release()

@@ -45,23 +45,23 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             return true;
         }
 
-        public AsyncOperationHandle<T> Release<T>(TypeAsset typeAsset, string nameAsset) where T:class
+        public bool TryGetRelease<T>(TypeAsset typeAsset, string nameAsset,out  AsyncOperationHandle<T> asyncOperationHandle) where T:class
         {
             if (_assetCollection.ContainsKey(typeAsset) == false ||
                 _assetCollection[typeAsset].ContainsKey(nameAsset) == false)
             {
                 Log.Default.W($"Asset not found...[{typeAsset}-{nameAsset}]");
-                return default;
+                asyncOperationHandle = default;
+                return false;
             }
             
-            AsyncOperationHandle<T> asyncOperationHandle = 
-                (AsyncOperationHandle<T>)_assetCollection[typeAsset][nameAsset];
-
+            asyncOperationHandle = (AsyncOperationHandle<T>)_assetCollection[typeAsset][nameAsset];
             _assetCollection[typeAsset].Remove(nameAsset);
 
-            if (_assetCollection[typeAsset].Count == 0) _assetCollection.Remove(typeAsset);
+            if (_assetCollection[typeAsset].Count == 0) 
+                _assetCollection.Remove(typeAsset);
 
-            return asyncOperationHandle;
+            return true;
         }
     }
 }

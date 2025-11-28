@@ -148,7 +148,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             OnButtonInteractive.OnNext(false);
             BotAction botAction = _ai.MakeBestDecision(_bot);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(15f));
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
             _ai.SetField(_bot,botAction.Field);
         }
 

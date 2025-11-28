@@ -1,6 +1,8 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
+﻿using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using UniRx;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 {
@@ -8,6 +10,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
     {
         private static AudioService _audioService;
         private static IPlayerProgress _playerProgress;
+
+        public static Subject<bool> OnChangeMuteSound = new Subject<bool>();
+        public static Subject<bool> OnChangeMuteEffect= new Subject<bool>();
 
         public static void Construct(AudioService audioService, IPlayerProgress playerProgress)
         {
@@ -37,6 +42,26 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         public static void Click()
         {
             _audioService.PlaySFX(_audioService.ConfigAudio.Click);
+        }
+
+        public static float LoadSliderValue(TypeValueChange typeValue)
+        {
+            PlayerData data = _playerProgress.PlayerData;
+
+            switch (typeValue)
+            {
+                case TypeValueChange.Sound:
+                    if (data.AudioSetting.IsSoundMute == false)
+                        _audioService.ChangeValue(data.AudioSetting.VolumeSound,TypeValueChange.Sound);
+                    break;
+                
+                case TypeValueChange.Music:
+                    if (data.AudioSetting.IsMusicMute == false)
+                        _audioService.ChangeValue(data.AudioSetting.VolumeMusic, TypeValueChange.Music);
+                    break;
+            }
+            
+            return GetSliderValue(typeValue);
         }
 
         public static void MetaBackground()

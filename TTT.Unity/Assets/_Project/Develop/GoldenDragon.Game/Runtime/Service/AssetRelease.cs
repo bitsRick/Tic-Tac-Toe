@@ -16,14 +16,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
         public void ReleaseAsset<T>(TypeAsset typeAsset,string nameAsset) where T:class
         {
-            AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
-            asset.Release();
+            if (_assetCatch.TryGetRelease<T>(typeAsset,nameAsset, out AsyncOperationHandle<T> asset)) 
+                asset.Release();
         }
 
         public async UniTask ReleaseAssetAsync<T>(TypeAsset typeAsset,string nameAsset) where T:class
         {
-            AsyncOperationHandle<T> asset = _assetCatch.Release<T>(typeAsset,nameAsset);
-            asset.Release();
+            if (_assetCatch.TryGetRelease<T>(typeAsset,nameAsset, out AsyncOperationHandle<T> asset)) 
+                asset.Release();
 
             await UniTask.CompletedTask;
         }

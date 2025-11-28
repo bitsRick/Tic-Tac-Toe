@@ -32,12 +32,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         
         public Subject<bool> OnPlayerAction = new Subject<bool>();
         public Subject<bool> OnBotAction = new Subject<bool>();
+        private SaveLoadService _saveLoadService;
+        private IPlayerProgress _playerProgress;
 
         public ModuleView(
             ProviderUiFactory providerUiFactory, 
             AssetService assetService, 
-            RoundManager roundManager)
+            RoundManager roundManager,
+            SaveLoadService saveLoadService,IPlayerProgress playerProgress)
         {
+            _playerProgress = playerProgress;
+            _saveLoadService = saveLoadService;
             _providerUiFactory = providerUiFactory;
             _assetService = assetService;
             _roundManager = roundManager;
@@ -102,7 +107,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 winLosePopup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{matchUiRoot.NextMatch();}).AddTo(winLosePopup);
             }
 
-            if (_popupService.TryOpenPopup(TypePopup.Setting, out SettingPopup setting))
+            if (_popupService.TryGetPopup(TypePopup.Setting, out SettingPopup setting))
             {
                 setting.ToMeta.onClick.AsObservable().Subscribe((_)=> matchUiRoot.ToMeta()).AddTo(matchUiRoot);
             }
@@ -110,7 +115,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Release()
         {
-            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.WinLose);
             await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.WinLose);
             await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.StartMatchViewAction);
         }
@@ -153,6 +157,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 case MatchWin.Player:
                     SetWinPlayer(popup);
                     break;
+                
                 case MatchWin.Bot:
                     popup.Lose.SetActive(true);
                     break;
@@ -186,7 +191,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public void OpenCharacterStartMatchPopup()
         {
-            AudioPlayer.Click();
             CharacterStartMatchPopup popup;
             
             if (_popupService.TryOpenPopup(TypePopup.CharacterStartMatch, out CharacterStartMatchPopup characterStartMatch))
@@ -211,6 +215,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 .Take(countEvent)
                 .Subscribe((_) =>
                 {
+                    AudioPlayer.Click();
                     _roundManager.Start();
                 });
 
@@ -251,6 +256,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
             TextMeshProUGUI valueWin = _playerMatchData.Field == TypePlayingField.X ? popup.X : popup.O;
             valueWin.text = softValue.ToString();
+
+            switch (_playerMatchData.Field)
+            {
+                case TypePlayingField.X:
+                    _playerProgress.PlayerData.SoftValueX = softValue;
+                    break;
+                
+                case TypePlayingField.O:
+                    _playerProgress.PlayerData.SoftValueO = softValue;
+                    break;
+            }
+
+            _saveLoadService.SaveProgress(true);
             
             popup.Win.SetActive(true);
         }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
@@ -18,6 +17,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 using VContainer;
 using StyleData = GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player.StyleData;
 
@@ -85,9 +85,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
-            popup.MusicSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Music);
-            popup.SoundSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Sound);
+            OnSwitchIcoAudioMute(TypeValueChange.Music,popup,popup.MusicMute,_playerData.PlayerData.AudioSetting.IsMusicMute);
+            OnSwitchIcoAudioMute(TypeValueChange.Sound,popup,popup.SoundMute,_playerData.PlayerData.AudioSetting.IsSoundMute);
             
+            popup.MusicSlider.value = AudioPlayer.LoadSliderValue(TypeValueChange.Music);
+            popup.SoundSlider.value = AudioPlayer.LoadSliderValue(TypeValueChange.Sound);
+
             _popupBackground.Show();
             popup.Show();
         }
@@ -300,27 +303,73 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     OnSetValueChange(value,TypeValueChange.Music);
                 }).AddTo(popupSetting);
 
-                popupSetting.MusicMute.onClick.AsObservable().Subscribe((_) =>
-                {
-                    OnSetMuteAudio(TypeValueChange.Music);
-                }).AddTo(popupSetting);
-                
                 popupSetting.SoundSlider.onValueChanged.AsObservable().Subscribe( value =>
                 {
                     OnSetValueChange(value,TypeValueChange.Sound);
                 }).AddTo(popupSetting);
-
+                
+                popupSetting.MusicMute.onClick.AsObservable().Subscribe((_) =>
+                {
+                    OnSetMuteAudio(TypeValueChange.Music);
+                    OnSwitchIcoAudioMute(TypeValueChange.Music,popupSetting,popupSetting.MusicMute, _playerData.PlayerData.AudioSetting.IsMusicMute);
+                    SetValueSlideAudio(TypeValueChange.Music, popupSetting, _playerData.PlayerData.AudioSetting.IsMusicMute);
+                }).AddTo(popupSetting);
+                
                 popupSetting.SoundMute.onClick.AsObservable().Subscribe((_) =>
                 {
                     OnSetMuteAudio(TypeValueChange.Sound);
+                    OnSwitchIcoAudioMute(TypeValueChange.Sound,popupSetting,popupSetting.SoundMute, _playerData.PlayerData.AudioSetting.IsSoundMute);
+                    SetValueSlideAudio(TypeValueChange.Sound, popupSetting, _playerData.PlayerData.AudioSetting.IsSoundMute);
                 }).AddTo(popupSetting);
             }
 
-            if (_popupService.TryGetPopup<MatchPopup>(TypePopup.Match,out MatchPopup matchPopup))
+            if (_popupService.TryGetPopup(TypePopup.Match,out MatchPopup matchPopup))
             {
                 matchPopup.X.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.X); }).AddTo(matchPopup);
                 matchPopup.O.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.O);}).AddTo(matchPopup);
             }
+        }
+
+        private void OnSwitchIcoAudioMute(TypeValueChange valueChange, SettingPopup popupSetting,
+            Button btn, bool playerAudioStateMute)
+        {
+            switch (valueChange)
+            {
+                case TypeValueChange.Sound:
+                    SwitchImageButtonAudioMute(popupSetting.SoundOn, popupSetting.SoundOff,btn, playerAudioStateMute);
+                    break;
+                
+                case TypeValueChange.Music:
+                    SwitchImageButtonAudioMute(popupSetting.MusicOn, popupSetting.MusicOff,btn, playerAudioStateMute);
+                    break;
+            }
+        }
+
+        private static void SetValueSlideAudio(TypeValueChange valueChange, SettingPopup popupSetting,
+            bool playerAudioStateMute)
+        {
+            Slider slider = valueChange == TypeValueChange.Music
+                ? popupSetting.MusicSlider
+                : popupSetting.SoundSlider;
+
+            if (playerAudioStateMute == false)
+                slider.value = AudioPlayer.LoadSliderValue(valueChange);
+            else
+                slider.value = 0;
+        }
+
+        private void SwitchImageButtonAudioMute(Image musicOn, Image musicOff, Button btn, bool playerAudioStateMute)
+        {
+            musicOn.gameObject.SetActive(false);
+            musicOff.gameObject.SetActive(false);
+            
+            Image imageToActive =
+                playerAudioStateMute
+                    ? musicOff
+                    : musicOn;
+            
+            btn.targetGraphic = imageToActive;
+            imageToActive.gameObject.SetActive(true);
         }
 
         private void OnSetMuteAudio(TypeValueChange type)

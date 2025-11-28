@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -15,6 +14,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
         [SerializeField] private TextMeshProUGUI _soundText;
         [SerializeField] private TextMeshProUGUI _musicText;
 
+        [Header("SoundImageButton")]
+        [SerializeField] private Image _onSoundMute;
+        [SerializeField] private Image _offSoundMute;
+        [Header("MusicImageButton")]
+        [SerializeField] private Image _onMusicMute;
+        [SerializeField] private Image _offMusicMute;
+
         [Header("Setting Audio")] 
         [SerializeField]private Button _soundMute;
         [SerializeField]private Button _musicMute;
@@ -22,6 +28,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
         [SerializeField]private Slider _soundSlider;
 
         [SerializeField] private Button _toMeta;
+        
+        public Image SoundOff => _offSoundMute;
+        public Image SoundOn => _onSoundMute;
+        public Image MusicOff => _offMusicMute;
+        public Image MusicOn => _onMusicMute;
         
         public Button SoundMute => _soundMute;
         public Button MusicMute => _musicMute;

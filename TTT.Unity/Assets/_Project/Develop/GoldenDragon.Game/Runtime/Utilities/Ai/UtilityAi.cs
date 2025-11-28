@@ -54,16 +54,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 .Where(x => x.score.HasValue)
                 .Select(x => new ScoreAction(x.score.Value, x.field, botMatchDataData.Field))
                 .ToList();
-
-            // foreach (Field field in _playingField.Fields)
-            // {
-            //     float? score = CalculateScore(botMatchDataData,field);
-            //
-            //     if (!score.HasValue)
-            //         continue;
-            //
-            //     yield return new ScoreAction(score.Value,field,botMatchDataData.Field);
-            // }
         }
         
         private float? CalculateScore(CharacterMatchData botMatchDataData, Field field)

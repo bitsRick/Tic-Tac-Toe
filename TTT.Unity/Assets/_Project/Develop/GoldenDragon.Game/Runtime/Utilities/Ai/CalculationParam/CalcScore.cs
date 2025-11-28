@@ -11,7 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
     {
         private const int DefaultScore = 100;
         private const int UltraScore = 150;
-        private const int PlayerNextRoundWin = 2;
+        private const int SlashUltraScore = 350;
         private PlayingField _playingField;
         
         public UniTask Load(UtilityAi utilityAi)
@@ -20,10 +20,48 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             return UniTask.CompletedTask;
         }
 
-        public Func<PositionElementWin, CharacterMatchData, Field, float> ScaleBy(int scoreUp)
+        public Func<PositionElementWin, CharacterMatchData, Field, float> ScaleBySlash(int scoreUp)
         {
-            int countPlayerField = 0;
-            
+            return (position, bot, currentField) =>
+            {
+                if (position == PositionElementWin.None)
+                    return 0;
+
+                int score = 1;
+                int playerCount = 0;
+                TypePlayingField player = bot.Field == TypePlayingField.X ? TypePlayingField.O : TypePlayingField.X;
+                
+                if (currentField.Position == PositionElementToField.MiddleCenter && 
+                    currentField.CurrentPlayingField == TypePlayingField.None) 
+                    score *= SlashUltraScore;
+                
+                foreach (Field field in GetFields(position))
+                {
+                    if (field.Position == currentField.Position)
+                        continue;
+
+                    if (field.CurrentPlayingField == TypePlayingField.None) 
+                        score += SlashUltraScore;
+
+                    if (field.CurrentPlayingField == player)
+                    {
+                        score -= SlashUltraScore;
+                        playerCount++;
+                    }
+
+                    if (field.CurrentPlayingField == bot.Field) 
+                        score += SlashUltraScore;
+
+                    if (playerCount == 2) 
+                        score += SlashUltraScore * 2;
+                }
+
+                return score * scoreUp;
+            };
+        }
+
+        public Func<PositionElementWin, CharacterMatchData, Field, float> ScaleByDefault(int scoreUp)
+        {
             return (position, bot, field) =>
             {
                 float score = 0;
@@ -42,21 +80,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                         continue;
                     }
 
-                    if (countPlayerField == PlayerNextRoundWin)
-                    {
-                        score *= scoreUp;
-                        continue;
-                    }
-
                     if (fieldLazy.CurrentPlayingField == TypePlayingField.None)
-                    {
                         score += DefaultScore;
-                    }
                     else
-                    {
                         score -= DefaultScore;
-                        countPlayerField++;
-                    }
                 }
 
                 return score * scoreUp;

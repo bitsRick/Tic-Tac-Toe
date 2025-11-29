@@ -14,7 +14,7 @@ namespace GoldenDragon
         [SerializeField] private TextMeshProUGUI _loading;
         [SerializeField] private TextMeshProUGUI _nameGame;
         [SerializeField] private CanvasGroup _canvasGroup;
-        private readonly float _countNegativeAlpha = 0.05f;
+        private readonly float _countNegativeAlpha = 0.75f;
         private int _timeReduceAlpha;
         private Tween _fadeTween = null;
 
@@ -45,7 +45,7 @@ namespace GoldenDragon
         {
             if (_fadeTween != null) _fadeTween.Kill();
             
-            _fadeTween = _canvasGroup.DOFade(0f, 0.75f)
+            _fadeTween = _canvasGroup.DOFade(0f, _countNegativeAlpha)
                 .SetAutoKill(true)
                 .SetTest(() => gameObject.SetActive(false))
                 .Play();

@@ -9,9 +9,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 {
     public class CalcScore:ILoadUnit<UtilityAi>
     {
-        private const int DefaultScore = 100;
-        private const int UltraScore = 150;
-        private const int SlashUltraScore = 350;
         private PlayingField _playingField;
         
         public UniTask Load(UtilityAi utilityAi)
@@ -33,7 +30,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                 
                 if (currentField.Position == PositionElementToField.MiddleCenter && 
                     currentField.CurrentPlayingField == TypePlayingField.None) 
-                    score *= SlashUltraScore;
+                    score *= Constant.Ai.SlashUltraScore;
                 
                 foreach (Field field in GetFields(position))
                 {
@@ -41,19 +38,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
                         continue;
 
                     if (field.CurrentPlayingField == TypePlayingField.None) 
-                        score += SlashUltraScore;
+                        score += Constant.Ai.SlashUltraScore;
 
                     if (field.CurrentPlayingField == player)
                     {
-                        score -= SlashUltraScore;
+                        score -= Constant.Ai.SlashUltraScore;
                         playerCount++;
                     }
 
                     if (field.CurrentPlayingField == bot.Field) 
-                        score += SlashUltraScore;
+                        score += Constant.Ai.SlashUltraScore;
 
                     if (playerCount == 2) 
-                        score += SlashUltraScore * 2;
+                        score += Constant.Ai.SlashUltraScore * 2;
                 }
 
                 return score * scoreUp;
@@ -76,14 +73,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
 
                     if (fieldLazy.CurrentPlayingField == bot.Field)
                     {
-                        score *= UltraScore;
+                        score *= Constant.Ai.UltraScore;
                         continue;
                     }
 
                     if (fieldLazy.CurrentPlayingField == TypePlayingField.None)
-                        score += DefaultScore;
+                        score += Constant.Ai.DefaultScore;
                     else
-                        score -= DefaultScore;
+                        score -= Constant.Ai.DefaultScore;
                 }
 
                 return score * scoreUp;

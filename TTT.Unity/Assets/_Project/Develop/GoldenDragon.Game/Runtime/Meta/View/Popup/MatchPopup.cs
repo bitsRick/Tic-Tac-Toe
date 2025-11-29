@@ -23,7 +23,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             
         public void Initialized()
         {
-            _playerVsBot.text = Lang.S.UI.POPUP.MATCH_POPUP.VsBot;
+            _playerVsBot.text = Lang.S.UI.POPUP.MATCH.VsBot;
         }
 
         public override void Dispose()

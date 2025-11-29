@@ -52,7 +52,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai
             return _playingField.Fields
                 .Select(field => new{field,score = CalculateScore(botMatchDataData, field)})
                 .Where(x => x.score.HasValue)
-                .Select(x => new ScoreAction(x.score.Value, x.field, botMatchDataData.Field))
+                .Select(x => new ScoreAction(x.score.Value, x.field))
                 .ToList();
         }
         

@@ -2,7 +2,6 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Ai;
@@ -35,7 +34,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private CharacterMatchData _bot;
         private WinService _winService;
         private RandomRound _randomRound;
-        private RoundData _roundData = new RoundData();
+        private readonly RoundData _roundData = new RoundData();
         private bool _isPlayerAction;
         private MatchMode _mode = MatchMode.Pause;
 
@@ -43,7 +42,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public RoundData RoundData => _roundData;
 
         public Subject<MatchWin> OnWin = new Subject<MatchWin>();
-        public Subject<Unit> OnNextTurn = new Subject<Unit>();
         public Subject<bool> OnButtonInteractive  = new Subject<bool>();
 
         public UniTask Initialized(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,WinService winService,RandomRound randomRound)

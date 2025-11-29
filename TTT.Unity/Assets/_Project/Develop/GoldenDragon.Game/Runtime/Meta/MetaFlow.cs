@@ -24,10 +24,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly Model _modelMetaRoot;
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly SessionDataMatch _sessionDataMatch;
+        private readonly SaveLoadService _saveLoadService;
         private PopupService _popupService;
         private PoolUiItem<ItemInventoryStyle> _itemInventoryStyle;
         private PoolUiItem<ItemShop> _itemShopPool;
-        private SaveLoadService _saveLoadService;
         private MetaRoot _metaRoot;
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,

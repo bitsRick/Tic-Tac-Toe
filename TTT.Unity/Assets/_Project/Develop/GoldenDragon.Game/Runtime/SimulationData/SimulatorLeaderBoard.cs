@@ -7,12 +7,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData
         private static SimulatorLeaderBoard instance;
         public static SimulatorLeaderBoard S => instance ?? new SimulatorLeaderBoard();
         
-        public List<Data> D => new List<Data>()
+        public List<Data> D => new()
         {
-            new Data(){Name = "OboObo Asas", Score = 909021999},
-            new Data(){Name = "Tramp", Score = 100},
-            new Data(){Name = "Furry", Score = 564},
-            new Data(){Name = "Adrey", Score = 234}
+            new(){Name = "OboObo Asas", Score = 909021999},
+            new(){Name = "Tramp", Score = 100},
+            new(){Name = "Furry", Score = 564},
+            new(){Name = "Adrey", Score = 234}
         };
     }
 

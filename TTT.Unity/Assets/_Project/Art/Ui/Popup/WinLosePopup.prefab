@@ -996,6 +996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc52732c2964399960802c55a37877f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _winText: {fileID: 7689254043454982520}
+  _loseText: {fileID: 6775362715177797534}
+  _rewardText: {fileID: 649687028468057974}
   _win: {fileID: 1884733332163961310}
   _lose: {fileID: 7012617854678200791}
   _btnMenu: {fileID: 5169218767911141054}

@@ -6,7 +6,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
     [Serializable]
     public class Lang:Singleton<Lang>
     {
-        public Lang() {}
         public Ui UI = new Ui();
 
         [Serializable]
@@ -67,14 +66,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
                 public class MatchPopup
                 {
                     public string VsBot = "Игрок Vs Бот";
-                    public string VsPlayer = "Игрок Vs Игрок";
+                }
+
+                [Serializable]
+                public class CharacterStartMatchPopup
+                {
+                    public string FirstAction = "Первым ходит:";
+                }
+                
+                [Serializable]
+                public class WinLosePopup
+                {
+                    public string Win = "Вы победили!";
+                    public string Lose = "Вы Проиграли!";
+                    public string Reward = "Награда";
                 }
 
                 public Setting SETTING = new Setting();
                 public LeaderBoard LEADER_BOARD = new ();
                 public Inventory INVENTORY = new ();
                 public Shop SHOP = new ();
-                public MatchPopup MATCH_POPUP = new ();
+                public MatchPopup MATCH = new ();
+                public CharacterStartMatchPopup CHARACTER_START_MATCH = new CharacterStartMatchPopup();
+                public WinLosePopup WIN_LOSE = new WinLosePopup();
             }
 
             public RegistrationScreen REGISTRATION_SCREEN = new RegistrationScreen();

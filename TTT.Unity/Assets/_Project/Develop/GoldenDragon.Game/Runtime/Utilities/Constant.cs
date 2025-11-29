@@ -22,6 +22,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             }
         }
         
+        public static class Ai
+        {
+            public const int DefaultScore = 100;
+            public const int UltraScore = 150;
+            public const int SlashUltraScore = 350;
+        }
+        
         public static class B
         {
             public const float DurationFadeRegistrationScreen = 0.5f;
@@ -57,6 +64,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             public const int SoftValueWin = 10;
             public const int MaxWinMatch = 3;
             public const int MaxCountSetField = 8;
+            public const int PlayerAction = 0;
+            public const int BotAction = 2;
 
             public static class Asset
             {

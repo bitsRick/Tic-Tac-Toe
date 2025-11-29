@@ -210,6 +210,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             else
                 return;
 
+            popup.Initialized();
+            
             switch (_roundManager.Mode)
             {
                 case MatchMode.PlayerAction:

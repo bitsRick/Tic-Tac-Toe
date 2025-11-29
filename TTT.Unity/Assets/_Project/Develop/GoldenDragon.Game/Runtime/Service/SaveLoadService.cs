@@ -24,7 +24,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
         public UniTask Load()
         {
-            Log.Loading.D($"{nameof(SaveLoadService)} is loading ...");
+            Log.Loading.D($"{nameof(SaveLoadService)}",$" is loading ...");
 
             var playerDataCode64 = PlayerPrefs.GetString(Key);
             var encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
@@ -32,11 +32,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
             if (convertPlayerData == null)
             {
-                Log.Loading.D("[Player Data]:Empty");
+                Log.Loading.D($"{nameof(SaveLoadService)}","[Player Data]:Empty");
             }
             else
             {
-                Log.Loading.D("[Player Data]:Load");
+                Log.Loading.D($"{nameof(SaveLoadService)}","[Player Data]:Load");
                 _playerProgress.PlayerData = convertPlayerData;
             }
 
@@ -53,11 +53,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             if (isFastSave == false)
                 if (_isSaveData == false)
                 {
-                    Log.Loading.D($"{nameof(SaveLoadService)} is not write data");
+                    Log.Boot.D($"{nameof(SaveLoadService)}",$" is not write data");
                     return UniTask.CompletedTask;
                 }
 
-            Log.Loading.D($"{nameof(SaveLoadService)} is save progress");
+            Log.Boot.D($"{nameof(SaveLoadService)}",$" is save progress");
 
             var playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
             var code64PlayerData = Coding.GetCodingBase64(playerDataJson);
@@ -72,6 +72,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             _playerProgress.PlayerData = new PlayerData(name);
             SetData();
             await SaveProgress();
+            
+            Log.Boot.D($"{nameof(SaveLoadService)}",$" Create New Player Progress");
         }
 
         private void SetData() => _isSaveData = true;

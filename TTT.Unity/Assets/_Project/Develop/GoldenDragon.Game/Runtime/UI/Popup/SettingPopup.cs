@@ -57,20 +57,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
                     break;
             }
         }
-
-        public override UniTask Show()
-        {
-            return base.Show();
-        }
-
-        public override UniTask Hide()
-        {
-            return base.Hide();
-        }
-
+        
         public override void Dispose()
         {
-           UnityEngine.GameObject.Destroy(this);
+           Destroy(this);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
     public class WinService:ILoadUnit
     {
-        private CharacterMatchData _bot;
-        private CharacterMatchData _player;
-        private MatchUiRoot _matchUiRoot;
+        private readonly CharacterMatchData _bot;
+        private readonly CharacterMatchData _player;
+        private readonly MatchUiRoot _matchUiRoot;
         private Field[] _fieldFields;
         private List<Field> _horizontalTopLineFields;
         private List<Field> _horizontalBottomLineFields;

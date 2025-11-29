@@ -9,13 +9,13 @@ namespace GoldenDragon
 {
     public class BootstrapFlow:IStartable
     {
-        private LoadingService _loadingService;
-        private SceneManager _sceneManager;
-        private RegistrationScreen _registrationScreen;
-        private SaveLoadService _saveLoadService;
-        private LoadingView _loadingView;
-        private AudioService _audioService;
-        private IPlayerProgress _progress;
+        private readonly LoadingService _loadingService;
+        private readonly SceneManager _sceneManager;
+        private readonly RegistrationScreen _registrationScreen;
+        private readonly SaveLoadService _saveLoadService;
+        private readonly LoadingView _loadingView;
+        private readonly AudioService _audioService;
+        private readonly IPlayerProgress _progress;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
@@ -47,14 +47,14 @@ namespace GoldenDragon
             }
             else
             {
-                _sceneManager.LoadScene(RuntimeConstants.Scene.Loading).Forget();
+                await StartLoading();
             }
         }
 
-        public async void SetRegistration(string inputFieldText)
+        public async void SetRegistration(string namePlayer)
         {
             await _registrationScreen.Hide();
-            await _saveLoadService.CreateNewData(inputFieldText);
+            await _saveLoadService.CreateNewData(namePlayer);
             await StartLoading();
         }
 

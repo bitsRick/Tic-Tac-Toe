@@ -9,11 +9,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
         [SerializeField] private Field[] _fields;
         [Header("Рамка")]
         [SerializeField] private Image _border;
-        [Header("Задний фон Рамки")]
-        [SerializeField] private Image _background;
-
+        
         public Field[] Fields => _fields;
         public Image Border => _border;
-        public Image background => _background;
     }
 }

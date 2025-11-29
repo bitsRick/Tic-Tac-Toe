@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using Newtonsoft.Json;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {

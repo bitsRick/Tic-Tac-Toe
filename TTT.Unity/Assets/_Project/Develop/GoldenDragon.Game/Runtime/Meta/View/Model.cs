@@ -29,7 +29,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private PopupService _popupService;
         private BackPopupBackground _popupBackground;
         private MetaRoot _metaRoot;
-        private PoolUiItem<ItemShop> _poolItemSellUi;
+        private PoolUiItem<ItemShop> _poolItemUi;
         private PoolUiItem<ItemInventoryStyle> _poolItemInventoryStyle;
         private ProviderUiFactory _uiFactory;
         private SaveLoadService _saveLoadService;
@@ -59,7 +59,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             _metaFlow = metaFlow;
             _poolItemInventoryStyle = poolItemInventoryStyle;
             _metaRoot = metaRoot;
-            _poolItemSellUi = poolItemSellUi;
+            _poolItemUi = poolItemSellUi;
             _styleData = styleData;
             _popupBackground = metaRoot.GetPopupBackground();
             
@@ -194,7 +194,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         private void OnShowItemShop(ShowItemStyle type)
         {
-            _poolItemSellUi.Reset();
+            _poolItemUi.Reset();
 
             foreach (Style.StyleData data in _styleData)
             {
@@ -202,7 +202,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     data.Id == Constant.StyleData.GetDefaultType(type))
                     continue;
 
-                ItemShop item = _poolItemSellUi.GetItem();
+                ItemShop item = _poolItemUi.GetItem();
                 item.Id = data.Id;
                 item.Image.sprite = data.Sprite;
                 item.X = data.ValueX.ToString();
@@ -424,7 +424,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             if (_popupService.TryGetPopup<ShopPopup>(TypePopup.Shop,out ShopPopup popup))
                 for (int i = 0; i < _styleData.Length; i++)
                 {
-                    ItemShop item = _uiFactory.FactoryItem.CreateItem(_poolItemSellUi.GetItem(), popup);
+                    ItemShop item = _uiFactory.FactoryItem.CreateItem(_poolItemUi.GetItem(), popup);
                     EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() => BuyStyle(item.Id, item.ActiveGameObject, item.Type)));
                 }
             else

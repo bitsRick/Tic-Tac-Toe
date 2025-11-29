@@ -13,14 +13,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
     public class RoundData
     {
-        public const int MaxWinMatch = 3;
-        public int CurrenWin = 0;
         public int CountSetField = -1;
         public bool IsStart;
         public bool IsFinish;
         
-        public int MaxWin => MaxWinMatch;
-
         public void Reset()
         {
             IsStart = false;
@@ -29,7 +25,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         }
         
         public bool IsNotEndWin(CharacterMatchData playerMatchData, CharacterMatchData botMatchData) => 
-            playerMatchData.WinCount < MaxWinMatch && botMatchData.WinCount < MaxWinMatch;
+            playerMatchData.WinCount < Constant.M.MaxWinMatch && botMatchData.WinCount < Constant.M.MaxWinMatch;
     }
 
     public class RoundManager
@@ -148,7 +144,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             OnButtonInteractive.OnNext(false);
             BotAction botAction = _ai.MakeBestDecision(_bot);
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
             _ai.SetField(_bot,botAction.Field);
         }
 

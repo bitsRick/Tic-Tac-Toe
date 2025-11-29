@@ -19,20 +19,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly LoadingService _loadingService;
         private readonly LoadingView _loadingView;
         private readonly ProviderUiFactory _providerUiFactory;
-        private SessionDataMatch _sessionDataMatch;
+        private readonly SessionDataMatch _sessionDataMatch;
+        private readonly SaveLoadService _saveLoadService;
+        private readonly RoundManager _roundManager;
+        private readonly ModuleView _moduleView;
+        private readonly StyleMatchData _styleMatchData;
+        private readonly ModulePlayingField _modulePlayingField;
+        private readonly IPlayerProgress _playerProgress;
+        private readonly IAi _utilityAi;
         private PopupService _popupService;
-        private SaveLoadService _saveLoadService;
-        private RoundManager _roundManager;
         private WinService _winService;
-        private IAi _utilityAi;
-        private IPlayerProgress _playerProgress;
-        private ModuleView _moduleView;
-        private ModulePlayingField _modulePlayingField;
-        private StyleMatchData _styleMatchData;
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchDataData;
         private MatchUiRoot _matchUi;
-
 
         public MatchFlow(
             SceneManager sceneManager,
@@ -106,7 +105,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _modulePlayingField.Reset();
             _botMatchDataData.Reset();
             _playerMatchDataData.Reset();
+            _roundManager.Reset();
+            
+            _popupService.SetNoClose(false);
+            _popupService.Close();
+            
             _matchUi.OpenCharacterStartMatchPopup();
+
             _loadingView.Hide();
         }
 
@@ -121,6 +126,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             await _moduleView.Release();
             await _popupService.Release();
+            await _winService.Release();
             await Task.CompletedTask;
         }
     }

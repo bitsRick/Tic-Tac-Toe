@@ -8,9 +8,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         private const int PlayerAction = 0;
         private const int BotAction = 2;
 
-        public MatchMode GetFirstCharacterAction()
-        {
-            return Random.Range(PlayerAction, BotAction) == PlayerAction ? MatchMode.PlayerAction : MatchMode.BotAction;
-        }
+        public MatchMode GetFirstCharacterAction() => Random.Range(PlayerAction, BotAction) == PlayerAction ? MatchMode.PlayerAction : MatchMode.BotAction;
     }
 }

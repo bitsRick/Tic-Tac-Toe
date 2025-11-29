@@ -78,9 +78,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 field.Btn.interactable = isFlag;
         }
 
-        public void OnMouseEnterField(Field fieldData) => SetViewField(fieldData, true);
+        public void OnMouseEnterField(Field fieldData)
+        {
+            if (_roundManager.Mode == MatchMode.BotAction)
+                return;
 
-        public void OnMouseExitField(Field fieldData) => SetViewField(fieldData, false);
+            SetViewField(fieldData, true);
+        }
+
+        public void OnMouseExitField(Field fieldData)
+        {
+            SetViewField(fieldData, false);
+        }
 
         public void SetWinMatch(MatchWin winner)
         {

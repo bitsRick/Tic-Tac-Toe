@@ -1736,8 +1736,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 2117881235793988159}
-  _actionRound: {r: 0, g: 1, b: 0.11850643, a: 0}
-  _noActionRound: {r: 1, g: 1, b: 1, a: 0}
+  _actionRound: {r: 0, g: 1, b: 0.11850643, a: 1}
+  _noActionRound: {r: 1, g: 1, b: 1, a: 1}
   _winOne: {fileID: 7047160009901957194}
   _winTwo: {fileID: 224566262102772453}
   _winThree: {fileID: 7399301532699278279}
@@ -5464,8 +5464,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 550908984986538634}
-  _actionRound: {r: 0, g: 1, b: 0.11850643, a: 0}
-  _noActionRound: {r: 1, g: 1, b: 1, a: 0}
+  _actionRound: {r: 0, g: 1, b: 0.11850643, a: 1}
+  _noActionRound: {r: 1, g: 1, b: 1, a: 1}
   _winOne: {fileID: 3810893416044763900}
   _winTwo: {fileID: 4051041462348393380}
   _winThree: {fileID: 1220859705404333875}

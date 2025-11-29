@@ -13,6 +13,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         private PopupBase _activePopup;
         private SaveLoadService _saveLoadService;
         private bool _isActivePopup;
+        private bool _isNoClose;
 
         public PopupService(SaveLoadService saveLoadService)
         {
@@ -68,9 +69,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             return false;
         }
 
+        public void SetNoClose(bool isFlag) => _isNoClose = isFlag;
+
         public void Close()
         {
             AudioPlayer.Click();
+            
+            if (_isNoClose)
+                return;
+
             Rest();
             _saveLoadService.SaveProgress();
         }

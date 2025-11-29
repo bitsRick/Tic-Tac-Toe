@@ -14,9 +14,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             {
                 return type switch
                 {
-                    ShowItemStyle.Board => Constant.StyleData.DefaultBoard,
-                    ShowItemStyle.X => Constant.StyleData.DefaultX,
-                    ShowItemStyle.O => Constant.StyleData.DefaultO,
+                    ShowItemStyle.Board => DefaultBoard,
+                    ShowItemStyle.X => DefaultX,
+                    ShowItemStyle.O => DefaultO,
                     _ => null
                 };
             }
@@ -55,6 +55,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         {
             public const string BotName = "Bot_Goga";
             public const int SoftValueWin = 10;
+            public const int MaxWinMatch = 3;
+            public const int MaxCountSetField = 8;
 
             public static class Asset
             {
@@ -90,13 +92,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             }
         }
     }
-
-    public enum TypeColorMatchAction
-    {
-        Active,
-        NoActive
-    }
-
+    
     public enum TypeValueChange
     {
         Sound,
@@ -106,7 +102,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     public enum TypePopup
     {
         Setting,
-        None,
         LeaderBoard,
         Match,
         Inventory,

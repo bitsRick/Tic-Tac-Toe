@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
@@ -11,7 +11,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 {
     public class WinService:ILoadUnit
     {
-        private const int WinCount = 3;
         private CharacterMatchData _bot;
         private CharacterMatchData _player;
         private MatchUiRoot _matchUiRoot;
@@ -49,6 +48,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             return UniTask.CompletedTask;
         }
 
+        public async UniTask Release()
+        {
+            _horizontalTopLineFields = null;
+            _horizontalBottomLineFields = null;
+            _horizontalMiddleFields = null;
+            _verticalCenterLineFields = null;
+            _verticalLeftLineFields = null;
+            _verticalRightLineFields = null;
+            _backSlashFields = null;
+            _slashFields = null;
+
+            await Task.CompletedTask;
+        }
+
         public bool TryGetMatchWin(RoundData roundData, out MatchWin matchMode)
         {
             matchMode = GetCharacterMatchWin(
@@ -59,7 +72,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
 
             if (matchMode == MatchWin.None
-                &&roundData.CountSetField >= 8)
+                &&roundData.CountSetField >= Constant.M.MaxCountSetField)
             {
                 matchMode = MatchWin.None;
                 return true;
@@ -84,10 +97,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
                     if (field.CurrentPlayingField == _bot.Field) botField++;
                 }
 
-                if (playerField == WinCount)
+                if (playerField == Constant.M.MaxWinMatch)
                     return MatchWin.Player;
 
-                if (botField == WinCount)
+                if (botField == Constant.M.MaxWinMatch)
                     return MatchWin.Bot;
 
                 botField = 0;

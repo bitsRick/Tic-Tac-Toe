@@ -17,6 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup
         [Header("SoundImageButton")]
         [SerializeField] private Image _onSoundMute;
         [SerializeField] private Image _offSoundMute;
+        
         [Header("MusicImageButton")]
         [SerializeField] private Image _onMusicMute;
         [SerializeField] private Image _offMusicMute;

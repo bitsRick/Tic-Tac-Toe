@@ -7,7 +7,9 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 {
-        public interface IDisposableLoadUnit : ILoadUnit, IDisposable { }
+    public interface IDisposableLoadUnit : ILoadUnit, IDisposable
+    {
+    }
 
     public interface ILoadUnit
     {
@@ -19,7 +21,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         UniTask Load(T param);
     }
 
-    public interface IDisposableLoadUnit<in T> : ILoadUnit<T>, IDisposable { }
+    public interface IDisposableLoadUnit<in T> : ILoadUnit<T>, IDisposable
+    {
+    }
 
     public sealed class LoadingService
     {
@@ -41,17 +45,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         private async UniTask OnLoadingFinish(object unit, bool isError)
         {
             _watch?.Stop();
-            Log.Loading.D($"{unit.GetType().Name} is {(isError ? "NOT " : "")}loaded with time {_watch?.ElapsedMilliseconds}ms");
+            Log.Loading.D(
+                $"{unit.GetType().Name} is {(isError ? "NOT " : "")}loaded with time {_watch?.ElapsedMilliseconds}ms");
 
             int currentThreadId = Thread.CurrentThread.ManagedThreadId;
             int mainThreadId = PlayerLoopHelper.MainThreadId;
 
-            if (mainThreadId != currentThreadId) {
+            if (mainThreadId != currentThreadId)
+            {
                 _watch?.Restart();
-                Log.Loading.D("THREADING",$"start switching from '{currentThreadId}' thread to main thread '{mainThreadId}'");
+                Log.Loading.D("THREADING",
+                    $"start switching from '{currentThreadId}' thread to main thread '{mainThreadId}'");
                 await UniTask.SwitchToMainThread();
                 _watch?.Stop();
-                Log.Loading.D("THREADING",$"switch finished with time {_watch?.ElapsedMilliseconds}");
+                Log.Loading.D("THREADING", $"switch finished with time {_watch?.ElapsedMilliseconds}");
             }
         }
 
@@ -59,18 +66,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         {
             var isError = true;
 
-            try {
+            try
+            {
                 OnLoadingBegin(loadUnit);
                 await loadUnit.Load();
                 isError = false;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Loading.E(e);
 
                 if (!skipExceptionThrow)
                     throw;
             }
-            finally {
+            finally
+            {
                 await OnLoadingFinish(loadUnit, isError);
             }
         }
@@ -85,18 +95,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
         {
             var isError = true;
 
-            try {
+            try
+            {
                 OnLoadingBegin(loadUnit);
                 await loadUnit.Load(param);
                 isError = false;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Loading.E(e);
 
                 if (!skipExceptionThrow)
                     throw;
             }
-            finally {
+            finally
+            {
                 await OnLoadingFinish(loadUnit, isError);
             }
         }
@@ -113,23 +126,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
                 await BeginLoading(loadUnit, skipExceptionThrow);
         }
 
-        public async UniTask BeginLoadingParallel(string logName, bool skipExceptionThrow = false, params ILoadUnit[] units)
+        public async UniTask BeginLoadingParallel(string logName, bool skipExceptionThrow = false,
+            params ILoadUnit[] units)
         {
             var isError = true;
 
-            try {
+            try
+            {
                 OnLoadingBegin(logName);
                 var t = UniTask.WhenAll(units.Select(e => e.Load()));
                 await t;
                 isError = false;
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Log.Loading.E(e);
 
                 if (!skipExceptionThrow)
                     throw;
             }
-            finally {
+            finally
+            {
                 await OnLoadingFinish(logName, isError);
             }
         }

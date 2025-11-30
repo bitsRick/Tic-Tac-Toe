@@ -80,7 +80,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //arange
                 AssetCatch assetCatch = new AssetCatch();
                 AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));
-                var pull = new PoolUiItem<ItemInventoryStyle>(assetService);
+                var pull = new PoolUiItem<ItemStyle>(assetService);
                 var styleData = new StyleDataLoadShop(assetService);
                 
                 //act
@@ -104,7 +104,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //arange
                 AssetCatch assetCatch = new AssetCatch();
                 AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));
-                var pull = new PoolUiItem<ItemShop>(assetService);
+                var pull = new PoolUiItem<ShopItem>(assetService);
                 var styleData = new StyleDataLoadShop(assetService);
                 
                 //act

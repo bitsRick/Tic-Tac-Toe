@@ -23,10 +23,10 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             //arrange
             int count = 10;
             MatchMode[] modeArray = new MatchMode[count];
-            RandomRound roundManager = new RandomRound();
+            RoundRandom manager = new RoundRandom();
             
             //act
-            for (int i = 0; i < count; i++) modeArray[i] = roundManager.GetFirstCharacterAction();
+            for (int i = 0; i < count; i++) modeArray[i] = manager.GetFirstCharacterAction();
             int countPlayer = modeArray.Count(key => key == MatchMode.PlayerAction);
 
             //assert

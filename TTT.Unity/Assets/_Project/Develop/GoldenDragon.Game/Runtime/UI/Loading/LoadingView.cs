@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Core;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Base;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using TMPro;
 using UnityEngine;
@@ -14,6 +14,7 @@ namespace GoldenDragon
         [SerializeField] private TextMeshProUGUI _loading;
         [SerializeField] private TextMeshProUGUI _nameGame;
         [SerializeField] private CanvasGroup _canvasGroup;
+        
         private readonly float _countNegativeAlpha = 0.75f;
         private int _timeReduceAlpha;
         private Tween _fadeTween = null;

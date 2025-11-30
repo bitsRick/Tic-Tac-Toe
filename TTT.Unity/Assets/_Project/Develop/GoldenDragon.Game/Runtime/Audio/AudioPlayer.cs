@@ -1,8 +1,6 @@
-﻿using System;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using UniRx;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 {
@@ -10,10 +8,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
     {
         private static AudioService _audioService;
         private static IPlayerProgress _playerProgress;
-
-        public static Subject<bool> OnChangeMuteSound = new Subject<bool>();
-        public static Subject<bool> OnChangeMuteEffect= new Subject<bool>();
-
+        
         public static void Construct(AudioService audioService, IPlayerProgress playerProgress)
         {
             _audioService = audioService;

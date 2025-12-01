@@ -1,6 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -22,7 +24,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 if (_assetCatch.TryGet<T>(typeAsset, nameAsset,out AsyncOperationHandle<T> handleOut))
                     return handleOut.WaitForCompletion();
 
-                AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(nameAsset);
+                AsyncOperationHandle<T> handle = default;
+                
+                try
+                {
+                    handle = Addressables.LoadAssetAsync<T>(nameAsset);
+                }
+                catch (Exception ex)
+                {
+                    Log.Default.W(nameof(AssetLoad),$"Ошибка загрузки Ассета: {ex.Message}");
+                }
+
                 _assetCatch.Add(typeAsset, nameAsset, handle);
                 
                 return handle.WaitForCompletion();
@@ -34,8 +46,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
                 
                 if (_assetCatch.TryGet<T>(typeAsset, nameAsset,out AsyncOperationHandle<T> handleOut))
                     return handleOut.WaitForCompletion();
+                
+                AsyncOperationHandle<T> handle = default;
+                
+                try
+                {
+                    handle = Addressables.LoadAssetAsync<T>(nameAsset);;
+                }
+                catch (Exception ex)
+                {
+                    Log.Default.W(nameof(AssetLoad),$"Ошибка загрузки Ассета: {ex.Message}");
+                }
 
-                AsyncOperationHandle<T> handle = Addressables.LoadAssetAsync<T>(nameAsset);
                 _assetCatch.Add(typeAsset,nameAsset,handle);
                 
                 return await handle.ToUniTask();

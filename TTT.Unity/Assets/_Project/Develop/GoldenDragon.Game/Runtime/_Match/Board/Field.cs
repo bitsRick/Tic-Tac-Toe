@@ -30,7 +30,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 
         public PositionElementToField Position => _positionElementToField; 
         
-        public void Initialized(PositionElementToField position, ModulePlayingField modulePlayingField)
+        public void Resolve(PositionElementToField position, ModulePlayingField modulePlayingField)
         {
             _matchUiRoot = modulePlayingField;
             _positionElementToField = position;

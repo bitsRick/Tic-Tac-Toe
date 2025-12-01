@@ -27,6 +27,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
         [SerializeField] private Button _btn;
         [SerializeField] private CanvasGroup _selfGroup;
         private bool _isActive;
+        private BootstrapFlow _bootstrapFlow;
 
         private void Awake()
         {
@@ -41,8 +42,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
             
             _switchLanguage.value = 0;
         }
+
+        public void Resolve(BootstrapFlow bootstrapFlow)
+        {
+            _bootstrapFlow = bootstrapFlow;
+        }
         
-        public UniTask Initialized(BootstrapFlow bootstrapFlow)
+        public UniTask Initialized()
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
@@ -52,7 +58,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
                     return;
                
                 _isActive = true;
-                bootstrapFlow.SetRegistration(_inputField.text);
+                _bootstrapFlow.SetRegistration(_inputField.text);
             }).AddTo(this);
             
             _registration.text = Lang.S.UI.REGISTRATION_SCREEN.Registration;

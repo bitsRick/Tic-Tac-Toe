@@ -36,7 +36,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private void Awake() => DontDestroyOnLoad(this);
 
         [Inject]
-        public void Contructor(AssetService assetService) => _assetService = assetService;
+        public void Resolve(AssetService assetService) => _assetService = assetService;
 
         public void InitializedDefaultAudioSetting()
         {

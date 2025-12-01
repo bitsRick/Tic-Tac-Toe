@@ -27,7 +27,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _roundManager = roundManager;
         }
 
-        public UniTask Initialized(PlayingField playingField,CharacterMatchData playerData,CharacterMatchData botData,MatchUiRoot matchUiRoot)
+        public UniTask Resolve(PlayingField playingField,CharacterMatchData playerData,CharacterMatchData botData,MatchUiRoot matchUiRoot)
         {
             _playingField = playingField;
             _playerMatchData = playerData;
@@ -61,7 +61,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 field.X.sprite = styleMatchData.X;
                 field.O.sprite = styleMatchData.O;
                 
-                field.Initialized(type, this);
+                field.Resolve(type, this);
                 field.Btn.onClick.AsObservable().Subscribe((_) =>
                     {
                         SetTypeInFieldTurn(_playerMatchData, field);

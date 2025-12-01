@@ -42,20 +42,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         public void Construct(
             IPlayerProgress playerData, 
             ProviderUiFactory providerUiFactory,
-            SaveLoadService saveLoadService,SessionDataMatch sessionDataMatch)
+            SaveLoadService saveLoadService,SessionDataMatch sessionDataMatch,PopupService popupService)
         {
+            _popupService = popupService;
             _sessionDataMatch = sessionDataMatch;
             _saveLoadService = saveLoadService;
             _uiFactory = providerUiFactory;
             _playerData = playerData;
         }
-
-        public UniTask Initialized(MetaRoot metaRoot,
+        
+        public UniTask Resolve(MetaRoot metaRoot,
             Style.StyleData[] styleData,
             PoolUiItem<ShopItem> poolItemSellUi,
-            PoolUiItem<ItemStyle> poolItemInventoryStyle, PopupService popupService,MetaFlow metaFlow)
+            PoolUiItem<ItemStyle> poolItemInventoryStyle,
+            MetaFlow metaFlow)
         {
-            _popupService = popupService;
             _metaFlow = metaFlow;
             _poolItemInventoryStyle = poolItemInventoryStyle;
             _metaRoot = metaRoot;
@@ -74,7 +75,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             
             return UniTask.CompletedTask;
         }
-        
+
         public void OpenPopupSetting()
         {
             AudioPlayer.S.Click();

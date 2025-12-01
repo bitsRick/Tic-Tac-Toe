@@ -36,14 +36,15 @@ namespace GoldenDragon
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
 
-            AudioPlayer.S.Construct(_audioService,_progress);
+            AudioPlayer.S.Resolve(_audioService,_progress);
             AudioPlayer.S.Initialized();
             
             await _loadingView.Initialized();
 
             if (_saveLoadService.PlayerData == null)
             {
-                await _registrationScreen.Initialized(this);
+                _registrationScreen.Resolve(this);
+                await _registrationScreen.Initialized();
                 await _registrationScreen.Show();
             }
             else

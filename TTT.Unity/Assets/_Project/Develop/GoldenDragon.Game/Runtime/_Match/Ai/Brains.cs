@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai.CalculationParam;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
 {
@@ -10,6 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
         private Convolution _convolution;
         private Calculation _c;
         
+        [Inject]
         public Brains(Calculation calculation)
         {
             _c = calculation;

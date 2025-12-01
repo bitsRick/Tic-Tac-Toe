@@ -7,6 +7,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
 {
@@ -18,10 +19,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
         private Brains _brains;
         private MatchUiRoot _matchUiRoot;
 
+        [Inject]
         public UtilityAi(Calculation calculation,Brains brains)
         {
             _brains = brains;
             _calculation = calculation;
+            _calculation.Resolve(this);
         }
 
         public async UniTask Load(MatchUiRoot matchUiRoot)
@@ -29,10 +32,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
             _matchUiRoot = matchUiRoot;
             _playingField = _matchUiRoot.PlayingField;
             
-            _calculation = new Calculation();
-            await _calculation.Score.Load(this);
-            
-            _brains = new Brains(_calculation);
+            await _calculation.Score.Load();
             await _brains.Load();
             
             _utilityFunction = _brains.GetUtilityFunction();

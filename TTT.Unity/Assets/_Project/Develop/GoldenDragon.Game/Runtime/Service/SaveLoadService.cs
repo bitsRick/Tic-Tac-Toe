@@ -5,6 +5,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using Newtonsoft.Json;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
@@ -17,6 +18,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         public PlayerData PlayerData => _playerProgress.PlayerData;
         public Subject<Unit> OnPlayerDataChanged = new Subject<Unit>();
 
+        [Inject]
         public SaveLoadService(IPlayerProgress playerProgress)
         {
             _playerProgress = playerProgress;

@@ -38,7 +38,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private ProviderUiFactory _providerUiFactory;
 
         [Inject]
-        public void Constructor(PopupService popupService,Model model,AssetService assetService,PlayerData playerProgress,ProviderUiFactory providerUiFactory)
+        public void Resolve(PopupService popupService,Model model,AssetService assetService,PlayerData playerProgress,ProviderUiFactory providerUiFactory)
         {
             _providerUiFactory = providerUiFactory;
             _playerProgress = playerProgress;

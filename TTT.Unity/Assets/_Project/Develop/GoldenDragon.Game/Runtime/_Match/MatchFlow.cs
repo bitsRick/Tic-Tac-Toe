@@ -28,11 +28,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly ModulePlayingField _modulePlayingField;
         private readonly IPlayerProgress _playerProgress;
         private readonly IAi _utilityAi;
-        private PopupService _popupService;
         private WinService _winService;
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchDataData;
         private MatchUiRoot _matchUi;
+        private PopupService _popupService;
 
         public MatchFlow(
             SceneManager sceneManager,
@@ -45,8 +45,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             SaveLoadService saveLoadService,
             RoundManager roundManager,
             ModuleView moduleView,
-            ModulePlayingField modulePlayingField,StyleMatchData styleMatchData)
+            ModulePlayingField modulePlayingField,StyleMatchData styleMatchData,PopupService popupService)
         {
+            _popupService = popupService;
             _styleMatchData = styleMatchData;
             _modulePlayingField = modulePlayingField;
             _moduleView = moduleView;
@@ -63,8 +64,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
 
         public async void Start()
         {
-            _popupService = new PopupService(_saveLoadService);
-            
             _botMatchDataData = new CharacterMatchData(RuntimeConstants.Match.BotName,_sessionDataMatch.BotType,true);
             _playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
             
@@ -73,17 +72,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             await _matchUi.Initialized();
 
             await _loadingService.BeginLoading(_styleMatchData, _playerProgress);
-            
             await _loadingService.BeginLoading(_moduleView);
             await _loadingService.BeginLoading(_modulePlayingField,_styleMatchData);
             await _loadingService.BeginLoading(_matchUi);
-            
             await _loadingService.BeginLoading(_utilityAi,_matchUi);
 
             _winService = new WinService(_botMatchDataData, _playerMatchDataData, _matchUi);
             await _loadingService.BeginLoading(_winService);
             
-            await _roundManager.Initialized(_utilityAi,_playerMatchDataData,_botMatchDataData,_winService,new RoundRandom());
+            await _roundManager.Resolve(_utilityAi,_playerMatchDataData,_botMatchDataData,_winService,new RoundRandom());
             _roundManager.InitializedFirstActionRound();
             _roundManager.InitializedEvent(_matchUi,_modulePlayingField);
             

@@ -20,23 +20,24 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
     public class ModuleView:ILoadUnit
     {
-        private ProviderUiFactory _providerUiFactory;
-        private AssetService _assetService;
+        private readonly ProviderUiFactory _providerUiFactory;
+        private readonly AssetService _assetService;
+        private readonly SaveLoadService _saveLoadService;
+        private readonly RoundManager _roundManager;
+        private readonly IPlayerProgress _playerProgress;
         private GameObject _parent;
         private PopupService _popupService;
-        private RoundManager _roundManager;
         private BackPopupBackground _popupBackground;
         private TopProgressViewWinUi _playerVisualDataLeft;
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchData;
         private TopProgressViewWinUi _botVisualDataRight;
-        
-        public Subject<bool> OnPlayerAction = new Subject<bool>();
-        public Subject<bool> OnBotAction = new Subject<bool>();
-        private SaveLoadService _saveLoadService;
-        private IPlayerProgress _playerProgress;
         private WinImageUi[] _winImageUiPlayer;
         private WinImageUi[] _winImageUiBot;
+        private MatchUiRoot _matchUiRoot;
+
+        public Subject<bool> OnPlayerAction = new Subject<bool>();
+        public Subject<bool> OnBotAction = new Subject<bool>();
 
         public ModuleView(
             ProviderUiFactory providerUiFactory, 
@@ -51,13 +52,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             _roundManager = roundManager;
         }
 
-        public UniTask Initialized(
+        public UniTask Resolve(
             BackPopupBackground backPopupBackground,
             TopProgressViewWinUi playerViewData,
             TopProgressViewWinUi botViewData,
             CharacterMatchData botData,
-            CharacterMatchData playerData,GameObject parent,PopupService popupService)
+            CharacterMatchData playerData,GameObject parent,PopupService popupService,MatchUiRoot matchUiRoot)
         {
+            _matchUiRoot = matchUiRoot;
             _popupBackground = backPopupBackground;
             _playerVisualDataLeft = playerViewData;
             _botVisualDataRight = botViewData;
@@ -93,29 +95,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             await UniTask.CompletedTask;
         }
 
-        public void InitializedEvent(MatchUiRoot matchUiRoot)
+        public void InitializedEvent()
         {
             OnPlayerAction.Subscribe((isFlag) =>
             {
                 SetColorText(false, _botVisualDataRight);
                 SetColorText(isFlag, _playerVisualDataLeft);
-            }).AddTo(matchUiRoot);
+            }).AddTo(_matchUiRoot);
             
             OnBotAction.Subscribe((isFlag) =>
             {
                 SetColorText(false, _playerVisualDataLeft);
                 SetColorText(isFlag, _botVisualDataRight);
-            }).AddTo(matchUiRoot);
+            }).AddTo(_matchUiRoot);
 
             if (_popupService.TryGetPopup(TypePopup.WinLose,out WinLosePopup winLosePopup))
             {
-                winLosePopup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{matchUiRoot.ToMeta();}).AddTo(winLosePopup);
-                winLosePopup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{matchUiRoot.NextMatch();}).AddTo(winLosePopup);
+                winLosePopup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{_matchUiRoot.ToMeta();}).AddTo(winLosePopup);
+                winLosePopup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{_matchUiRoot.NextMatch();}).AddTo(winLosePopup);
             }
 
             if (_popupService.TryGetPopup(TypePopup.Setting, out SettingPopup setting))
             {
-                setting.ToMeta.onClick.AsObservable().Subscribe((_)=> matchUiRoot.ToMeta()).AddTo(matchUiRoot);
+                setting.ToMeta.onClick.AsObservable().Subscribe((_)=> _matchUiRoot.ToMeta()).AddTo(_matchUiRoot);
             }
         }
 

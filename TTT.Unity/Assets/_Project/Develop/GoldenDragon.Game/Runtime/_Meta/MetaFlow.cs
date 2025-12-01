@@ -25,7 +25,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly SessionDataMatch _sessionDataMatch;
         private readonly SaveLoadService _saveLoadService;
-        private PopupService _popupService;
+        private readonly PopupService _popupService;
         private PoolUiItem<ItemStyle> _itemInventoryStyle;
         private PoolUiItem<ShopItem> _itemShopPool;
         private MetaRoot _metaRoot;
@@ -34,8 +34,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             LoadingView loadingView,AssetService assetService,
             StyleDataLoadShop styleDataLoadShop,Model modelMetaRoot,
             ProviderUiFactory providerUiFactory,
-            SessionDataMatch sessionDataMatch,SaveLoadService saveLoadService)
+            SessionDataMatch sessionDataMatch,SaveLoadService saveLoadService,PopupService popupService)
         {
+            _popupService = popupService;
             _saveLoadService = saveLoadService;
             _sessionDataMatch = sessionDataMatch;
             _providerUiFactory = providerUiFactory;
@@ -49,7 +50,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public async void Start()
         {
-            _popupService = new PopupService(_saveLoadService);
             _itemShopPool = new PoolUiItem<ShopItem>(_assetService);
             _itemInventoryStyle = new PoolUiItem<ItemStyle>(_assetService);
             
@@ -68,12 +68,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
                     _styleDataLoadShop.GetData().Length));
             
             _metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, RuntimeConstants.UiRoot.MetaRoot);
-            _metaRoot.Constructor(_popupService,_modelMetaRoot,_assetService,_saveLoadService.PlayerData,_providerUiFactory);
+            _metaRoot.Resolve(_popupService,_modelMetaRoot,_assetService,_saveLoadService.PlayerData,_providerUiFactory);
             
             await _loadingService.BeginLoading(_metaRoot);
             await _metaRoot.Show();
-            
-            await _modelMetaRoot.Initialized(_metaRoot,_styleDataLoadShop.GetData(),_itemShopPool,_itemInventoryStyle,_popupService,this);
+
+            await _modelMetaRoot.Resolve(_metaRoot,_styleDataLoadShop.GetData(),_itemShopPool,_itemInventoryStyle,this);
             await _loadingService.BeginLoading(_modelMetaRoot);
             
             await _loadingView.Hide();

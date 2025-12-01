@@ -9,7 +9,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         private static AudioService _audioService;
         private static IPlayerProgress _playerProgress;
         
-        public void Construct(AudioService audioService, IPlayerProgress playerProgress)
+        public void Resolve(AudioService audioService, IPlayerProgress playerProgress)
         {
             _audioService = audioService;
             _playerProgress = playerProgress;

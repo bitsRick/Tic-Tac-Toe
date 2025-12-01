@@ -8,13 +8,19 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai.CalculationParam
 {
-    public class CalcScore:ILoadUnit<UtilityAi>
+    public class CalcScore:ILoadUnit
     {
         private PlayingField _playingField;
-        
-        public UniTask Load(UtilityAi utilityAi)
+        private UtilityAi _utilityAi;
+
+        public void Resolve(UtilityAi utilityAi)
         {
-            _playingField = utilityAi.GetPlayingField();
+            _utilityAi = utilityAi;
+        }
+
+        public UniTask Load()
+        {
+            _playingField = _utilityAi.GetPlayingField();
             return UniTask.CompletedTask;
         }
 

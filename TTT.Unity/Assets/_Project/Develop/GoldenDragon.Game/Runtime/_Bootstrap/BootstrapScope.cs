@@ -33,6 +33,7 @@ namespace GoldenDragon
             builder.Register<SceneManager>(Lifetime.Scoped);
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
+            builder.Register<PopupService>(Lifetime.Singleton);
             
             builder.Register<AssetCatch>(Lifetime.Singleton);
             builder.Register<AssetInstall>(Lifetime.Singleton);

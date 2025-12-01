@@ -5,7 +5,6 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SimulationData;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UniRx;
 
@@ -45,7 +44,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public Subject<MatchWin> OnWin = new Subject<MatchWin>();
         public Subject<bool> OnButtonInteractive  = new Subject<bool>();
 
-        public UniTask Initialized(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,WinService winService,RoundRandom roundRandom)
+        public UniTask Resolve(IAi ai, CharacterMatchData player, CharacterMatchData botMatchDataData,WinService winService,RoundRandom roundRandom)
         {
             _roundRandom = roundRandom;
             _ai = ai;

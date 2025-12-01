@@ -55,20 +55,29 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Initialized()
         {
-            await _moduleView.Initialized(_popupBackground,_playerVisualDataLeft,_botVisualDataRight,
-                _botMatchDataData,_playerMatchData,_parent,_popupService);
+            await _moduleView.Resolve(_popupBackground,_playerVisualDataLeft,_botVisualDataRight,
+                _botMatchDataData,_playerMatchData,_parent,_popupService,this);
             
-            await _modulePlayingField.Initialized(_playingField,_playerMatchData,_botMatchDataData,this);
+            await _modulePlayingField.Resolve(_playingField,_playerMatchData,_botMatchDataData,this);
             
             await UniTask.CompletedTask;
         }
-        
+
         public async UniTask Load()
         {
             await InitializedPopup();
             await InitializedEvent();
             
             await UniTask.CompletedTask;
+        }
+
+        public UniTask InitializedEvent()
+        {
+            _setting.onClick.AsObservable().Subscribe((_) => { _moduleView.OpenSetting(); }).AddTo(this);
+            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
+            _moduleView.InitializedEvent();
+            
+            return UniTask.CompletedTask;
         }
 
         public async UniTask InitializedPopup()
@@ -80,15 +89,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         public UniTask Show()
         {
             gameObject.SetActive(true);
-            return UniTask.CompletedTask;
-        }
-
-        public UniTask InitializedEvent()
-        {
-            _setting.onClick.AsObservable().Subscribe((_) => { _moduleView.OpenSetting(); }).AddTo(this);
-            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
-            _moduleView.InitializedEvent(this);
-            
             return UniTask.CompletedTask;
         }
 

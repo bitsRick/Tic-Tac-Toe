@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board;
@@ -10,7 +9,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
 {
-    public class WinService:ILoadUnit
+    public class WinService:IDisposableLoadUnit
     {
         private readonly CharacterMatchData _bot;
         private readonly CharacterMatchData _player;
@@ -32,7 +31,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
             _player = player;
             _matchUiRoot = matchUiRoot;
         }
-        
+
         public UniTask Load()
         {            
             _fieldFields = _matchUiRoot.PlayingField.Fields;
@@ -48,8 +47,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
             
             return UniTask.CompletedTask;
         }
-
-        public async UniTask Release()
+        
+        public void Dispose()
         {
             _horizontalTopLineFields = null;
             _horizontalBottomLineFields = null;
@@ -59,8 +58,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
             _verticalRightLineFields = null;
             _backSlashFields = null;
             _slashFields = null;
-
-            await Task.CompletedTask;
         }
 
         public bool TryGetMatchWin(RoundData roundData, out MatchWin matchMode)

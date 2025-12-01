@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
@@ -14,14 +15,13 @@ using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
 {
-    public class MatchFlow:IStartable,ITickable
+    public class MatchFlow:IStartable,ITickable,IDisposable
     {
         private readonly SceneManager _sceneManager;
         private readonly LoadingService _loadingService;
         private readonly LoadingView _loadingView;
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly SessionDataMatch _sessionDataMatch;
-        private readonly SaveLoadService _saveLoadService;
         private readonly RoundManager _roundManager;
         private readonly ModuleView _moduleView;
         private readonly StyleMatchData _styleMatchData;
@@ -42,7 +42,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             SessionDataMatch sessionDataMatch,
             IPlayerProgress playerProgress,
             IAi utilityAi,
-            SaveLoadService saveLoadService,
             RoundManager roundManager,
             ModuleView moduleView,
             ModulePlayingField modulePlayingField,StyleMatchData styleMatchData,PopupService popupService)
@@ -53,7 +52,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _moduleView = moduleView;
             _utilityAi = utilityAi;
             _roundManager = roundManager;
-            _saveLoadService = saveLoadService;
             _playerProgress = playerProgress;
             _sessionDataMatch = sessionDataMatch;
             _providerUiFactory = providerUiFactory;
@@ -116,16 +114,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         public async void ToMeta()
         {
             _loadingView.Show();
-            await Release();
             await _sceneManager.LoadScene(RuntimeConstants.Scene.Meta);
         }
-
-        private async UniTask Release()
+        
+        public void Dispose()
         {
-            await _moduleView.Release();
-            await _popupService.Release();
-            await _winService.Release();
-            await Task.CompletedTask;
+            _popupService.Release().Forget();
+            _loadingService.DisposableService.Dispose();
         }
     }
 }

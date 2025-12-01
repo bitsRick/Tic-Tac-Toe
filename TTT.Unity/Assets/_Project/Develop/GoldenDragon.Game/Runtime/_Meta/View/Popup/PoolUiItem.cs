@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -10,7 +9,7 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
 {
-    public class PoolUiItem<T> : ILoadUnit<DataPullUiItem>,IEnumerable<T>,IDisposable
+    public class PoolUiItem<T> : IDisposableLoadUnit<DataPullUiItem>,IEnumerable<T>
         where T : IItem
     {
         public List<T> _item = new List<T>();
@@ -26,6 +25,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public void Dispose()
         {
+            foreach (T item in this)
+            {
+                if (item is GameObject gameObject) 
+                    UnityEngine.Object.Destroy(gameObject);
+            }
+            
             _item = null;
         }
 
@@ -42,7 +47,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
                 gameObject.transform.parent = _poolRoot.gameObject.transform;
                 gameObject.SetActive(false);
                 
-                var newItem = gameObject.GetComponent<T>();
+                T newItem = gameObject.GetComponent<T>();
                 _item.Add(newItem);
 
                 await UniTask.Yield();
@@ -73,10 +78,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < _item.Count; i++)
+            foreach (var t in _item)
             {
                 _index++;
-                yield return _item[i];
+                yield return t;
             }
         }
 

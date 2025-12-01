@@ -25,6 +25,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
     {
     }
 
+    public class DisposableService:IDisposable
+    {
+        public readonly List<IDisposable> Disposables = new();
+        
+        public void Dispose()
+        {
+            foreach (IDisposable disposable in Disposables) 
+                disposable?.Dispose();
+
+            Disposables.Clear();
+        }
+    }
+
     public sealed class LoadingService
     {
         private readonly Stopwatch _watch =
@@ -34,7 +47,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
             null;
 #endif
 
-        public readonly List<IDisposable> Disposables = new();
+        public DisposableService DisposableService = new DisposableService();
 
         private void OnLoadingBegin(object unit)
         {
@@ -87,7 +100,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 
         public async UniTask BeginLoading(IDisposableLoadUnit unit, bool skipExceptionThrow = false)
         {
-            Disposables.Add(unit);
+            DisposableService.Disposables.Add(unit);
             await BeginLoading((ILoadUnit)unit, skipExceptionThrow);
         }
 
@@ -116,7 +129,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities
 
         public async UniTask BeginLoading<T>(IDisposableLoadUnit<T> unit, T param, bool skipExceptionThrow = false)
         {
-            Disposables.Add(unit);
+            DisposableService.Disposables.Add(unit);
             await BeginLoading((ILoadUnit<T>)unit, param, skipExceptionThrow);
         }
 

@@ -8,7 +8,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 {
-    public class StyleDataLoadShop:ILoadUnit
+    public class StyleDataLoadShop:IDisposableLoadUnit
     {
         private StyleData[] _data;
         private AssetService _assetService;
@@ -57,8 +57,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
             
             return _data;
         }
-
-        public void Release()
+        
+        public void Dispose()
         {
             foreach (StyleData data in _data)
             {

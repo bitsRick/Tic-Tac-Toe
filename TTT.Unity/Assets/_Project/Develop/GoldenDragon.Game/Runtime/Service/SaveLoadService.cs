@@ -28,9 +28,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         {
             Log.Loading.D($"{nameof(SaveLoadService)}",$" is loading ...");
 
-            var playerDataCode64 = PlayerPrefs.GetString(Key);
-            var encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
-            var convertPlayerData = JsonConvert.DeserializeObject<PlayerData>(encodePlayerData);
+            string playerDataCode64 = PlayerPrefs.GetString(Key);
+            string encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
+            PlayerData convertPlayerData = JsonConvert.DeserializeObject<PlayerData>(encodePlayerData);
 
             if (convertPlayerData == null)
             {
@@ -61,8 +61,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
             Log.Boot.D($"{nameof(SaveLoadService)}",$" is save progress");
 
-            var playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
-            var code64PlayerData = Coding.GetCodingBase64(playerDataJson);
+            string playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
+            string code64PlayerData = Coding.GetCodingBase64(playerDataJson);
             
             PlayerPrefs.SetString(Key,code64PlayerData);
             _isSaveData = false;

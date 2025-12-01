@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
-    public class ModuleView:ILoadUnit
+    public class ModuleView:IDisposableLoadUnit
     {
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly AssetService _assetService;
@@ -121,13 +121,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             }
         }
 
-        public async UniTask Release()
+        public void Dispose()
         {
-            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.WinLose);
-            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.StartMatchViewAction);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.WinLose);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.StartMatchViewAction);
             _winImageUiPlayer = null;
             _winImageUiBot = null;
         }
+        
 
         public void Reset()
         {
@@ -144,7 +145,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 winImageUi.IsNotWin = true;
             }
         }
-        
+
         private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
         {
             TopProgressViewWinUi viewDataTop = topProgressViewWinUi;

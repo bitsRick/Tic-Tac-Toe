@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
@@ -14,7 +15,7 @@ using VContainer.Unity;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 {
-    public class MetaFlow:IStartable
+    public class MetaFlow:IStartable,IDisposable
     {
         private readonly SceneManager _sceneManager;
         private readonly LoadingService _loadingService;
@@ -83,24 +84,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         public async void StartMatch()
         {
             await _loadingView.Show();
-            await Release();
             await _sceneManager.LoadScene(RuntimeConstants.Scene.Match);
         }
-
-        private async UniTask Release()
+        
+        public void Dispose()
         {
-            foreach (ItemStyle item in _itemInventoryStyle) UnityEngine.Object.Destroy(item.gameObject);
-            foreach (ShopItem item in _itemShopPool) UnityEngine.Object.Destroy(item.gameObject);
-            
-            _itemInventoryStyle.Dispose();
-            _itemShopPool.Dispose();
-            
-            await _popupService.Release();
-
-            _styleDataLoadShop.Release();
-            _metaRoot.Release();
-            
-            await Task.CompletedTask;
+             _popupService.Release().Forget();
+            _loadingService.DisposableService.Dispose();
         }
     }
 }

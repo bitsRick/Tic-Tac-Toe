@@ -14,7 +14,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class MetaRoot : MonoBehaviour,IUiRoot,ILoadUnit
+    public class MetaRoot : MonoBehaviour,IUiRoot,IDisposableLoadUnit
     {
         [Header("Popup Background")]
         [SerializeField] private BackPopupBackground _popupBackground;
@@ -122,8 +122,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             gameObject.SetActive(true);
             await UniTask.CompletedTask;
         }
-
-        public void Release()
+        
+        public void Dispose()
         {
             _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.LeaderBoard);
             _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.Shop);

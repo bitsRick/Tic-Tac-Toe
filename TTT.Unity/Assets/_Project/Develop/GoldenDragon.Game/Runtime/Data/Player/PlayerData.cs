@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 {
@@ -29,26 +28,26 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 
             ShopPlayerData = new List<StyleData>()
             {
-                new(){Id = Constant.StyleData.DefaultO,Type = ShowItemStyle.O},
-                new(){Id = Constant.StyleData.DefaultX,Type = ShowItemStyle.X},
-                new (){Id = Constant.StyleData.DefaultBoard,Type = ShowItemStyle.Board},
+                new(){Id = RuntimeConstants.StyleData.DefaultO,Type = ShowItemStyle.O},
+                new(){Id = RuntimeConstants.StyleData.DefaultX,Type = ShowItemStyle.X},
+                new (){Id = RuntimeConstants.StyleData.DefaultBoard,Type = ShowItemStyle.Board},
             };
 
             Board = new StyleData()
             {
-                Id = Constant.StyleData.DefaultBoard,
+                Id = RuntimeConstants.StyleData.DefaultBoard,
                 Type = ShowItemStyle.Board
             };
             
             X = new StyleData()
             {
-                Id = Constant.StyleData.DefaultX,
+                Id = RuntimeConstants.StyleData.DefaultX,
                 Type = ShowItemStyle.X
             };
             
             O = new StyleData()
             {
-                Id = Constant.StyleData.DefaultO,
+                Id = RuntimeConstants.StyleData.DefaultO,
                 Type = ShowItemStyle.O
             };
 

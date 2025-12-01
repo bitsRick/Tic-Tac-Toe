@@ -1,4 +1,5 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using NUnit.Framework;
 
@@ -13,7 +14,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
             LangFileLoad langFileLoad = new LangFileLoad();
   
             //act
-            var ser = langFileLoad.Load(Constant.B.Lang.RusLangFile);
+            var ser = langFileLoad.Load(RuntimeConstants.Lang.RusLangFile);
             
             //assert
             Assert.NotNull(ser.GetAwaiter());

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
@@ -49,7 +50,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));
                 ProviderUiFactory providerUiFactory = new ProviderUiFactory(new FactoryItem(),new FactoryUi(assetService));
                 PopupService popupService = new PopupService(saveLoadService);
-                MatchUiRoot matchUi = providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
+                MatchUiRoot matchUi = providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,RuntimeConstants.UiRoot.MatchRoot);
                 //matchUi.Constructor(botMatchDataData,playerMatchDataData,popupService,assetService,providerUiFactory,roundManager);
                 //await matchUi.InitializedPlayingField();
                 

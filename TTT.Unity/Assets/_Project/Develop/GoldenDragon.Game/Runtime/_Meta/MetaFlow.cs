@@ -57,17 +57,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             await _loadingService.BeginLoading(_sessionDataMatch);
             await _loadingService.BeginLoading(_itemShopPool, 
                 new DataPullUiItem(
-                    Constant.M.Asset.Popup.ShopElementBuyPrefab,
-                    Constant.M.Asset.Popup.PoolElementUi,
+                    RuntimeConstants.Popup.ShopElementBuyPrefab,
+                    RuntimeConstants.Popup.PoolElementUi,
                     _styleDataLoadShop.GetData().Length));
             
             await _loadingService.BeginLoading(_itemInventoryStyle, 
                 new DataPullUiItem(
-                    Constant.M.Asset.Popup.InventoryElementStylePrefab,
-                    Constant.M.Asset.Popup.PoolElementUi,
+                    RuntimeConstants.Popup.InventoryElementStylePrefab,
+                    RuntimeConstants.Popup.PoolElementUi,
                     _styleDataLoadShop.GetData().Length));
             
-            _metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, Constant.M.Asset.Ui.MetaRoot);
+            _metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, RuntimeConstants.UiRoot.MetaRoot);
             _metaRoot.Constructor(_popupService,_modelMetaRoot,_assetService,_saveLoadService.PlayerData,_providerUiFactory);
             
             await _loadingService.BeginLoading(_metaRoot);

@@ -70,14 +70,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Load()
         {
-            GameObject settingObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
+            GameObject settingObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Setting);
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(settingObject, _parent);
             settingPopup.Initialized(StateFlow.Match);
             
-            GameObject winLoseObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.WinLose);
+            GameObject winLoseObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.WinLose);
             WinLosePopup winLosePopup = _assetService.Install.InstallToUiPopup<WinLosePopup>(winLoseObject, _parent);
             
-            GameObject characterViewObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.StartMatchViewAction);
+            GameObject characterViewObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.StartMatchViewAction);
             CharacterStartMatchPopup characterStartMatchPopup = _assetService.Install.InstallToUiPopup<CharacterStartMatchPopup>(characterViewObject, _parent);
             
             _popupService.AddPopupInList(TypePopup.Setting, settingPopup);
@@ -121,8 +121,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Release()
         {
-            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.WinLose);
-            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, Constant.M.Asset.Popup.StartMatchViewAction);
+            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.WinLose);
+            await _assetService.Release.ReleaseAssetAsync<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.StartMatchViewAction);
             _winImageUiPlayer = null;
             _winImageUiBot = null;
         }
@@ -265,7 +265,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         private void SetWinPlayer(WinLosePopup popup)
         {
-            int softValue = _playerMatchData.WinCount * Constant.M.SoftValueWin;
+            int softValue = _playerMatchData.WinCount * RuntimeConstants.Match.SoftValueWin;
 
             TextMeshProUGUI valueWin = _playerMatchData.Field == TypePlayingField.X ? popup.X : popup.O;
             valueWin.text = softValue.ToString();

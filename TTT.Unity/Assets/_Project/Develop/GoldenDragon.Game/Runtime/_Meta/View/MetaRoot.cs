@@ -59,11 +59,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public async UniTask InitializedPopup()
         {
-            GameObject setting = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Setting);
-            GameObject leaderBoard = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.LeaderBoard);
-            GameObject shop = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Shop);
-            GameObject inventory = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Inventory);
-            GameObject match = await _providerUiFactory.FactoryUi.LoadPopupToObject(Constant.M.Asset.Popup.Match);
+            GameObject setting = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Setting);
+            GameObject leaderBoard = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.LeaderBoard);
+            GameObject shop = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Shop);
+            GameObject inventory = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Inventory);
+            GameObject match = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Match);
             
             SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(setting,_parent);
             settingPopup.Initialized(StateFlow.Meta);
@@ -125,10 +125,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void Release()
         {
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,Constant.M.Asset.Popup.LeaderBoard);
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,Constant.M.Asset.Popup.Shop);
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,Constant.M.Asset.Popup.Inventory);
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,Constant.M.Asset.Popup.Match);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.LeaderBoard);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.Shop);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.Inventory);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup,RuntimeConstants.Popup.Match);
         }
     }
 }

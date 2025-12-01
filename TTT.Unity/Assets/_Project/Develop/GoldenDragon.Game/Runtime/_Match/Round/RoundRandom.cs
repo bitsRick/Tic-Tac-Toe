@@ -6,7 +6,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
     public class RoundRandom
     {
         public MatchMode GetFirstCharacterAction() => 
-            Random.Range(Constant.M.PlayerAction, Constant.M.BotAction) == Constant.M.PlayerAction 
+            Random.Range(RuntimeConstants.Match.PlayerAction, RuntimeConstants.Match.BotAction) == RuntimeConstants.Match.PlayerAction 
                 ? MatchMode.PlayerAction 
                 : MatchMode.BotAction;
     }

@@ -21,12 +21,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
         
         public UniTask Load()
         {
-            TextAsset jsonText = _assetService.Load.GetAsset<TextAsset>(TypeAsset.Json,Constant.L.Asset.DataStyleJson);
+            TextAsset jsonText = _assetService.Load.GetAsset<TextAsset>(TypeAsset.Json,RuntimeConstants.AssetStyle.DataStyleJson);
             _data = JsonConvert.DeserializeObject<StyleData[]>(jsonText.text);
 
             if (_data == null)
             {
-                Log.Meta.W($"Not loading json:[{Constant.L.Asset.DataStyleJson}]");
+                Log.Meta.W($"Not loading json:[{RuntimeConstants.AssetStyle.DataStyleJson}]");
                 return UniTask.CompletedTask;
             }
 
@@ -68,7 +68,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
             }
 
             _data = null;
-            _assetService.Release.ReleaseAsset<TextAsset>(TypeAsset.Json, Constant.L.Asset.DataStyleJson);
+            _assetService.Release.ReleaseAsset<TextAsset>(TypeAsset.Json, RuntimeConstants.AssetStyle.DataStyleJson);
         }
     }
 }

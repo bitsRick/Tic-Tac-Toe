@@ -25,7 +25,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         }
         
         public bool IsNotEndWin(CharacterMatchData playerMatchData, CharacterMatchData botMatchData) => 
-            playerMatchData.WinCount < Constant.M.MaxWinMatch && botMatchData.WinCount < Constant.M.MaxWinMatch;
+            playerMatchData.WinCount < RuntimeConstants.Match.MaxWinMatch && botMatchData.WinCount < RuntimeConstants.Match.MaxWinMatch;
     }
 
     public class RoundManager

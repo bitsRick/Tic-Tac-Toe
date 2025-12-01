@@ -40,8 +40,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public void InitializedDefaultAudioSetting()
         {
-            _currentCountSound = GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName);
-            _currentCountMusic = GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName);
+            _currentCountSound = GetValueMixerAudio(RuntimeConstants.Audio.SoundMixerExposeName);
+            _currentCountMusic = GetValueMixerAudio(RuntimeConstants.Audio.MusicMixerExposeName);
         }
         
         public void ChangeValue(float value, TypeValueChange type)
@@ -50,12 +50,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             {
                 case TypeValueChange.Sound:
                     if (_currentCountSound != value)
-                        SetValue(Constant.U.Audio.SoundMixerExposeName, value, ref _currentCountSound, ref _dbSound);
+                        SetValue(RuntimeConstants.Audio.SoundMixerExposeName, value, ref _currentCountSound, ref _dbSound);
                     break;
                 
                 case TypeValueChange.Music:
                     if (_currentCountMusic != value)
-                        SetValue(Constant.U.Audio.MusicMixerExposeName, value, ref _currentCountMusic, ref _dbMusic);
+                        SetValue(RuntimeConstants.Audio.MusicMixerExposeName, value, ref _currentCountMusic, ref _dbMusic);
                     break;
             }
         }
@@ -65,20 +65,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             switch (type)
             {
                 case TypeValueChange.Sound:
-                    ChangeMute(Constant.U.Audio.SoundMixerExposeName,ref _dbSound, ref _isMuteSfx);
+                    ChangeMute(RuntimeConstants.Audio.SoundMixerExposeName,ref _dbSound, ref _isMuteSfx);
                     break;
                 
                 case TypeValueChange.Music:
-                    ChangeMute(Constant.U.Audio.MusicMixerExposeName, ref _dbMusic, ref _isMuteMusic);
+                    ChangeMute(RuntimeConstants.Audio.MusicMixerExposeName, ref _dbMusic, ref _isMuteMusic);
                     break;
             }
         }
 
         public UniTask Load()
         {
-            _config = _assetService.Load.GetAsset<ConfigSounds>(TypeAsset.Audio,Constant.B.Audio.AudioConfig);
+            _config = _assetService.Load.GetAsset<ConfigSounds>(TypeAsset.Audio,RuntimeConstants.Audio.AudioConfig);
             
-            if (_config == null) Log.Default.W($"Not Load config:{Constant.B.Audio.AudioConfig}");
+            if (_config == null) Log.Default.W($"Not Load config:{RuntimeConstants.Audio.AudioConfig}");
 
             return UniTask.CompletedTask;
         }
@@ -96,10 +96,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             switch (type)
             {
                 case TypeValueChange.Sound:
-                    return Mathf.Pow(10f, GetValueMixerAudio(Constant.U.Audio.SoundMixerExposeName) / 20f);
+                    return Mathf.Pow(10f, GetValueMixerAudio(RuntimeConstants.Audio.SoundMixerExposeName) / 20f);
 
                 case TypeValueChange.Music:
-                    return Mathf.Pow(10f, GetValueMixerAudio(Constant.U.Audio.MusicMixerExposeName) / 20f);
+                    return Mathf.Pow(10f, GetValueMixerAudio(RuntimeConstants.Audio.MusicMixerExposeName) / 20f);
             }
 
             return 0;

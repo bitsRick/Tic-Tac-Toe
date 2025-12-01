@@ -73,7 +73,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
 
 
             if (matchMode == MatchWin.None
-                &&roundData.CountSetField >= Constant.M.MaxCountSetField)
+                &&roundData.CountSetField >= RuntimeConstants.Match.MaxCountSetField)
             {
                 matchMode = MatchWin.None;
                 return true;
@@ -98,10 +98,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
                     if (field.CurrentPlayingField == _bot.Field) botField++;
                 }
 
-                if (playerField == Constant.M.MaxWinMatch)
+                if (playerField == RuntimeConstants.Match.MaxWinMatch)
                     return MatchWin.Player;
 
-                if (botField == Constant.M.MaxWinMatch)
+                if (botField == RuntimeConstants.Match.MaxWinMatch)
                     return MatchWin.Bot;
 
                 botField = 0;

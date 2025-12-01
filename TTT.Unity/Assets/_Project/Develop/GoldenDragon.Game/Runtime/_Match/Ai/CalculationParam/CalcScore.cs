@@ -31,7 +31,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai.Calcu
                 
                 if (currentField.Position == PositionElementToField.MiddleCenter && 
                     currentField.CurrentPlayingField == TypePlayingField.None) 
-                    score *= Constant.Ai.SlashUltraScore;
+                    score *= RuntimeConstants.AiScore.SlashUltraScore;
                 
                 foreach (Field field in GetFields(position))
                 {
@@ -39,19 +39,19 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai.Calcu
                         continue;
 
                     if (field.CurrentPlayingField == TypePlayingField.None) 
-                        score += Constant.Ai.SlashUltraScore;
+                        score += RuntimeConstants.AiScore.SlashUltraScore;
 
                     if (field.CurrentPlayingField == player)
                     {
-                        score -= Constant.Ai.SlashUltraScore;
+                        score -= RuntimeConstants.AiScore.SlashUltraScore;
                         playerCount++;
                     }
 
                     if (field.CurrentPlayingField == bot.Field) 
-                        score += Constant.Ai.SlashUltraScore;
+                        score += RuntimeConstants.AiScore.SlashUltraScore;
 
                     if (playerCount == 2) 
-                        score += Constant.Ai.SlashUltraScore * 2;
+                        score += RuntimeConstants.AiScore.SlashUltraScore * 2;
                 }
 
                 return score * scoreUp;
@@ -74,14 +74,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai.Calcu
 
                     if (fieldLazy.CurrentPlayingField == bot.Field)
                     {
-                        score *= Constant.Ai.UltraScore;
+                        score *= RuntimeConstants.AiScore.UltraScore;
                         continue;
                     }
 
                     if (fieldLazy.CurrentPlayingField == TypePlayingField.None)
-                        score += Constant.Ai.DefaultScore;
+                        score += RuntimeConstants.AiScore.DefaultScore;
                     else
-                        score -= Constant.Ai.DefaultScore;
+                        score -= RuntimeConstants.AiScore.DefaultScore;
                 }
 
                 return score * scoreUp;

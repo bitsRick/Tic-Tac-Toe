@@ -65,10 +65,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _popupService = new PopupService(_saveLoadService);
             
-            _botMatchDataData = new CharacterMatchData(Constant.M.BotName,_sessionDataMatch.BotType,true);
+            _botMatchDataData = new CharacterMatchData(RuntimeConstants.Match.BotName,_sessionDataMatch.BotType,true);
             _playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
             
-            _matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,Constant.M.Asset.Ui.MatchRoot);
+            _matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,RuntimeConstants.UiRoot.MatchRoot);
             _matchUi.Constructor(_popupService,_moduleView,_modulePlayingField,_botMatchDataData,_playerMatchDataData,this);
             await _matchUi.Initialized();
 

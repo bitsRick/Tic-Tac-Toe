@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Text;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
@@ -86,8 +87,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //act
                 await styleData.Load();
                 DataPullUiItem item = new DataPullUiItem(
-                    Constant.M.Asset.Popup.InventoryElementStylePrefab,
-                    Constant.M.Asset.Popup.PoolElementUi,
+                    RuntimeConstants.Popup.InventoryElementStylePrefab,
+                    RuntimeConstants.Popup.PoolElementUi,
                     styleData.GetData().Length);
                 await pull.Load(item);
 
@@ -110,8 +111,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //act
                 await styleData.Load();
                 DataPullUiItem item = new DataPullUiItem(
-                    Constant.M.Asset.Popup.ShopElementBuyPrefab,
-                    Constant.M.Asset.Popup.PoolElementUi,
+                    RuntimeConstants.Popup.ShopElementBuyPrefab,
+                    RuntimeConstants.Popup.PoolElementUi,
                     styleData.GetData().Length);
                 await pull.Load(item);
 
@@ -128,7 +129,7 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //arange
                 AssetCatch assetCatch = new AssetCatch();
                 AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));
-                var hudObject = assetService.Load.GetAsset<GameObject>(TypeAsset.Meta_Root_Ui, Constant.M.Asset.Ui.MetaRoot);
+                var hudObject = assetService.Load.GetAsset<GameObject>(TypeAsset.Meta_Root_Ui, RuntimeConstants.UiRoot.MetaRoot);
                 
                 //act
                 var metaRoot = assetService.Install.InstallToRoot<GameObject>(hudObject).GetComponent<MetaRoot>();

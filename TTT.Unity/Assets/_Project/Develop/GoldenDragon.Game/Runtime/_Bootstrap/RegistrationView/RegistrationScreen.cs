@@ -32,12 +32,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
         {
             _switchLanguage.options.Clear();
             _switchLanguage.options.Add(new TMP_Dropdown.OptionData(
-                Constant.B.Lang.RusLangFile.Remove(
-                    Constant.B.Lang.IndexRemove(Constant.B.Lang.RusLangFile.Length))));
+                RuntimeConstants.Lang.RusLangFile.Remove(
+                    RuntimeConstants.Lang.IndexRemove(RuntimeConstants.Lang.RusLangFile.Length))));
             
             _switchLanguage.options.Add(new TMP_Dropdown.OptionData(
-                Constant.B.Lang.EngLangFile.Remove(
-                    Constant.B.Lang.IndexRemove(Constant.B.Lang.EngLangFile.Length))));
+                RuntimeConstants.Lang.EngLangFile.Remove(
+                    RuntimeConstants.Lang.IndexRemove(RuntimeConstants.Lang.EngLangFile.Length))));
             
             _switchLanguage.value = 0;
         }
@@ -72,7 +72,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
 
         public override async UniTask Hide()
         {
-            await _selfGroup.DOFade(0f, Constant.B.DurationFadeRegistrationScreen)
+            await _selfGroup.DOFade(0f,RuntimeConstants.RegistrationScreen.DurationFadeRegistrationScreen)
                 .SetAutoKill(true)
                 .Play();
             

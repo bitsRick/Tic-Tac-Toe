@@ -199,7 +199,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             foreach (Style.StyleData data in _styleData)
             {
                 if (data.Type != type.ToString() ||
-                    data.Id == Constant.StyleData.GetDefaultType(type))
+                    data.Id == RuntimeConstants.StyleData.GetDefaultType(type))
                     continue;
 
                 ShopItem shopItem = _poolItemUi.GetItem();

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Cysharp.Threading.Tasks;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,7 +9,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
     {
         public async UniTask<string> Load(string fileName)
         {
-            string langFolderPath = Path.Combine(Application.streamingAssetsPath, Constant.B.Lang.FolderName);
+            string langFolderPath = Path.Combine(Application.streamingAssetsPath, RuntimeConstants.Lang.FolderName);
             string filePath = Path.Combine(langFolderPath, fileName);
 
             // Выводим имя файла

@@ -77,7 +77,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         
         public void OpenPopupSetting()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             SettingPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.Setting, out SettingPopup settingPopup))
@@ -88,8 +88,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             OnSwitchIcoAudioMute(TypeValueChange.Music,popup,popup.MusicMute,_playerData.PlayerData.AudioSetting.IsMusicMute);
             OnSwitchIcoAudioMute(TypeValueChange.Sound,popup,popup.SoundMute,_playerData.PlayerData.AudioSetting.IsSoundMute);
             
-            popup.MusicSlider.value = AudioPlayer.LoadSliderValue(TypeValueChange.Music);
-            popup.SoundSlider.value = AudioPlayer.LoadSliderValue(TypeValueChange.Sound);
+            popup.MusicSlider.value = AudioPlayer.S.LoadSliderValue(TypeValueChange.Music);
+            popup.SoundSlider.value = AudioPlayer.S.LoadSliderValue(TypeValueChange.Sound);
 
             _popupBackground.Show();
             popup.Show();
@@ -97,7 +97,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupLeaderBoard()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             LeaderBoardPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.LeaderBoard, out LeaderBoardPopup leaderBoardPopup))
@@ -139,7 +139,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupMatch()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             MatchPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.Match, out MatchPopup matchPopup))
@@ -153,7 +153,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupInventory()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             InventoryPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.Inventory, out InventoryPopup inventoryPopup))
@@ -169,7 +169,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public void OpenPopupShop()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             ShopPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.Shop, out ShopPopup shopPopup))
@@ -353,7 +353,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 : popupSetting.SoundSlider;
 
             if (playerAudioStateMute == false)
-                slider.value = AudioPlayer.LoadSliderValue(valueChange);
+                slider.value = AudioPlayer.S.LoadSliderValue(valueChange);
             else
                 slider.value = 0;
         }
@@ -374,13 +374,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         private void OnSetMuteAudio(TypeValueChange type)
         {
-            AudioPlayer.Mute(type);
+            AudioPlayer.S.Mute(type);
             _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
         }
 
         private void OnSetValueChange(float value, TypeValueChange type)
         {
-            AudioPlayer.ChangeValue(value, type);
+            AudioPlayer.S.ChangeValue(value, type);
             _saveLoadService.OnPlayerDataChanged.OnNext(Unit.Default);
         }
 

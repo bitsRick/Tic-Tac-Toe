@@ -36,8 +36,8 @@ namespace GoldenDragon
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
 
-            AudioPlayer.Construct(_audioService,_progress);
-            AudioPlayer.Initialized();
+            AudioPlayer.S.Construct(_audioService,_progress);
+            AudioPlayer.S.Initialized();
             
             await _loadingView.Initialized();
 

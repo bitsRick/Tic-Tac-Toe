@@ -46,7 +46,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
         {
             _btn.OnClickAsObservable().Subscribe(_ =>
             {
-                AudioPlayer.Click();
+                AudioPlayer.S.Click();
                 
                 if (_isActive)
                     return;

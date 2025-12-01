@@ -151,7 +151,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public void OpenWinLose(MatchWin matchWin)
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             WinLosePopup popup;
             
             if (_popupService.TryOpenPopup(TypePopup.WinLose, out WinLosePopup winLosePopup))
@@ -181,7 +181,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public void OpenSetting()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             SettingPopup popup;
 
             if (_popupService.TryOpenPopup(TypePopup.Setting, out SettingPopup settingPopup))
@@ -189,8 +189,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             else
                 return;
 
-            popup.MusicSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Music);
-            popup.SoundSlider.value = AudioPlayer.GetSliderValue(TypeValueChange.Sound);
+            popup.MusicSlider.value = AudioPlayer.S.GetSliderValue(TypeValueChange.Music);
+            popup.SoundSlider.value = AudioPlayer.S.GetSliderValue(TypeValueChange.Sound);
 
             _popupBackground.Show();
             popup.Show();
@@ -229,7 +229,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 .Take(countEvent)
                 .Subscribe((_) =>
                 {
-                    AudioPlayer.Click();
+                    AudioPlayer.S.Click();
                     _roundManager.Start();
                 });
 

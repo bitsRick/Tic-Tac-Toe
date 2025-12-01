@@ -4,18 +4,18 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 {
-    public static class AudioPlayer
+    public class AudioPlayer:Singleton<AudioPlayer>
     {
         private static AudioService _audioService;
         private static IPlayerProgress _playerProgress;
         
-        public static void Construct(AudioService audioService, IPlayerProgress playerProgress)
+        public void Construct(AudioService audioService, IPlayerProgress playerProgress)
         {
             _audioService = audioService;
             _playerProgress = playerProgress;
         }
 
-        public static void Initialized()
+        public void Initialized()
         {
             PlayerData data = _playerProgress.PlayerData;
             
@@ -34,12 +34,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             if (setting.IsSoundMute) _audioService.SetMute(TypeValueChange.Sound);
         }
 
-        public static void Click()
+        public void Click()
         {
             _audioService.PlaySFX(_audioService.ConfigAudio.Click);
         }
 
-        public static float LoadSliderValue(TypeValueChange typeValue)
+        public float LoadSliderValue(TypeValueChange typeValue)
         {
             PlayerData data = _playerProgress.PlayerData;
 
@@ -59,12 +59,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             return GetSliderValue(typeValue);
         }
 
-        public static void MetaBackground()
+        public void MetaBackground()
         {
             _audioService.PlayBackground(_audioService.ConfigAudio.MetaBackground);
         }
 
-        public static void Mute(TypeValueChange type)
+        public void Mute(TypeValueChange type)
         {
             _audioService.SetMute(type);
             
@@ -80,7 +80,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             }
         }
 
-        public static void ChangeValue(float value, TypeValueChange type)
+        public void ChangeValue(float value, TypeValueChange type)
         {
             _audioService.ChangeValue(value, type);
 
@@ -96,7 +96,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             }
         }
 
-        public static float GetSliderValue(TypeValueChange music)
+        public float GetSliderValue(TypeValueChange music)
         {
             return _audioService.GetSliderValue(music);
         }

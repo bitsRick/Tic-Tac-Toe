@@ -77,7 +77,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             await _loadingService.BeginLoading(_modelMetaRoot);
             
             await _loadingView.Hide();
-            AudioPlayer.MetaBackground();
+            AudioPlayer.S.MetaBackground();
         }
 
         public async void StartMatch()

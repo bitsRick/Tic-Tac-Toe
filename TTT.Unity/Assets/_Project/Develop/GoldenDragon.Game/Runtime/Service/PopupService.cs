@@ -73,7 +73,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
         public void Close()
         {
-            AudioPlayer.Click();
+            AudioPlayer.S.Click();
             
             if (_isNoClose)
                 return;

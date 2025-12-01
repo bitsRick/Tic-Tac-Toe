@@ -16,13 +16,13 @@ namespace GoldenDragon
         private readonly SaveLoadService _saveLoadService;
         private readonly LoadingView _loadingView;
         private readonly AudioService _audioService;
-        private readonly IPlayerProgress _progress;
+        private readonly IPlayerProfile _profile;
 
         public BootstrapFlow(LoadingService loadingService, SceneManager sceneManager,
             RegistrationScreen registrationScreen,SaveLoadService saveLoadService,
-            LoadingView loadingView,IPlayerProgress progress,AudioService audioService)
+            LoadingView loadingView,IPlayerProfile profile,AudioService audioService)
         {
-            _progress = progress;
+            _profile = profile;
             _loadingView = loadingView;
             _saveLoadService = saveLoadService;
             _registrationScreen = registrationScreen;
@@ -36,12 +36,12 @@ namespace GoldenDragon
             await _loadingService.BeginLoading(_saveLoadService);
             await _loadingService.BeginLoading(_audioService);
 
-            AudioPlayer.S.Resolve(_audioService,_progress);
+            AudioPlayer.S.Resolve(_audioService,_profile);
             AudioPlayer.S.Initialized();
             
             await _loadingView.Initialized();
 
-            if (_saveLoadService.PlayerData == null)
+            if (_saveLoadService.profileData == null)
             {
                 _registrationScreen.Resolve(this);
                 await _registrationScreen.Initialized();

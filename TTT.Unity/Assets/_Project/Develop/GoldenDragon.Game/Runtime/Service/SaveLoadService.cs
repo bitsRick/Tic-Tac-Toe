@@ -12,16 +12,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
     public class SaveLoadService:ILoadUnit
     {
         private const string Key = "1024";
-        private IPlayerProgress _playerProgress;
+        private IPlayerProfile _playerProfile;
         private bool _isSaveData = false;
         
-        public PlayerData PlayerData => _playerProgress.PlayerData;
+        public ProfileData profileData => _playerProfile.profileData;
         public Subject<Unit> OnPlayerDataChanged = new Subject<Unit>();
 
         [Inject]
-        public SaveLoadService(IPlayerProgress playerProgress)
+        public SaveLoadService(IPlayerProfile playerProfile)
         {
-            _playerProgress = playerProgress;
+            _playerProfile = playerProfile;
         }
 
         public UniTask Load()
@@ -30,16 +30,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
             string playerDataCode64 = PlayerPrefs.GetString(Key);
             string encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
-            PlayerData convertPlayerData = JsonConvert.DeserializeObject<PlayerData>(encodePlayerData);
+            ProfileData convertProfileData = JsonConvert.DeserializeObject<ProfileData>(encodePlayerData);
 
-            if (convertPlayerData == null)
+            if (convertProfileData == null)
             {
                 Log.Loading.D($"{nameof(SaveLoadService)}","[Player Data]:Empty");
             }
             else
             {
                 Log.Loading.D($"{nameof(SaveLoadService)}","[Player Data]:Load");
-                _playerProgress.PlayerData = convertPlayerData;
+                _playerProfile.profileData = convertProfileData;
             }
 
             OnPlayerDataChanged.Subscribe((_) =>
@@ -61,7 +61,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
             Log.Boot.D($"{nameof(SaveLoadService)}",$" is save progress");
 
-            string playerDataJson = JsonConvert.SerializeObject(_playerProgress.PlayerData);
+            string playerDataJson = JsonConvert.SerializeObject(_playerProfile.profileData);
             string code64PlayerData = Coding.GetCodingBase64(playerDataJson);
             
             PlayerPrefs.SetString(Key,code64PlayerData);
@@ -71,7 +71,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
         public async UniTask CreateNewData(string name)
         {
-            _playerProgress.PlayerData = new PlayerData(name);
+            _playerProfile.profileData = new ProfileData(name);
             SetData();
             await SaveProgress();
             

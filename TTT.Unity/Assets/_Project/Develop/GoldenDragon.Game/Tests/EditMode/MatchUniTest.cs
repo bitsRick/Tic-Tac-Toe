@@ -43,8 +43,8 @@ namespace _Project.Develop.GoldenDragon.Game.Tests.EditMode
                 //arange
                 CharacterMatchData botMatchDataData = new CharacterMatchData("test",TypePlayingField.O,true);
                 CharacterMatchData playerMatchDataData = new CharacterMatchData("test",TypePlayingField.X,false);
-                IPlayerProgress playerProgress = new ProgressService();
-                SaveLoadService saveLoadService = new SaveLoadService(playerProgress);
+                IPlayerProfile playerProfile = new ProfileService();
+                SaveLoadService saveLoadService = new SaveLoadService(playerProfile);
                 RoundManager roundManager = new RoundManager();
                 AssetCatch assetCatch = new AssetCatch();
                 AssetService assetService = new AssetService(new AssetInstall(),new AssetLoad(assetCatch),new AssetRelease(assetCatch));

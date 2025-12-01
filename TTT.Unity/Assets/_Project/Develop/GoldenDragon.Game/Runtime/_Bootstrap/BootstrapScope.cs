@@ -29,7 +29,7 @@ namespace GoldenDragon
             builder.RegisterComponent(_loadingView);
             builder.RegisterComponent(_audioService);
 
-            builder.Register<IPlayerProgress, ProgressService>(Lifetime.Singleton);
+            builder.Register<IPlayerProfile, ProfileService>(Lifetime.Singleton);
             builder.Register<SceneManager>(Lifetime.Scoped);
             builder.Register<LoadingService>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);

@@ -2,13 +2,13 @@
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
-   public interface IPlayerProgress
+   public interface IPlayerProfile
     {
-        PlayerData PlayerData { get; set; }
+        ProfileData profileData { get; set; }
     }
     
-    public class ProgressService:IPlayerProgress
+    public class ProfileService:IPlayerProfile
     {
-        public PlayerData PlayerData { get; set; }
+        public ProfileData profileData { get; set; }
     }
 }

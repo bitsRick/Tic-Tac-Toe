@@ -24,7 +24,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private readonly AssetService _assetService;
         private readonly SaveLoadService _saveLoadService;
         private readonly RoundManager _roundManager;
-        private readonly IPlayerProgress _playerProgress;
+        private readonly IPlayerProfile _playerProfile;
         private GameObject _parent;
         private PopupService _popupService;
         private BackPopupBackground _popupBackground;
@@ -43,9 +43,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             ProviderUiFactory providerUiFactory, 
             AssetService assetService, 
             RoundManager roundManager,
-            SaveLoadService saveLoadService,IPlayerProgress playerProgress)
+            SaveLoadService saveLoadService,IPlayerProfile playerProfile)
         {
-            _playerProgress = playerProgress;
+            _playerProfile = playerProfile;
             _saveLoadService = saveLoadService;
             _providerUiFactory = providerUiFactory;
             _assetService = assetService;
@@ -276,11 +276,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             switch (_playerMatchData.Field)
             {
                 case TypePlayingField.X:
-                    _playerProgress.PlayerData.SoftValueX = softValue;
+                    _playerProfile.profileData.SoftValueX = softValue;
                     break;
                 
                 case TypePlayingField.O:
-                    _playerProgress.PlayerData.SoftValueO = softValue;
+                    _playerProfile.profileData.SoftValueO = softValue;
                     break;
             }
 

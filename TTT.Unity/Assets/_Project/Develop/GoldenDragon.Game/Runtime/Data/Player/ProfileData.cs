@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 {
     [Serializable]
-    public class PlayerData
+    public class ProfileData
     {
-        public StyleData Board;
-        public StyleData X;
-        public StyleData O;
-        public AudioSetting AudioSetting;
-        public bool IsRegistred;
-        public int Score;
-        public int SoftValueX;
-        public int SoftValueO;
-        public int WinCount;
-        public int LoseCount;
-        public string Nick;
+        [JsonProperty("Sb")] public StyleData Board;
+        [JsonProperty("Xs")] public StyleData X;
+        [JsonProperty("Os")] public StyleData O;
+        [JsonProperty("As")] public AudioSetting AudioSetting;
+        [JsonProperty("Sc")] public int Score;
+        [JsonProperty("Sx")]public int SoftValueX;
+        [JsonProperty("So")]public int SoftValueO;
+        [JsonProperty("Nk")] public string Nick;
+        [JsonProperty("Sd")]public List<StyleData> ShopPlayerData;
 
-        public PlayerData(string nick)
+
+        public ProfileData(string nick)
         {
-            IsRegistred = true;
             Nick = nick;
             SoftValueX = 100;
             SoftValueO = 100;
@@ -53,17 +52,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
 
             AudioSetting = new AudioSetting(false,false,1f,1f);
         }
-        
-        public List<StyleData> ShopPlayerData;
     }
 
     [Serializable]
     public class AudioSetting
     {
-        public bool IsMusicMute;
-        public bool IsSoundMute;
-        public float VolumeMusic;
-        public float VolumeSound;
+       [JsonProperty("Mm")] public bool IsMusicMute;
+       [JsonProperty("Sm")] public bool IsSoundMute;
+       [JsonProperty("Vm")] public float VolumeMusic;
+       [JsonProperty("Vs")] public float VolumeSound;
 
         public AudioSetting(bool isMusicMute, bool isSoundMute, float volumeMusic, float volumeSound)
         {
@@ -77,7 +74,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player
     [Serializable]
     public class StyleData
     {
-        public string Id;
-        public ShowItemStyle Type;
+        [JsonProperty("Id")]public string Id;
+        [JsonProperty("T")] public ShowItemStyle Type;
     }
 }

@@ -35,12 +35,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private SaveLoadService _saveLoadService;
         private SessionDataMatch _sessionDataMatch;
         private MetaFlow _metaFlow;
-        private IPlayerProgress _playerData;
+        private IPlayerProfile _playerData;
         private bool _isShopLoadData;
 
         [Inject]
         public void Construct(
-            IPlayerProgress playerData, 
+            IPlayerProfile playerData, 
             ProviderUiFactory providerUiFactory,
             SaveLoadService saveLoadService,SessionDataMatch sessionDataMatch,PopupService popupService)
         {
@@ -86,8 +86,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
-            OnSwitchIcoAudioMute(TypeValueChange.Music,popup,popup.MusicMute,_playerData.PlayerData.AudioSetting.IsMusicMute);
-            OnSwitchIcoAudioMute(TypeValueChange.Sound,popup,popup.SoundMute,_playerData.PlayerData.AudioSetting.IsSoundMute);
+            OnSwitchIcoAudioMute(TypeValueChange.Music,popup,popup.MusicMute,_playerData.profileData.AudioSetting.IsMusicMute);
+            OnSwitchIcoAudioMute(TypeValueChange.Sound,popup,popup.SoundMute,_playerData.profileData.AudioSetting.IsSoundMute);
             
             popup.MusicSlider.value = AudioPlayer.S.LoadSliderValue(TypeValueChange.Music);
             popup.SoundSlider.value = AudioPlayer.S.LoadSliderValue(TypeValueChange.Sound);
@@ -108,10 +108,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             popup.Initialized();
 
-            PlayerData playerData = _playerData.PlayerData;
+            ProfileData profileData = _playerData.profileData;
 
             List<SimulationData.Data> dataList = SimulatorLeaderBoard.S.D;
-            dataList.Add(new SimulationData.Data() { Score = playerData.Score, Name = playerData.Nick });
+            dataList.Add(new SimulationData.Data() { Score = profileData.Score, Name = profileData.Nick });
 
             var sortLeader = dataList.OrderByDescending(key => key.Score).ToArray();
             int index = -1;
@@ -211,7 +211,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 shopItem.Type = type;
 
                 shopItem.ActiveGameObject.SetActive(_playerData
-                    .PlayerData
+                    .profileData
                     .ShopPlayerData
                     .FirstOrDefault(key => key.Id == data.Id) != null);
 
@@ -223,7 +223,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             _poolItemInventoryStyle.Reset();
 
-            var dataStyleArray = _playerData.PlayerData.ShopPlayerData.Where(key => key.Type == type).ToArray();
+            var dataStyleArray = _playerData.profileData.ShopPlayerData.Where(key => key.Type == type).ToArray();
 
             foreach (ItemStyle item in _poolItemInventoryStyle)
             {
@@ -268,9 +268,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         {
             return type switch
             {
-                ShowItemStyle.Board => _playerData.PlayerData.Board,
-                ShowItemStyle.X => _playerData.PlayerData.X,
-                ShowItemStyle.O => _playerData.PlayerData.O,
+                ShowItemStyle.Board => _playerData.profileData.Board,
+                ShowItemStyle.X => _playerData.profileData.X,
+                ShowItemStyle.O => _playerData.profileData.O,
                 _ => throw new DataException($"Type not found {type}")
             };
         }
@@ -312,15 +312,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 popupSetting.MusicMute.onClick.AsObservable().Subscribe((_) =>
                 {
                     OnSetMuteAudio(TypeValueChange.Music);
-                    OnSwitchIcoAudioMute(TypeValueChange.Music,popupSetting,popupSetting.MusicMute, _playerData.PlayerData.AudioSetting.IsMusicMute);
-                    SetValueSlideAudio(TypeValueChange.Music, popupSetting, _playerData.PlayerData.AudioSetting.IsMusicMute);
+                    OnSwitchIcoAudioMute(TypeValueChange.Music,popupSetting,popupSetting.MusicMute, _playerData.profileData.AudioSetting.IsMusicMute);
+                    SetValueSlideAudio(TypeValueChange.Music, popupSetting, _playerData.profileData.AudioSetting.IsMusicMute);
                 }).AddTo(popupSetting);
                 
                 popupSetting.SoundMute.onClick.AsObservable().Subscribe((_) =>
                 {
                     OnSetMuteAudio(TypeValueChange.Sound);
-                    OnSwitchIcoAudioMute(TypeValueChange.Sound,popupSetting,popupSetting.SoundMute, _playerData.PlayerData.AudioSetting.IsSoundMute);
-                    SetValueSlideAudio(TypeValueChange.Sound, popupSetting, _playerData.PlayerData.AudioSetting.IsSoundMute);
+                    OnSwitchIcoAudioMute(TypeValueChange.Sound,popupSetting,popupSetting.SoundMute, _playerData.profileData.AudioSetting.IsSoundMute);
+                    SetValueSlideAudio(TypeValueChange.Sound, popupSetting, _playerData.profileData.AudioSetting.IsSoundMute);
                 }).AddTo(popupSetting);
             }
 
@@ -392,15 +392,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             if (data == null)
                 return;
 
-            if (data.ValueX > _playerData.PlayerData.SoftValueX ||
-                data.ValueO > _playerData.PlayerData.SoftValueO)
+            if (data.ValueX > _playerData.profileData.SoftValueX ||
+                data.ValueO > _playerData.profileData.SoftValueO)
                 return;
 
-            _playerData.PlayerData.SoftValueX -= data.ValueX;
-            _playerData.PlayerData.SoftValueO -= data.ValueO;
+            _playerData.profileData.SoftValueX -= data.ValueX;
+            _playerData.profileData.SoftValueO -= data.ValueO;
 
             _metaRoot.OnSoftValueChanged.OnNext(Unit.Default);
-            _playerData.PlayerData.ShopPlayerData.Add(new StyleData() { Id = id, Type = style });
+            _playerData.profileData.ShopPlayerData.Add(new StyleData() { Id = id, Type = style });
             gameObject.SetActive(true);
             
             _saveLoadService.SaveProgress(true);

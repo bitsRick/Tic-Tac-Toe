@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Style
 {
-    public class StyleMatchData:ILoadUnit<IPlayerProgress>
+    public class StyleMatchData:ILoadUnit<IPlayerProfile>
     {
         private readonly AssetService _assetService;
 
@@ -16,9 +16,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Sty
         public StyleMatchData(AssetService assetService) => 
             _assetService = assetService;
 
-        public async UniTask Load(IPlayerProgress playerProgress)
+        public async UniTask Load(IPlayerProfile playerProfile)
         {
-            var data = playerProgress.PlayerData;
+            var data = playerProfile.profileData;
 
             Board = await _assetService.Load.GetAssetAsync<Sprite>(TypeAsset.Sprite,data.Board.Id);
             X = await _assetService.Load.GetAssetAsync<Sprite>(TypeAsset.Sprite,data.X.Id);

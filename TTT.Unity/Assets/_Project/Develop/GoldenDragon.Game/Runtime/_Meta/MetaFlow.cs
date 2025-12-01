@@ -69,7 +69,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
                     _styleDataLoadShop.GetData().Length));
             
             _metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, RuntimeConstants.UiRoot.MetaRoot);
-            _metaRoot.Resolve(_popupService,_modelMetaRoot,_assetService,_saveLoadService.PlayerData,_providerUiFactory);
+            _metaRoot.Resolve(_popupService,_modelMetaRoot,_assetService,_saveLoadService.profileData,_providerUiFactory);
             
             await _loadingService.BeginLoading(_metaRoot);
             await _metaRoot.Show();

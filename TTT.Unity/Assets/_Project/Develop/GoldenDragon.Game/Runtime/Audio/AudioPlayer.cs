@@ -7,17 +7,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
     public class AudioPlayer:Singleton<AudioPlayer>
     {
         private static AudioService _audioService;
-        private static IPlayerProgress _playerProgress;
+        private static IPlayerProfile _playerProfile;
         
-        public void Resolve(AudioService audioService, IPlayerProgress playerProgress)
+        public void Resolve(AudioService audioService, IPlayerProfile playerProfile)
         {
             _audioService = audioService;
-            _playerProgress = playerProgress;
+            _playerProfile = playerProfile;
         }
 
         public void Initialized()
         {
-            PlayerData data = _playerProgress.PlayerData;
+            ProfileData data = _playerProfile.profileData;
             
             if (data == null)
             {
@@ -41,7 +41,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
 
         public float LoadSliderValue(TypeValueChange typeValue)
         {
-            PlayerData data = _playerProgress.PlayerData;
+            ProfileData data = _playerProfile.profileData;
 
             switch (typeValue)
             {
@@ -71,11 +71,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             switch (type)
             {
                 case TypeValueChange.Sound:
-                    _playerProgress.PlayerData.AudioSetting.IsSoundMute = _audioService.IsMuteSound;
+                    _playerProfile.profileData.AudioSetting.IsSoundMute = _audioService.IsMuteSound;
                     break;
                 
                 case TypeValueChange.Music:
-                    _playerProgress.PlayerData.AudioSetting.IsMusicMute = _audioService.IsMuteMusic;
+                    _playerProfile.profileData.AudioSetting.IsMusicMute = _audioService.IsMuteMusic;
                     break;
             }
         }
@@ -87,11 +87,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             switch (type)
             {
                 case TypeValueChange.Sound:
-                    _playerProgress.PlayerData.AudioSetting.VolumeSound = value;
+                    _playerProfile.profileData.AudioSetting.VolumeSound = value;
                     break;
                 
                 case TypeValueChange.Music:
-                    _playerProgress.PlayerData.AudioSetting.VolumeMusic = value;
+                    _playerProfile.profileData.AudioSetting.VolumeMusic = value;
                     break;
             }
         }

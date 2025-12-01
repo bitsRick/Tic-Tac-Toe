@@ -26,7 +26,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly ModuleView _moduleView;
         private readonly StyleMatchData _styleMatchData;
         private readonly ModulePlayingField _modulePlayingField;
-        private readonly IPlayerProgress _playerProgress;
+        private readonly IPlayerProfile _playerProfile;
         private readonly IAi _utilityAi;
         private WinService _winService;
         private CharacterMatchData _botMatchDataData;
@@ -40,7 +40,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             LoadingView loadingView,
             ProviderUiFactory providerUiFactory,
             SessionDataMatch sessionDataMatch,
-            IPlayerProgress playerProgress,
+            IPlayerProfile playerProfile,
             IAi utilityAi,
             RoundManager roundManager,
             ModuleView moduleView,
@@ -52,7 +52,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _moduleView = moduleView;
             _utilityAi = utilityAi;
             _roundManager = roundManager;
-            _playerProgress = playerProgress;
+            _playerProfile = playerProfile;
             _sessionDataMatch = sessionDataMatch;
             _providerUiFactory = providerUiFactory;
             _loadingView = loadingView;
@@ -63,13 +63,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         public async void Start()
         {
             _botMatchDataData = new CharacterMatchData(RuntimeConstants.Match.BotName,_sessionDataMatch.BotType,true);
-            _playerMatchDataData = new CharacterMatchData(_playerProgress.PlayerData.Nick,_sessionDataMatch.PlayerType,false);
+            _playerMatchDataData = new CharacterMatchData(_playerProfile.profileData.Nick,_sessionDataMatch.PlayerType,false);
             
             _matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,RuntimeConstants.UiRoot.MatchRoot);
             _matchUi.Constructor(_popupService,_moduleView,_modulePlayingField,_botMatchDataData,_playerMatchDataData,this);
             await _matchUi.Initialized();
 
-            await _loadingService.BeginLoading(_styleMatchData, _playerProgress);
+            await _loadingService.BeginLoading(_styleMatchData, _playerProfile);
             await _loadingService.BeginLoading(_moduleView);
             await _loadingService.BeginLoading(_modulePlayingField,_styleMatchData);
             await _loadingService.BeginLoading(_matchUi);

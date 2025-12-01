@@ -33,15 +33,15 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         private PopupService _popupService;
         private Model _model;
         private AssetService _assetService;
-        private PlayerData _playerProgress;
+        private ProfileData _profileProgress;
         public Subject<Unit> OnSoftValueChanged = new Subject<Unit>();
         private ProviderUiFactory _providerUiFactory;
 
         [Inject]
-        public void Resolve(PopupService popupService,Model model,AssetService assetService,PlayerData playerProgress,ProviderUiFactory providerUiFactory)
+        public void Resolve(PopupService popupService,Model model,AssetService assetService,ProfileData profileProgress,ProviderUiFactory providerUiFactory)
         {
             _providerUiFactory = providerUiFactory;
-            _playerProgress = playerProgress;
+            _profileProgress = profileProgress;
             _assetService = assetService;
             _model = model;
             _popupService = popupService;
@@ -102,10 +102,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 OnSoftValueChanged
                     .Subscribe(_ =>
                     {
-                        _softValueO.text = _playerProgress.SoftValueO.ToString();
-                        _softValueX.text = _playerProgress.SoftValueX.ToString();
-                        shopPopup.SoftValueO.text = _playerProgress.SoftValueO.ToString();
-                        shopPopup.SoftValueX.text = _playerProgress.SoftValueX.ToString();
+                        _softValueO.text = _profileProgress.SoftValueO.ToString();
+                        _softValueX.text = _profileProgress.SoftValueX.ToString();
+                        shopPopup.SoftValueO.text = _profileProgress.SoftValueO.ToString();
+                        shopPopup.SoftValueX.text = _profileProgress.SoftValueX.ToString();
                     }).AddTo(this);
             }
             

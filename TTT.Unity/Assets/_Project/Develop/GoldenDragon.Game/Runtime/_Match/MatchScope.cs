@@ -18,8 +18,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             builder.Register<Brains>(Lifetime.Scoped);
             builder.Register<IAi,UtilityAi>(Lifetime.Scoped);
 
-            builder.Register<ModuleView>(Lifetime.Scoped);
-            builder.Register<ModulePlayingField>(Lifetime.Scoped);
+            builder.Register<ModuleMatchView>(Lifetime.Scoped);
+            builder.Register<ModuleMatchPlayingField>(Lifetime.Scoped);
             builder.Register<StyleMatchData>(Lifetime.Scoped);
             
             builder.RegisterEntryPoint<MatchFlow>();

@@ -44,7 +44,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
             OnPlayerDataChanged.Subscribe((_) =>
             {
-                SetData();
+                SetDirty();
             });
             
             return UniTask.CompletedTask;
@@ -72,12 +72,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         public async UniTask CreateNewData(string name)
         {
             _playerProfile.profileData = new ProfileData(name);
-            SetData();
+            SetDirty();
             await SaveProgress();
             
             Log.Boot.D($"{nameof(SaveLoadService)}",$" Create New Player Progress");
         }
 
-        private void SetData() => _isSaveData = true;
+        private void SetDirty() => _isSaveData = true;
     }
 }

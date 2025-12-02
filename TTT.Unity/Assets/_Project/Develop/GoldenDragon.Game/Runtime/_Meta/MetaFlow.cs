@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
@@ -22,7 +21,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         private readonly LoadingView _loadingView;
         private readonly AssetService _assetService;
         private readonly StyleDataLoadShop _styleDataLoadShop;
-        private readonly Model _modelMetaRoot;
+        private readonly ModuleMetaView _moduleMetaViewMetaRoot;
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly SessionDataMatch _sessionDataMatch;
         private readonly SaveLoadService _saveLoadService;
@@ -33,7 +32,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
 
         public MetaFlow(SceneManager sceneManager, LoadingService loadingService,
             LoadingView loadingView,AssetService assetService,
-            StyleDataLoadShop styleDataLoadShop,Model modelMetaRoot,
+            StyleDataLoadShop styleDataLoadShop,ModuleMetaView moduleMetaViewMetaRoot,
             ProviderUiFactory providerUiFactory,
             SessionDataMatch sessionDataMatch,SaveLoadService saveLoadService,PopupService popupService)
         {
@@ -41,7 +40,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
             _saveLoadService = saveLoadService;
             _sessionDataMatch = sessionDataMatch;
             _providerUiFactory = providerUiFactory;
-            _modelMetaRoot = modelMetaRoot;
+            _moduleMetaViewMetaRoot = moduleMetaViewMetaRoot;
             _styleDataLoadShop = styleDataLoadShop;
             _assetService = assetService;
             _loadingView = loadingView;
@@ -69,13 +68,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
                     _styleDataLoadShop.GetData().Length));
             
             _metaRoot = _providerUiFactory.FactoryUi.CreateRootUi<MetaRoot>(TypeAsset.Meta_Root_Ui, RuntimeConstants.UiRoot.MetaRoot);
-            _metaRoot.Resolve(_popupService,_modelMetaRoot,_assetService,_saveLoadService.profileData,_providerUiFactory);
+            _metaRoot.Resolve(_popupService,_moduleMetaViewMetaRoot,_assetService,_saveLoadService.profileData);
             
             await _loadingService.BeginLoading(_metaRoot);
             await _metaRoot.Show();
 
-            await _modelMetaRoot.Resolve(_metaRoot,_styleDataLoadShop.GetData(),_itemShopPool,_itemInventoryStyle,this);
-            await _loadingService.BeginLoading(_modelMetaRoot);
+            await _moduleMetaViewMetaRoot.Resolve(_metaRoot,_styleDataLoadShop.GetData(),_itemShopPool,_itemInventoryStyle,this);
+            await _loadingService.BeginLoading(_moduleMetaViewMetaRoot);
             
             await _loadingView.Hide();
             AudioPlayer.S.MetaBackground();
@@ -89,7 +88,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         
         public void Dispose()
         {
-             _popupService.Release().Forget();
+             _popupService.Dispose();
             _loadingService.DisposableService.Dispose();
         }
     }

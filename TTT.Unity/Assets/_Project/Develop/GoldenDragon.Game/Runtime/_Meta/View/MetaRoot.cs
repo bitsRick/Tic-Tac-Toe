@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup;
@@ -32,19 +33,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
         [SerializeField] private TextMeshProUGUI _softValueO;
         
         private PopupService _popupService;
-        private Model _model;
+        private ModuleMetaView _moduleMetaView;
         private AssetService _assetService;
         private ProfileData _profileProgress;
         public Subject<Unit> OnSoftValueChanged = new Subject<Unit>();
-        private ProviderUiFactory _providerUiFactory;
 
         [Inject]
-        public void Resolve(PopupService popupService,Model model,AssetService assetService,ProfileData profileProgress,ProviderUiFactory providerUiFactory)
+        public void Resolve(PopupService popupService,ModuleMetaView moduleMetaView,AssetService assetService,ProfileData profileProgress)
         {
-            _providerUiFactory = providerUiFactory;
             _profileProgress = profileProgress;
             _assetService = assetService;
-            _model = model;
+            _moduleMetaView = moduleMetaView;
             _popupService = popupService;
         }
 
@@ -60,23 +59,27 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public async UniTask InitializedPopup()
         {
-            _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
-            _popupService.AddPopupInList<LeaderBoardPopup>(RuntimeConstants.Popup.LeaderBoard,_parent);
-            _popupService.AddPopupInList<ShopPopup>(RuntimeConstants.Popup.Shop,_parent);
-            _popupService.AddPopupInList<InventoryPopup>(RuntimeConstants.Popup.Inventory,_parent);
-            _popupService.AddPopupInList<MatchPopup>(RuntimeConstants.Popup.Match,_parent);
+            await _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
+            await _popupService.AddPopupInList<LeaderBoardPopup>(RuntimeConstants.Popup.LeaderBoard,_parent);
+            await _popupService.AddPopupInList<ShopPopup>(RuntimeConstants.Popup.Shop,_parent);
+            await _popupService.AddPopupInList<InventoryPopup>(RuntimeConstants.Popup.Inventory,_parent);
+            await _popupService.AddPopupInList<MatchPopup>(RuntimeConstants.Popup.Match,_parent);
             await Task.CompletedTask;
         }
 
         public async UniTask InitializedEvent()
         {
-            _btnOpenSetting.OnClickAsObservable().Subscribe(_ => _model.OpenPopupSetting()).AddTo(this);
-            _btnOpenLeaderBoard.OnClickAsObservable().Subscribe(_ => _model.OpenPopupLeaderBoard()).AddTo(this);
-            _btnOpenMatch.OnClickAsObservable().Subscribe(_ => _model.OpenPopupMatch()).AddTo(this);
-            _btnOpenInventory.OnClickAsObservable().Subscribe(_ => _model.OpenPopupInventory()).AddTo(this);
-            _btnOpenShop.OnClickAsObservable().Subscribe(_ => _model.OpenPopupShop()).AddTo(this);
+            _btnOpenSetting.OnClickAsObservable().Subscribe(_ => _moduleMetaView.OpenPopupSetting()).AddTo(this);
+            _btnOpenLeaderBoard.OnClickAsObservable().Subscribe(_ => _moduleMetaView.OpenPopupLeaderBoard()).AddTo(this);
+            _btnOpenMatch.OnClickAsObservable().Subscribe(_ => _moduleMetaView.OpenPopupMatch()).AddTo(this);
+            _btnOpenInventory.OnClickAsObservable().Subscribe(_ => _moduleMetaView.OpenPopupInventory()).AddTo(this);
+            _btnOpenShop.OnClickAsObservable().Subscribe(_ => _moduleMetaView.OpenPopupShop()).AddTo(this);
             
-            _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
+            _popupBackground.OnEvenPointClickBackground.Subscribe((_) =>
+            {
+                AudioPlayer.S.Click();
+                _popupService.Close();
+            }).AddTo(this);
             
            if( _popupService.TryGetPopup(out ShopPopup shopPopup))
             {

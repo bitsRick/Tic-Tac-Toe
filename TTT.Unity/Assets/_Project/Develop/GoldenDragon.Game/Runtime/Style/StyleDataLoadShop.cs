@@ -60,6 +60,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
         
         public void Dispose()
         {
+            if (_data == null)
+                return;
+
             foreach (StyleData data in _data)
             {
                 data.Sprite = null;

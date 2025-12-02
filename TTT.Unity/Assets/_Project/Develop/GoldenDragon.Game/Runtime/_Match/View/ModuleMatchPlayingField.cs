@@ -13,7 +13,7 @@ using VContainer;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
-    public class ModulePlayingField:ILoadUnit<StyleMatchData>
+    public class ModuleMatchPlayingField:ILoadUnit<StyleMatchData>
     {
         private PlayingField _playingField;
         private CharacterMatchData _playerMatchData;
@@ -22,7 +22,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private MatchUiRoot _matchUiRoot;
 
         [Inject]
-        public ModulePlayingField(RoundManager roundManager)
+        public ModuleMatchPlayingField(RoundManager roundManager)
         {
             _roundManager = roundManager;
         }

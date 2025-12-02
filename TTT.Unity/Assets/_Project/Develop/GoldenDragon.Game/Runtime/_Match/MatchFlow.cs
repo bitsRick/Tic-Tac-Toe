@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
@@ -23,9 +22,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly SessionDataMatch _sessionDataMatch;
         private readonly RoundManager _roundManager;
-        private readonly ModuleView _moduleView;
+        private readonly ModuleMatchView _moduleMatchView;
         private readonly StyleMatchData _styleMatchData;
-        private readonly ModulePlayingField _modulePlayingField;
+        private readonly ModuleMatchPlayingField _moduleMatchPlayingField;
         private readonly IPlayerProfile _playerProfile;
         private readonly IAi _utilityAi;
         private WinService _winService;
@@ -43,13 +42,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             IPlayerProfile playerProfile,
             IAi utilityAi,
             RoundManager roundManager,
-            ModuleView moduleView,
-            ModulePlayingField modulePlayingField,StyleMatchData styleMatchData,PopupService popupService)
+            ModuleMatchView moduleMatchView,
+            ModuleMatchPlayingField moduleMatchPlayingField,StyleMatchData styleMatchData,PopupService popupService)
         {
             _popupService = popupService;
             _styleMatchData = styleMatchData;
-            _modulePlayingField = modulePlayingField;
-            _moduleView = moduleView;
+            _moduleMatchPlayingField = moduleMatchPlayingField;
+            _moduleMatchView = moduleMatchView;
             _utilityAi = utilityAi;
             _roundManager = roundManager;
             _playerProfile = playerProfile;
@@ -66,12 +65,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _playerMatchDataData = new CharacterMatchData(_playerProfile.profileData.Nick,_sessionDataMatch.PlayerType,false);
             
             _matchUi = _providerUiFactory.FactoryUi.CreateRootUi<MatchUiRoot>(TypeAsset.Match_Root_Ui,RuntimeConstants.UiRoot.MatchRoot);
-            _matchUi.Constructor(_popupService,_moduleView,_modulePlayingField,_botMatchDataData,_playerMatchDataData,this);
+            _matchUi.Constructor(_popupService,_moduleMatchView,_moduleMatchPlayingField,_botMatchDataData,_playerMatchDataData,this);
             await _matchUi.Initialized();
 
             await _loadingService.BeginLoading(_styleMatchData, _playerProfile);
-            await _loadingService.BeginLoading(_moduleView);
-            await _loadingService.BeginLoading(_modulePlayingField,_styleMatchData);
+            await _loadingService.BeginLoading(_moduleMatchView);
+            await _loadingService.BeginLoading(_moduleMatchPlayingField,_styleMatchData);
             await _loadingService.BeginLoading(_matchUi);
             await _loadingService.BeginLoading(_utilityAi,_matchUi);
 
@@ -80,7 +79,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             
             await _roundManager.Resolve(_utilityAi,_playerMatchDataData,_botMatchDataData,_winService,new RoundRandom());
             _roundManager.InitializedFirstActionRound();
-            _roundManager.InitializedEvent(_matchUi,_modulePlayingField);
+            _roundManager.InitializedEvent(_matchUi,_moduleMatchPlayingField);
             
             _matchUi.Show();
             _matchUi.OpenCharacterStartMatchPopup();
@@ -97,8 +96,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         {
             _loadingView.Show();
             
-            _moduleView.Reset();
-            _modulePlayingField.Reset();
+            _moduleMatchView.Reset();
+            _moduleMatchPlayingField.Reset();
             _botMatchDataData.Reset();
             _playerMatchDataData.Reset();
             _roundManager.Reset();
@@ -114,12 +113,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
         public async void ToMeta()
         {
             _loadingView.Show();
+            _popupService.RestActivePopup();
             await _sceneManager.LoadScene(RuntimeConstants.Scene.Meta);
         }
         
         public void Dispose()
         {
-            _popupService.Release().Forget();
+            _popupService.Dispose();
             _loadingService.DisposableService.Dispose();
         }
     }

@@ -55,10 +55,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             return UniTask.CompletedTask;
         }
 
-        public void InitializedEvent(MatchUiRoot matchUiRoot,ModulePlayingField modulePlayingField)
+        public void InitializedEvent(MatchUiRoot matchUiRoot,ModuleMatchPlayingField moduleMatchPlayingField)
         {
-            OnWin.Subscribe(modulePlayingField.SetWinMatch).AddTo(matchUiRoot);
-            OnButtonInteractive.Subscribe(modulePlayingField.SetInteractiveFieldButton).AddTo(matchUiRoot);
+            OnWin.Subscribe(moduleMatchPlayingField.SetWinMatch).AddTo(matchUiRoot);
+            OnButtonInteractive.Subscribe(moduleMatchPlayingField.SetInteractiveFieldButton).AddTo(matchUiRoot);
         }
         
         public void InitializedFirstActionRound()

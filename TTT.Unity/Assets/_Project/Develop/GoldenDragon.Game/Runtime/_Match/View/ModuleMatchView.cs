@@ -2,7 +2,6 @@
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.TopInformation;
@@ -18,7 +17,7 @@ using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
-    public class ModuleView:IDisposableLoadUnit
+    public class ModuleMatchView:IDisposableLoadUnit
     {
         private readonly AssetService _assetService;
         private readonly SaveLoadService _saveLoadService;
@@ -38,7 +37,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         public Subject<bool> OnPlayerAction = new Subject<bool>();
         public Subject<bool> OnBotAction = new Subject<bool>();
 
-        public ModuleView(
+        public ModuleMatchView(
             AssetService assetService, 
             RoundManager roundManager,
             SaveLoadService saveLoadService,IPlayerProfile playerProfile)
@@ -69,9 +68,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Load()
         {
-            _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
-            _popupService.AddPopupInList<WinLosePopup>(RuntimeConstants.Popup.WinLose,_parent);
-            _popupService.AddPopupInList<CharacterStartMatchPopup>(RuntimeConstants.Popup.StartMatchViewAction,_parent);
+            await _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
+            await _popupService.AddPopupInList<WinLosePopup>(RuntimeConstants.Popup.WinLose,_parent);
+            await _popupService.AddPopupInList<CharacterStartMatchPopup>(RuntimeConstants.Popup.StartMatchViewAction,_parent);
 
             InitDataView(_playerVisualDataLeft,_playerMatchData);
             InitDataView(_botVisualDataRight,_botMatchDataData);
@@ -265,11 +264,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             switch (_playerMatchData.Field)
             {
                 case TypePlayingField.X:
-                    _playerProfile.profileData.SoftValueX = softValue;
+                    _playerProfile.profileData.SoftValueX += softValue;
                     break;
                 
                 case TypePlayingField.O:
-                    _playerProfile.profileData.SoftValueO = softValue;
+                    _playerProfile.profileData.SoftValueO += softValue;
                     break;
             }
 

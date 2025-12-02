@@ -33,21 +33,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private CharacterMatchData _botMatchDataData;
         private CharacterMatchData _playerMatchData;
         private PopupService _popupService;
-        private ModulePlayingField _modulePlayingField;
-        private ModuleView _moduleView;
+        private ModuleMatchPlayingField _moduleMatchPlayingField;
+        private ModuleMatchView _moduleMatchView;
         private MatchFlow _matchFlow;
 
         public PlayingField PlayingField => _playingField;
 
         public void Constructor(PopupService popupService,
-            ModuleView moduleView,
-            ModulePlayingField modulePlayingField,
+            ModuleMatchView moduleMatchView,
+            ModuleMatchPlayingField moduleMatchPlayingField,
             CharacterMatchData botMatchDataData,
             CharacterMatchData playerMatchDataData, MatchFlow matchFlow)
         {
             _matchFlow = matchFlow;
-            _moduleView = moduleView;
-            _modulePlayingField = modulePlayingField;
+            _moduleMatchView = moduleMatchView;
+            _moduleMatchPlayingField = moduleMatchPlayingField;
             _popupService = popupService;
             _playerMatchData = playerMatchDataData;
             _botMatchDataData = botMatchDataData;
@@ -55,10 +55,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Initialized()
         {
-            await _moduleView.Resolve(_popupBackground,_playerVisualDataLeft,_botVisualDataRight,
+            await _moduleMatchView.Resolve(_popupBackground,_playerVisualDataLeft,_botVisualDataRight,
                 _botMatchDataData,_playerMatchData,_parent,_popupService,this);
             
-            await _modulePlayingField.Resolve(_playingField,_playerMatchData,_botMatchDataData,this);
+            await _moduleMatchPlayingField.Resolve(_playingField,_playerMatchData,_botMatchDataData,this);
             await UniTask.CompletedTask;
         }
 
@@ -72,16 +72,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public UniTask InitializedEvent()
         {
-            _setting.onClick.AsObservable().Subscribe((_) => { _moduleView.OpenSetting(); }).AddTo(this);
+            _setting.onClick.AsObservable().Subscribe((_) => { _moduleMatchView.OpenSetting(); }).AddTo(this);
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
-            _moduleView.InitializedEvent();
+            _moduleMatchView.InitializedEvent();
             
             return UniTask.CompletedTask;
         }
 
         public async UniTask InitializedPopup()
         {
-            await _moduleView.Load();
+            await _moduleMatchView.Load();
             await UniTask.CompletedTask;
         }
 
@@ -103,22 +103,22 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public void SetViewWin(MatchWin winner)
         {
-            _moduleView.SetViewWin(winner);
+            _moduleMatchView.SetViewWin(winner);
         }
 
         public void OpenWinLose(MatchWin winner)
         {
-            _moduleView.OpenWinLose(winner);
+            _moduleMatchView.OpenWinLose(winner);
         }
 
         public void OpenCharacterStartMatchPopup()
         {
-            _moduleView.OpenCharacterStartMatchPopup();
+            _moduleMatchView.OpenCharacterStartMatchPopup();
         }
 
         public void SetTypeInField(CharacterMatchData botMatchDataData, Field botActionField)
         {
-            _modulePlayingField.SetTypeInFieldTurn(botMatchDataData,botActionField);
+            _moduleMatchPlayingField.SetTypeInFieldTurn(botMatchDataData,botActionField);
         }
 
         public void SetActiveViewColor(CharacterMatchData characterMatchData)
@@ -126,11 +126,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             switch (characterMatchData.IsBot)
             {
                 case true:
-                    _moduleView.OnBotAction.OnNext(true);
+                    _moduleMatchView.OnBotAction.OnNext(true);
                     break;
                 
                 case false:
-                    _moduleView.OnPlayerAction.OnNext(true);
+                    _moduleMatchView.OnPlayerAction.OnNext(true);
                     break;
             }
         }

@@ -23,7 +23,7 @@ using StyleData = GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.P
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 {
-    public class Model:ILoadUnit
+    public class ModuleMetaView:ILoadUnit
     {
         private Style.StyleData[] _styleData;
         private PopupService _popupService;
@@ -334,8 +334,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
             if (_popupService.TryGetPopup(out MatchPopup matchPopup))
             {
-                matchPopup.X.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.X); }).AddTo(matchPopup);
-                matchPopup.O.onClick.AsObservable().Subscribe((_) => { OnStartMatch(TypePlayingField.O);}).AddTo(matchPopup);
+                matchPopup.X.onClick.AsObservable().Subscribe((_) =>
+                {
+                    _popupService.Close();
+                    OnStartMatch(TypePlayingField.X);
+                }).AddTo(matchPopup);
+                matchPopup.O.onClick.AsObservable().Subscribe((_) =>
+                {
+                    _popupService.Close();
+                    OnStartMatch(TypePlayingField.O);
+                }).AddTo(matchPopup);
             }
         }
 

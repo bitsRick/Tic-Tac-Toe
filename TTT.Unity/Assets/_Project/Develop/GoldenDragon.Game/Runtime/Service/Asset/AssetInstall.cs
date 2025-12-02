@@ -37,7 +37,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             
             try
             {
-                instance = UnityEngine.Object.Instantiate(installObject);
+                instance = UnityEngine.Object.Instantiate(installObject,parent.transform);
             }
             catch (MissingReferenceException)
             {

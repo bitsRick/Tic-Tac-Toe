@@ -10,7 +10,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<StyleDataLoadShop>(Lifetime.Singleton);
-            builder.Register<Model>(Lifetime.Singleton);
+            builder.Register<ModuleMetaView>(Lifetime.Singleton);
             
             builder.RegisterEntryPoint<MetaFlow>();
         }

@@ -11,7 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
     public class PopupService
     {
-        private Dictionary<TypePopup, PopupData> _popupLists = new();
+        private Dictionary<string, PopupData> _popupLists = new();
         private readonly SaveLoadService _saveLoadService;
         private readonly ProviderUiFactory _providerUiFactory;
         private readonly AssetService _assetService;
@@ -26,11 +26,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             _saveLoadService = saveLoadService;
         }
         
-        public async void AddPopupInList<T>(TypePopup typePopup, string pathPopupAsset,GameObject parent) where T: PopupBase
+        public async void AddPopupInList<T>(string pathPopupAsset,GameObject parent) where T: PopupBase
         {
             T popup = default;
             
-            if (_popupLists.ContainsKey(typePopup))
+            if (_popupLists.ContainsKey(nameof(T)))
                 return;
             
             try
@@ -43,12 +43,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
                 Log.Default.W(nameof(PopupService),$" - error load popup in asset - {e.Message}");
             }
             
-            _popupLists.Add(typePopup, new PopupData(popup));
+            _popupLists.Add(nameof(T), new PopupData(popup));
         }
 
         public async UniTask Release()
         {
-            foreach (KeyValuePair<TypePopup,PopupData> popupData in _popupLists) 
+            foreach (KeyValuePair<string,PopupData> popupData in _popupLists) 
                 popupData.Value.Dispose();
 
             _popupLists = null;
@@ -56,11 +56,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             await UniTask.CompletedTask;
         }
 
-        public bool TryGetPopup<T>(TypePopup typePopup, out T popup) where T : class
+        public bool TryGetPopup<T>(out T popup) where T : class
         {
             popup = default;
     
-            if (_popupLists.TryGetValue(typePopup, out PopupData popupData))
+            if (_popupLists.TryGetValue(nameof(T), out PopupData popupData))
             {
                 popup = popupData.GetPopup() as T;
                 return true;
@@ -69,10 +69,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             return false;
         }
 
-        public bool TryOpenPopup<TP>(TypePopup typePopup, out TP popupOut)
+        public bool TryOpenPopup<TP>(out TP popupOut)
             where TP : class
         {
-            if (IsNotOpenPopup(typePopup))
+            if (IsNotOpenPopup<TP>())
             {
                 if (_activePopup is TP popup)
                 {
@@ -81,7 +81,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
                 }
             }
 
-            Log.Default.W($"[PopupService]:NOT OPEN - {typePopup.ToString()}");
+            Log.Default.W($"[PopupService]:NOT OPEN - {nameof(TP)}");
             
             popupOut = null;
             return false;
@@ -107,21 +107,21 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             _activePopup = null;
         }
 
-        private bool IsNotOpenPopup(TypePopup typePopupOpen)
+        private bool IsNotOpenPopup<T>()where T:class
         {
             if (_isActivePopup == false)
             {
                 _isActivePopup = true;
-                _activePopup = GetPopup(typePopupOpen);
+                _activePopup = GetPopup<T>();
                 return true;
             }
 
             return false;
         }
 
-        private PopupBase GetPopup(TypePopup typePopup)
+        private PopupBase GetPopup<T>() where T:class
         {
-            return _popupLists.TryGetValue(typePopup,out PopupData popup) ? popup.GetPopup() : null;
+            return _popupLists.TryGetValue(nameof(T),out PopupData popup) ? popup.GetPopup() : null;
         }
     }
 }

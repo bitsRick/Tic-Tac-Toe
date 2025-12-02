@@ -60,11 +60,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public async UniTask InitializedPopup()
         {
-            _popupService.AddPopupInList<SettingPopup>(TypePopup.Setting,RuntimeConstants.Popup.Setting,_parent);
-            _popupService.AddPopupInList<LeaderBoardPopup>(TypePopup.LeaderBoard,RuntimeConstants.Popup.LeaderBoard,_parent);
-            _popupService.AddPopupInList<ShopPopup>(TypePopup.Shop,RuntimeConstants.Popup.Shop,_parent);
-            _popupService.AddPopupInList<InventoryPopup>(TypePopup.Inventory,RuntimeConstants.Popup.Inventory,_parent);
-            _popupService.AddPopupInList<MatchPopup>(TypePopup.Match,RuntimeConstants.Popup.Match,_parent);
+            _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
+            _popupService.AddPopupInList<LeaderBoardPopup>(RuntimeConstants.Popup.LeaderBoard,_parent);
+            _popupService.AddPopupInList<ShopPopup>(RuntimeConstants.Popup.Shop,_parent);
+            _popupService.AddPopupInList<InventoryPopup>(RuntimeConstants.Popup.Inventory,_parent);
+            _popupService.AddPopupInList<MatchPopup>(RuntimeConstants.Popup.Match,_parent);
             await Task.CompletedTask;
         }
 
@@ -78,7 +78,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             
             _popupBackground.OnEvenPointClickBackground.Subscribe((_) => _popupService.Close()).AddTo(this);
             
-           if( _popupService.TryGetPopup(TypePopup.Shop,out ShopPopup shopPopup))
+           if( _popupService.TryGetPopup(out ShopPopup shopPopup))
             {
                 OnSoftValueChanged
                     .Subscribe(_ =>

@@ -20,7 +20,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
     public class ModuleView:IDisposableLoadUnit
     {
-        private readonly ProviderUiFactory _providerUiFactory;
         private readonly AssetService _assetService;
         private readonly SaveLoadService _saveLoadService;
         private readonly RoundManager _roundManager;
@@ -40,14 +39,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         public Subject<bool> OnBotAction = new Subject<bool>();
 
         public ModuleView(
-            ProviderUiFactory providerUiFactory, 
             AssetService assetService, 
             RoundManager roundManager,
             SaveLoadService saveLoadService,IPlayerProfile playerProfile)
         {
             _playerProfile = playerProfile;
             _saveLoadService = saveLoadService;
-            _providerUiFactory = providerUiFactory;
             _assetService = assetService;
             _roundManager = roundManager;
         }
@@ -72,9 +69,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Load()
         {
-            _popupService.AddPopupInList<SettingPopup>(TypePopup.Setting, RuntimeConstants.Popup.Setting,_parent);
-            _popupService.AddPopupInList<WinLosePopup>(TypePopup.WinLose, RuntimeConstants.Popup.WinLose,_parent);
-            _popupService.AddPopupInList<CharacterStartMatchPopup>(TypePopup.CharacterStartMatch, RuntimeConstants.Popup.StartMatchViewAction,_parent);
+            _popupService.AddPopupInList<SettingPopup>(RuntimeConstants.Popup.Setting,_parent);
+            _popupService.AddPopupInList<WinLosePopup>(RuntimeConstants.Popup.WinLose,_parent);
+            _popupService.AddPopupInList<CharacterStartMatchPopup>(RuntimeConstants.Popup.StartMatchViewAction,_parent);
 
             InitDataView(_playerVisualDataLeft,_playerMatchData);
             InitDataView(_botVisualDataRight,_botMatchDataData);
@@ -99,13 +96,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 SetColorText(isFlag, _botVisualDataRight);
             }).AddTo(_matchUiRoot);
 
-            if (_popupService.TryGetPopup(TypePopup.WinLose,out WinLosePopup winLosePopup))
+            if (_popupService.TryGetPopup(out WinLosePopup winLosePopup))
             {
                 winLosePopup.ButtonMenu.onClick.AsObservable().Subscribe(_=>{_matchUiRoot.ToMeta();}).AddTo(winLosePopup);
                 winLosePopup.ButtonNextMatch.onClick.AsObservable().Subscribe(_=>{_matchUiRoot.NextMatch();}).AddTo(winLosePopup);
             }
 
-            if (_popupService.TryGetPopup(TypePopup.Setting, out SettingPopup setting))
+            if (_popupService.TryGetPopup(out SettingPopup setting))
             {
                 setting.ToMeta.onClick.AsObservable().Subscribe((_)=> _matchUiRoot.ToMeta()).AddTo(_matchUiRoot);
             }
@@ -147,7 +144,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             AudioPlayer.S.Click();
             WinLosePopup popup;
             
-            if (_popupService.TryOpenPopup(TypePopup.WinLose, out WinLosePopup winLosePopup))
+            if (_popupService.TryOpenPopup( out WinLosePopup winLosePopup))
                 popup = winLosePopup;
             else
                 return;
@@ -177,7 +174,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             AudioPlayer.S.Click();
             SettingPopup popup;
 
-            if (_popupService.TryOpenPopup(TypePopup.Setting, out SettingPopup settingPopup))
+            if (_popupService.TryOpenPopup( out SettingPopup settingPopup))
                 popup = settingPopup;
             else
                 return;
@@ -200,7 +197,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             CharacterStartMatchPopup popup;
             
-            if (_popupService.TryOpenPopup(TypePopup.CharacterStartMatch, out CharacterStartMatchPopup characterStartMatch))
+            if (_popupService.TryOpenPopup( out CharacterStartMatchPopup characterStartMatch))
                 popup = characterStartMatch;
             else
                 return;

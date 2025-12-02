@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai;
@@ -137,12 +138,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             _mode = MatchMode.BotAction;
         }
 
-        private async void ActionBotRound()
+        private void ActionBotRound()
         {
             OnButtonInteractive.OnNext(false);
             BotAction botAction = _ai.MakeBestDecision(_bot);
-
-            await UniTask.Delay(TimeSpan.FromSeconds(0.2f));
             _ai.SetField(_bot,botAction.Field);
         }
 

@@ -14,12 +14,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Single player")]
         [SerializeField] private Button _x; 
         [SerializeField] private Button _o;
-        [Header("Coop")] 
-        [SerializeField] private Button _coop;
-
+        
         public Button X => _x;
         public Button O => _o;
-        public Button Coop => _coop;
             
         public void Initialized()
         {

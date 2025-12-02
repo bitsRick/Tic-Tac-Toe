@@ -118,7 +118,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             _matchUiRoot.SetActiveViewColor(characterMatchData);
             
-            if (TrySetField(characterMatchData, field)) 
+            if (TrySetFieldByField(characterMatchData, field)) 
                 _roundManager.NextTurn();
         }
 
@@ -144,18 +144,18 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             data.Btn.targetGraphic = isView ? typeFieldImage : data.Empty;
         }
 
-        private bool TrySetField(CharacterMatchData characterAction, Field field)
+        private bool TrySetFieldByField(CharacterMatchData characterAction, Field field)
         {
             if (field.CurrentPlayingField != TypePlayingField.None)
                 return false;
-
+        
             Image typeFieldImage = characterAction.Field == TypePlayingField.X ? field.X : field.O;
             typeFieldImage.gameObject.SetActive(true);
-
+        
             field.CurrentPlayingField =
                 characterAction.Field == TypePlayingField.X ? TypePlayingField.X : TypePlayingField.O;
             field.Btn.targetGraphic = null;
-
+        
             return true;
         }
     }

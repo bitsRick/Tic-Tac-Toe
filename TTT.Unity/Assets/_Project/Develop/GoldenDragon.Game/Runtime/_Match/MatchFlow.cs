@@ -68,7 +68,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _matchUi.Constructor(_popupService,_moduleMatchView,_moduleMatchPlayingField,_botMatchDataData,_playerMatchDataData,this);
             await _matchUi.Initialized();
 
-            await _loadingService.BeginLoading(_styleMatchData, _playerProfile);
+            await _loadingService.BeginLoading(_styleMatchData);
             await _loadingService.BeginLoading(_moduleMatchView);
             await _loadingService.BeginLoading(_moduleMatchPlayingField,_styleMatchData);
             await _loadingService.BeginLoading(_matchUi);

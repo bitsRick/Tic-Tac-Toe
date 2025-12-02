@@ -1,29 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
+using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
     public class PopupService
     {
         private Dictionary<TypePopup, PopupData> _popupLists = new();
+        private readonly SaveLoadService _saveLoadService;
+        private readonly ProviderUiFactory _providerUiFactory;
+        private readonly AssetService _assetService;
         private PopupBase _activePopup;
-        private SaveLoadService _saveLoadService;
         private bool _isActivePopup;
         private bool _isNoClose;
 
-        public PopupService(SaveLoadService saveLoadService)
+        public PopupService(SaveLoadService saveLoadService,ProviderUiFactory providerUiFactory,AssetService assetService)
         {
+            _assetService = assetService;
+            _providerUiFactory = providerUiFactory;
             _saveLoadService = saveLoadService;
         }
         
-        public void AddPopupInList<T>(TypePopup typePopup, T popup) where T: PopupBase
+        public async void AddPopupInList<T>(TypePopup typePopup, string pathPopupAsset,GameObject parent) where T: PopupBase
         {
+            T popup = default;
+            
             if (_popupLists.ContainsKey(typePopup))
                 return;
-
+            
+            try
+            {
+                GameObject gameObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(pathPopupAsset);
+                popup = _assetService.Install.InstallToUiPopup<T>(gameObject, parent);
+            }
+            catch (Exception e)
+            {
+                Log.Default.W(nameof(PopupService),$" - error load popup in asset - {e.Message}");
+            }
+            
             _popupLists.Add(typePopup, new PopupData(popup));
         }
 

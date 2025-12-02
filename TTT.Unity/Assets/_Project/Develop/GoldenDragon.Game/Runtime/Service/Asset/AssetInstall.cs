@@ -1,4 +1,5 @@
 ﻿using System;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Popup;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -30,7 +31,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             return instance;
         }
 
-        public T InstallToUiPopup<T>(GameObject installObject,GameObject parent) where T: class
+        public T InstallToUiPopup<T>(GameObject installObject,GameObject parent) where T: PopupBase
         {
             GameObject instance = null;
             

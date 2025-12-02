@@ -86,6 +86,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
+            popup.Initialized(StateFlow.Meta);
+            
             OnSwitchIcoAudioMute(TypeValueChange.Music,popup,popup.MusicMute,_playerData.profileData.AudioSetting.IsMusicMute);
             OnSwitchIcoAudioMute(TypeValueChange.Sound,popup,popup.SoundMute,_playerData.profileData.AudioSetting.IsSoundMute);
             
@@ -148,6 +150,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
             else
                 return;
             
+            popup.Initialized();
+            
             _popupBackground.Show();
             popup.Show();
         }
@@ -161,6 +165,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 popup = inventoryPopup;
             else
                 return;
+            
+            popup.Initialized();
             
             OnShowItemInventor(ShowItemStyle.Board);
 
@@ -177,6 +183,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                 popup = shopPopup;
             else
                 return;
+            
+            popup.Initialized();
             
             OnShowItemShop(ShowItemStyle.Board);
 

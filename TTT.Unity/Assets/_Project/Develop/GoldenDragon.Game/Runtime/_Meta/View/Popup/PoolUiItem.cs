@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup
@@ -12,7 +14,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     public class PoolUiItem<T> : IDisposableLoadUnit<DataPullUiItem>,IEnumerable<T>
         where T : IItem
     {
-        public List<T> _item = new List<T>();
+        private List<T> _item = new List<T>();
         private AssetService _assetService;
         private GameObject _poolRoot;
 
@@ -25,10 +27,17 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
 
         public void Dispose()
         {
-            foreach (T item in this)
+            try
             {
-                if (item is GameObject gameObject) 
-                    UnityEngine.Object.Destroy(gameObject);
+                foreach (T item in this)
+                {
+                    if (item is GameObject gameObject && gameObject != null) 
+                        UnityEngine.Object.Destroy(gameObject);
+                }
+            }
+            catch (Exception e)
+            {
+               Log.Default.W(nameof(PoolUiItem<T>),"Ошибка при уничтожении объекта - "+ e.Message);
             }
             
             _item = null;
@@ -40,7 +49,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             
             for (int i = 0; i < dataPullUiItem.LenghtPull; i++)
             {
-                GameObject gameObject = _assetService.Install.InstallToGameObject<GameObject>(
+                GameObject gameObject = _assetService.Install.InstallToGameObject(
                     _assetService.Load
                         .GetAsset<GameObject>(TypeAsset.Elements, dataPullUiItem.PrefabPath));
                     

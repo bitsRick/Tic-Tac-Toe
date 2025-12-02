@@ -59,7 +59,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 _botMatchDataData,_playerMatchData,_parent,_popupService,this);
             
             await _modulePlayingField.Resolve(_playingField,_playerMatchData,_botMatchDataData,this);
-            
             await UniTask.CompletedTask;
         }
 

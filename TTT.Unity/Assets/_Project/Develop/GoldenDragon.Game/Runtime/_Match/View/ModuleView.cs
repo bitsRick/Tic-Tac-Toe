@@ -72,19 +72,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
         public async UniTask Load()
         {
-            GameObject settingObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Setting);
-            SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(settingObject, _parent);
-            settingPopup.Initialized(StateFlow.Match);
-            
-            GameObject winLoseObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.WinLose);
-            WinLosePopup winLosePopup = _assetService.Install.InstallToUiPopup<WinLosePopup>(winLoseObject, _parent);
-            
-            GameObject characterViewObject = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.StartMatchViewAction);
-            CharacterStartMatchPopup characterStartMatchPopup = _assetService.Install.InstallToUiPopup<CharacterStartMatchPopup>(characterViewObject, _parent);
-            
-            _popupService.AddPopupInList(TypePopup.Setting, settingPopup);
-            _popupService.AddPopupInList(TypePopup.WinLose, winLosePopup);
-            _popupService.AddPopupInList(TypePopup.CharacterStartMatch, characterStartMatchPopup);
+            _popupService.AddPopupInList<SettingPopup>(TypePopup.Setting, RuntimeConstants.Popup.Setting,_parent);
+            _popupService.AddPopupInList<WinLosePopup>(TypePopup.WinLose, RuntimeConstants.Popup.WinLose,_parent);
+            _popupService.AddPopupInList<CharacterStartMatchPopup>(TypePopup.CharacterStartMatch, RuntimeConstants.Popup.StartMatchViewAction,_parent);
 
             InitDataView(_playerVisualDataLeft,_playerMatchData);
             InitDataView(_botVisualDataRight,_botMatchDataData);
@@ -192,6 +182,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             else
                 return;
 
+            popup.Initialized(StateFlow.Match);
+            
             popup.MusicSlider.value = AudioPlayer.S.GetSliderValue(TypeValueChange.Music);
             popup.SoundSlider.value = AudioPlayer.S.GetSliderValue(TypeValueChange.Sound);
 

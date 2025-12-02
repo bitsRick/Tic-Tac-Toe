@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data.Player;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
@@ -59,32 +60,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         public async UniTask InitializedPopup()
         {
-            GameObject setting = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Setting);
-            GameObject leaderBoard = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.LeaderBoard);
-            GameObject shop = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Shop);
-            GameObject inventory = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Inventory);
-            GameObject match = await _providerUiFactory.FactoryUi.LoadPopupToObject(RuntimeConstants.Popup.Match);
-            
-            SettingPopup settingPopup = _assetService.Install.InstallToUiPopup<SettingPopup>(setting,_parent);
-            settingPopup.Initialized(StateFlow.Meta);
-            
-            LeaderBoardPopup leaderBoardPopup = _assetService.Install.InstallToUiPopup<LeaderBoardPopup>(leaderBoard,_parent);
-            leaderBoardPopup.Initialized();
-            
-            ShopPopup shopPopup = _assetService.Install.InstallToUiPopup<ShopPopup>(shop,_parent);
-            shopPopup.Initialized();
-            
-            InventoryPopup inventoryPopup = _assetService.Install.InstallToUiPopup<InventoryPopup>(inventory,_parent);
-            inventoryPopup.Initialized();
-            
-            MatchPopup matchPopup = _assetService.Install.InstallToUiPopup<MatchPopup>(match,_parent);
-            matchPopup.Initialized();
-            
-            _popupService.AddPopupInList(TypePopup.Setting,settingPopup);
-            _popupService.AddPopupInList(TypePopup.LeaderBoard,leaderBoardPopup);
-            _popupService.AddPopupInList(TypePopup.Shop,shopPopup);
-            _popupService.AddPopupInList(TypePopup.Inventory,inventoryPopup);
-            _popupService.AddPopupInList(TypePopup.Match,matchPopup);
+            _popupService.AddPopupInList<SettingPopup>(TypePopup.Setting,RuntimeConstants.Popup.Setting,_parent);
+            _popupService.AddPopupInList<LeaderBoardPopup>(TypePopup.LeaderBoard,RuntimeConstants.Popup.LeaderBoard,_parent);
+            _popupService.AddPopupInList<ShopPopup>(TypePopup.Shop,RuntimeConstants.Popup.Shop,_parent);
+            _popupService.AddPopupInList<InventoryPopup>(TypePopup.Inventory,RuntimeConstants.Popup.Inventory,_parent);
+            _popupService.AddPopupInList<MatchPopup>(TypePopup.Match,RuntimeConstants.Popup.Match,_parent);
+            await Task.CompletedTask;
         }
 
         public async UniTask InitializedEvent()

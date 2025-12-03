@@ -17,7 +17,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
 
         public T GetAsset<T>(TypeAsset typeAsset, string nameAsset) where T : UnityEngine.Object
         {
-            Log.Default.D($"Loading asset[{typeAsset}] path:{nameAsset}");
+            Log.Default.D(nameof(AssetLoad),$"Loading asset[{typeAsset}] path:{nameAsset}");
 
             if (_assetCatch.TryGet<T>(typeAsset, nameAsset, out AsyncOperationHandle<T> handleOut))
                 return handleOut.WaitForCompletion();
@@ -30,7 +30,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             }
             catch (Exception ex)
             {
-                Log.Default.W(nameof(AssetLoad), $"Ошибка загрузки Ассета: {ex.Message}");
+                Log.Default.W(nameof(AssetLoad), $"Error loading Asset: {ex.Message}");
             }
 
             _assetCatch.Add(typeAsset, nameAsset, handle);
@@ -53,7 +53,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             }
             catch (Exception ex)
             {
-                Log.Default.W(nameof(AssetLoad), $"Ошибка загрузки Ассета: {ex.Message}");
+                Log.Default.W(nameof(AssetLoad), $"Error loading Asset: {ex.Message}");
             }
 
             _assetCatch.Add(typeAsset, nameAsset, handle);

@@ -33,11 +33,6 @@ namespace GoldenDragon
             await Task.CompletedTask;
         }
 
-        private void OnDestroy()
-        {
-            if (_fadeTween != null) _fadeTween.Kill();
-        }
-
         public override UniTask Show()
         {
             _canvasGroup.alpha = 1f;
@@ -55,6 +50,11 @@ namespace GoldenDragon
                 .Play();
             
             return UniTask.CompletedTask;
+        }
+
+        private void OnDestroy()
+        {
+            if (_fadeTween != null) _fadeTween.Kill();
         }
     }
 }

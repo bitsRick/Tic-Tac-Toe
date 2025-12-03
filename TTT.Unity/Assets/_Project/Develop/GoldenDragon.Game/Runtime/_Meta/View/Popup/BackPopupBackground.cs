@@ -11,7 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            Log.Default.D("Close Popup");
+            Log.Default.D(nameof(BackPopupBackground),"Close Popup");
             Hide();
             OnEvenPointClickBackground.OnNext(Unit.Default);
         }

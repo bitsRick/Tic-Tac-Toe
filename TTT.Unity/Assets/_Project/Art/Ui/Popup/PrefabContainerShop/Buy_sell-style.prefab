@@ -953,6 +953,8 @@ MonoBehaviour:
   _valueO: {fileID: 3563696996488225339}
   _buy: {fileID: 1044632103990667914}
   _rectTransform: {fileID: 3482635553842196528}
+  _buyText: {fileID: 2040512578074939125}
+  _buyCompleteText: {fileID: 3698168704300439776}
 --- !u!1 &4294809644669565336
 GameObject:
   m_ObjectHideFlags: 0

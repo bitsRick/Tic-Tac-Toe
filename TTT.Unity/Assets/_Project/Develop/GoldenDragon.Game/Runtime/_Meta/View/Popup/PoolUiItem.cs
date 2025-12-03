@@ -14,8 +14,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
     public class PoolUiItem<T> : IDisposableLoadUnit<DataPullUiItem>,IEnumerable<T>
         where T : IItem
     {
-        private List<T> _item = new List<T>();
-        private AssetService _assetService;
+        private List<T> _item = new();
+        private readonly AssetService _assetService;
         private GameObject _poolRoot;
 
         private int _index = -1;
@@ -30,14 +30,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
             try
             {
                 foreach (T item in this)
-                {
-                    if (item is GameObject gameObject && gameObject != null) 
+                    if (item is GameObject gameObject && gameObject != null)
                         UnityEngine.Object.Destroy(gameObject);
-                }
             }
             catch (Exception e)
             {
-               Log.Default.W(nameof(PoolUiItem<T>),"Ошибка при уничтожении объекта - "+ e.Message);
+               Log.Default.W(nameof(PoolUiItem<T>),"Error while destroying object- "+ e.Message);
             }
             
             _item = null;

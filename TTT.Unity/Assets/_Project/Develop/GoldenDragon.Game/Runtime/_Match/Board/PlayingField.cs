@@ -5,9 +5,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
 {
     public class PlayingField:MonoBehaviour
     {
-        [Header("Массив элементов")]
+        [Header("Array of elements")]
         [SerializeField] private Field[] _fields;
-        [Header("Рамка")]
+        [Header("Frame")]
         [SerializeField] private Image _border;
         
         public Field[] Fields => _fields;

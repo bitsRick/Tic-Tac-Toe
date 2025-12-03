@@ -1,7 +1,6 @@
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.RegistrationView;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Factory.Ui;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.SessionData;
@@ -40,8 +39,6 @@ namespace GoldenDragon
             builder.Register<AssetLoad>(Lifetime.Singleton);
             builder.Register<AssetRelease>(Lifetime.Singleton);
             builder.Register<AssetService>(Lifetime.Singleton);
-            
-            builder.Register<LangFileLoad>(Lifetime.Singleton);
             
             builder.Register<FactoryUi>(Lifetime.Singleton);
             builder.Register<FactoryItem>(Lifetime.Singleton);

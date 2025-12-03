@@ -18,11 +18,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             }
             catch (MissingReferenceException)
             {
-                Log.Default.W(nameof(AssetInstall),"Prefab не назначен или уничтожен");
+                Log.Default.W(nameof(AssetInstall),"Prefab is not assigned or destroyed");
             }
             catch (UnityException ex) when (ex.Message.Contains("GameObject"))
             {
-                Log.Default.W(nameof(AssetInstall),"Проблема с GameObject");
+                Log.Default.W(nameof(AssetInstall),"Problem with GameObject");
             }
 
             if (instance is GameObject go) 
@@ -41,11 +41,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             }
             catch (MissingReferenceException)
             {
-                Log.Default.W(nameof(AssetInstall),"Prefab не назначен или уничтожен");
+                Log.Default.W(nameof(AssetInstall),"Prefab is not assigned or destroyed");
             }
             catch (UnityException ex) when (ex.Message.Contains("GameObject"))
             {
-                Log.Default.W(nameof(AssetInstall),"Проблема с GameObject");
+                Log.Default.W(nameof(AssetInstall),"Problem with GameObject");
             }
             
             instance.SetActive(false);

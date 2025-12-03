@@ -524,6 +524,7 @@ MonoBehaviour:
   activeGameObject: {fileID: 5081775371710665648}
   _btnEnter: {fileID: 8262385020252829817}
   _image: {fileID: 7058404091672787519}
+  _setText: {fileID: 6582063686768806535}
 --- !u!1 &6198679428767898258
 GameObject:
   m_ObjectHideFlags: 0

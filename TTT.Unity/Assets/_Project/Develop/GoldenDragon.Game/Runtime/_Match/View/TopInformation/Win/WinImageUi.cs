@@ -7,7 +7,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Top
     {
         [Header("Default")]
         [SerializeField] private Image _noWin;
-        [Header("Победа")]
+        [Header("Victory")]
         [SerializeField] private Image _win;
         private bool _isNotWin = true;
 

@@ -285,7 +285,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         private void InitializedEvent()
         {
-            if (_popupService.TryGetPopup<ShopPopup>(out ShopPopup popupShop))
+            if (_popupService.TryGetPopup(out ShopPopup popupShop))
             {
                 EventUniRx.CreateEventButtonClick(popupShop.BtnBorder, popupShop.gameObject,
                     () => { OnShowItemShop(ShowItemStyle.Board); });
@@ -295,7 +295,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     () => { OnShowItemShop(ShowItemStyle.O); });
             }
 
-            if (_popupService.TryGetPopup<InventoryPopup>(out InventoryPopup popupInventory))
+            if (_popupService.TryGetPopup(out InventoryPopup popupInventory))
             {
                 EventUniRx.CreateEventButtonClick(popupInventory.BtnBoard, popupInventory.gameObject,
                     () => { OnShowItemInventor(ShowItemStyle.Board); });
@@ -305,7 +305,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
                     () => { OnShowItemInventor(ShowItemStyle.O); });
             }
             
-            if (_popupService.TryGetPopup<SettingPopup>(out SettingPopup popupSetting))
+            if (_popupService.TryGetPopup(out SettingPopup popupSetting))
             {
                 popupSetting.MusicSlider.onValueChanged.AsObservable().Subscribe( value =>
                 {
@@ -424,29 +424,31 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View
 
         private void InitializedInventoryItem()
         {
-            if (_popupService.TryGetPopup<InventoryPopup>( out InventoryPopup popup))
+            if (_popupService.TryGetPopup( out InventoryPopup popup))
                 for (int i = 0; i < _styleData.Length; i++)
                 {
                     ItemStyle item =_uiFactory.FactoryItem.CreateItem(_poolItemInventoryStyle.GetItem(), popup);
+                    item.Initialized();
                     EventUniRx.CreateEventButtonClick(item.Btn, popup.gameObject, (() =>  EnterStyle(item)));
                 }
             else
             {
-                Log.Meta.W($"Not load popup:{nameof(InventoryPopup)}");
+                Log.Meta.W(nameof(ModuleMetaView),$"Not load popup:{nameof(InventoryPopup)}");
             }
         }
 
         private void InitializedShopItem()
         {
-            if (_popupService.TryGetPopup<ShopPopup>(out ShopPopup popup))
+            if (_popupService.TryGetPopup(out ShopPopup popup))
                 for (int i = 0; i < _styleData.Length; i++)
                 {
                     ShopItem shopItem = _uiFactory.FactoryItem.CreateItem(_poolItemUi.GetItem(), popup);
+                    shopItem.Initialized();
                     EventUniRx.CreateEventButtonClick(shopItem.Btn, popup.gameObject, (() => BuyStyle(shopItem.Id, shopItem.ActiveGameObject, shopItem.Type)));
                 }
             else
             {
-                Log.Meta.W($"Not load popup:{nameof(ShopPopup)}");
+                Log.Meta.W(nameof(ModuleMetaView),$"Not load popup:{nameof(ShopPopup)}");
             }
         }
     }

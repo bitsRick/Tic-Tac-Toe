@@ -6,13 +6,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Loading
     public class LoadingFlow:IStartable
     {
         private readonly SceneManager _sceneManager;
-        private readonly LoadingService _loadingService;
 
-        public LoadingFlow(SceneManager sceneManager, LoadingService loadingService)
-        {
+        public LoadingFlow(SceneManager sceneManager) => 
             _sceneManager = sceneManager;
-            _loadingService = loadingService;
-        }
 
         public async void Start()
         {

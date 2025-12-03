@@ -3,7 +3,7 @@ using DG.Tweening;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Base;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -66,6 +66,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime._Bootstrap.Reg
             _nickWrite.text = Lang.S.UI.REGISTRATION_SCREEN.NickWrite;
             _enter.text = Lang.S.UI.REGISTRATION_SCREEN.Enter;
             _lang.text = Lang.S.UI.REGISTRATION_SCREEN.Language;
+            
+            Log.Boot.D(nameof(RegistrationScreen),"Initialized");
             
             return UniTask.CompletedTask;
         }

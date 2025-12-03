@@ -1,5 +1,5 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +14,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private TextMeshProUGUI _valueO;
         [SerializeField] private GameObject _buy;
         [SerializeField] private RectTransform _rectTransform;
+
+        [Header("Lang")]
+        [SerializeField] private TextMeshProUGUI _buyText;
+        [SerializeField] private TextMeshProUGUI _buyCompleteText;
+        
         private string _id;
         private bool _isView;
 
         public ShowItemStyle Type { get; set; }
-
+        
         public Image Image => _image;
 
         public Button Btn => _btn;
@@ -53,6 +58,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         {
             get => _id;
             set => _id = value;
+        }
+
+        public void Initialized()
+        {
+            _buyText.text = Lang.S.UI.POPUP.SHOP.Buy;
+            _buyCompleteText.text = Lang.S.UI.POPUP.SHOP.Sell;
         }
     }
 }

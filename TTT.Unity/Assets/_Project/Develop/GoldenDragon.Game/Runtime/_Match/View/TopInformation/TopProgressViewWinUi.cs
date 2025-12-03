@@ -6,16 +6,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Top
 {
     public class TopProgressViewWinUi:MonoBehaviour
     {
-        [Header("имя игрока")]
+        [Header("Player name")]
         [SerializeField] private TextMeshProUGUI _name;
-        [Header("подсветка во время хода")]
+        [Header("Backlight during operation")]
         [SerializeField] private Color _actionRound;
         [SerializeField] private Color _noActionRound;
-        [Header("1 победа")]
+        [Header("1 win")]
         [SerializeField] private WinImageUi _winOne;
-        [Header("2 победа")]
+        [Header("2 win")]
         [SerializeField] private WinImageUi _winTwo;
-        [Header("3 победа")]
+        [Header("3 win")]
         [SerializeField] private WinImageUi _winThree;
 
         public TextMeshProUGUI Name => _name;

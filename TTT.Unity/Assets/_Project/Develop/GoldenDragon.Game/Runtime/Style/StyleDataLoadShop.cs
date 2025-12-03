@@ -26,7 +26,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 
             if (_data == null)
             {
-                Log.Meta.W($"Not loading json:[{RuntimeConstants.AssetStyle.DataStyleJson}]");
+                Log.Meta.W(nameof(StyleDataLoadShop),$"Not loading json:[{RuntimeConstants.AssetStyle.DataStyleJson}]");
                 return UniTask.CompletedTask;
             }
 
@@ -36,7 +36,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
 
                 if (sprite == null)
                 {
-                    Log.Meta.W($"Not loading sprite:[{styleData.Id}]");
+                    Log.Meta.W(nameof(StyleDataLoadShop),$"Not loading sprite:[{styleData.Id}]");
                     continue;
                 }
 
@@ -51,7 +51,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Style
         {
             if (_data == null)
             {
-                Log.Meta.W($"DataStyle null");
+                Log.Meta.W(nameof(StyleDataLoadShop),$"DataStyle null");
                 return null;
             }
             

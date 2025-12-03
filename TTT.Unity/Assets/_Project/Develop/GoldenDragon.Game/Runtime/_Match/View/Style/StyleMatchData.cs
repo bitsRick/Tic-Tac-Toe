@@ -37,7 +37,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Sty
             IsNotDefaultX = data.X.Id != RuntimeConstants.StyleData.DefaultX;
             IsNotDefaultO  = data.O.Id != RuntimeConstants.StyleData.DefaultO;
             
-
             await Task.CompletedTask;
         }
 

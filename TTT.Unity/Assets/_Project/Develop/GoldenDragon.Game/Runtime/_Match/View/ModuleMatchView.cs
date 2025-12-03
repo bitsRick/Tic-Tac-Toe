@@ -106,8 +106,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
                 setting.ToMeta.onClick.AsObservable().Subscribe((_)=> _matchUiRoot.ToMeta()).AddTo(_matchUiRoot);
             }
         }
-
-
+        
         public void Reset()
         {
             ResetTopViewDataWin(_winImageUiPlayer);

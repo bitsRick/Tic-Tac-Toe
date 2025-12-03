@@ -67,8 +67,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service
                 _verticalCenterLineFields, _verticalLeftLineFields, _verticalRightLineFields,
                 _backSlashFields, _slashFields
             );
-
-
+            
             if (matchMode == MatchWin.None
                 &&roundData.CountSetField >= RuntimeConstants.Match.MaxCountSetField)
             {

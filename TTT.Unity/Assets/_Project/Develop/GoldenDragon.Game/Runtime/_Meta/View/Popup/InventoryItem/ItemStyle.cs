@@ -1,5 +1,6 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private Button _btnEnter;
         [Header("View Style")]
         [SerializeField] private Image _image;
+        [Header("Lang")]
+        [SerializeField] private TextMeshProUGUI _setText;
+        
         private string _id;
 
         public ShowItemStyle Type { get; set; }
@@ -41,6 +45,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         {
             get => _id;
             set => _id = value;
+        }
+
+        public void Initialized()
+        {
+            _setText.text = Lang.S.UI.POPUP.INVENTORY.StyleEnter;
         }
     }
 }

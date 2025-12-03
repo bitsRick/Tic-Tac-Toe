@@ -18,7 +18,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [SerializeField] private Button _btnO;
         [Header("Container Item")]
         [SerializeField] private GameObject _root;
-        private string _styleEnter;
 
         public GameObject  Root
         {
@@ -40,7 +39,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         {
             _nameHeaderForm.text = Lang.S.UI.POPUP.INVENTORY.Header;
             _nameButtonBoard.text = Lang.S.UI.POPUP.INVENTORY.BoardButton;
-            _styleEnter = Lang.S.UI.POPUP.INVENTORY.StyleEnter;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popup.Interface

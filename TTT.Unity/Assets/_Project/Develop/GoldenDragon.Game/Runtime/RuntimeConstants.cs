@@ -13,6 +13,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime
             public static readonly int Match = SceneUtility.GetBuildIndexByScenePath("3.Match");
             public static readonly int Empty = SceneUtility.GetBuildIndexByScenePath("4.Empty");
         }
+        
+        public static class SaveLoad
+        {
+            public const string SaveKey = "1024";
+        }
 
         public static class StyleData
         {
@@ -87,15 +92,12 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime
             public const string ShopElementBuyPrefab = "Shop_Element_Buy-Prefab";
             public const string InventoryElementStylePrefab = "Inventory_Element_Style-Prefab";
             public const string PoolElementUi = nameof(PoolElementUi);
-            public const string NotViewShop = "Default_";
         }
 
         public static class Audio
         {
             public const string MusicMixerExposeName = "MusicValue";
             public const string SoundMixerExposeName = "SFXValue";
-            public const string AudioClipButtonClick = "Button_click";
-            public const string AudioClipBackgroundMeta = "Meta_background";
             public const string AudioConfig = "ConfigSounds";
         }
     }
@@ -106,18 +108,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime
         Sound,
         Music
     }
-
-    public enum TypePopup
-    {
-        Setting,
-        LeaderBoard,
-        Match,
-        Inventory,
-        Shop,
-        WinLose,
-        CharacterStartMatch
-    }
-
+    
     public enum TypeAsset
     {
         Meta_Root_Ui,

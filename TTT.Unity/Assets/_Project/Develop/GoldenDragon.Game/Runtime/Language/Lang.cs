@@ -50,7 +50,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language
                 {
                     public string Header = "Инвентарь стилей";
                     public string BoardButton = "Доска";
-                    public string StyleEnter = "Присенить";
+                    public string StyleEnter = "Применить";
                 }
 
                 [Serializable]

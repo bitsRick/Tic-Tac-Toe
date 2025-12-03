@@ -11,9 +11,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 {
     public class SaveLoadService:ILoadUnit
     {
-        private const string Key = "1024";
-        private IPlayerProfile _playerProfile;
-        private bool _isSaveData = false;
+        private readonly IPlayerProfile _playerProfile;
+        private bool _isSaveData;
         
         public ProfileData profileData => _playerProfile.profileData;
         public Subject<Unit> OnPlayerDataChanged = new Subject<Unit>();
@@ -28,7 +27,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         {
             Log.Loading.D($"{nameof(SaveLoadService)}",$" is loading ...");
 
-            string playerDataCode64 = PlayerPrefs.GetString(Key);
+            string playerDataCode64 = PlayerPrefs.GetString(RuntimeConstants.SaveLoad.SaveKey);
             string encodePlayerData = Coding.GetEncodingBase64(playerDataCode64);
             ProfileData convertProfileData = JsonConvert.DeserializeObject<ProfileData>(encodePlayerData);
 
@@ -55,16 +54,16 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             if (isFastSave == false)
                 if (_isSaveData == false)
                 {
-                    Log.Boot.D($"{nameof(SaveLoadService)}",$" is not write data");
+                    Log.Boot.D($"{nameof(SaveLoadService)}",$" Is not write data");
                     return UniTask.CompletedTask;
                 }
 
-            Log.Boot.D($"{nameof(SaveLoadService)}",$" is save progress");
+            Log.Boot.D($"{nameof(SaveLoadService)}",$" Save progress");
 
             string playerDataJson = JsonConvert.SerializeObject(_playerProfile.profileData);
             string code64PlayerData = Coding.GetCodingBase64(playerDataJson);
             
-            PlayerPrefs.SetString(Key,code64PlayerData);
+            PlayerPrefs.SetString(RuntimeConstants.SaveLoad.SaveKey,code64PlayerData);
             _isSaveData = false;
             return UniTask.CompletedTask;
         }

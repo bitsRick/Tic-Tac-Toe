@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities.Logging;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -17,7 +16,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             {
                 if (dicVal.ContainsKey(nameAsset))
                 {
-                    Log.Default.W($"{nameAsset} is asset added in Dictionary:{nameof(_assetCollection)}");
+                    Log.Default.W(nameof(AssetCatch),$"{nameAsset} is asset added in Dictionary:{nameof(_assetCollection)}");
                     Addressables.Release(handle);
                 }
                 else
@@ -36,7 +35,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             if (_assetCollection.ContainsKey(typeAsset) == false ||
                 _assetCollection[typeAsset].ContainsKey(nameAsset) == false)
             {
-                Log.Default.W($"Asset not found...[{typeAsset}-{nameAsset}]");
+                Log.Default.W(nameof(AssetCatch),$"Asset not found...[{typeAsset}-{nameAsset}]");
                 handle = new AsyncOperationHandle<T>();
                 return false;
             }
@@ -50,7 +49,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service.Asset
             if (_assetCollection.ContainsKey(typeAsset) == false ||
                 _assetCollection[typeAsset].ContainsKey(nameAsset) == false)
             {
-                Log.Default.W($"Asset not found...[{typeAsset}-{nameAsset}]");
+                Log.Default.W(nameof(AssetCatch),$"Asset not found...[{typeAsset}-{nameAsset}]");
                 asyncOperationHandle = default;
                 return false;
             }

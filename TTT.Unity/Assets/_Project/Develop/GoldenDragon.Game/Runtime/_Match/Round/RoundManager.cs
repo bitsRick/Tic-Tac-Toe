@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Data;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Service;
@@ -65,7 +63,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         public void InitializedFirstActionRound()
         {
             _mode = _roundRandom.GetFirstCharacterAction();
-            Log.Match.D($"[StartRoundMode]:{Mode.ToString()}");
+            Log.Match.D(nameof(RoundManager),$"[StartRoundMode]:{Mode.ToString()}");
         }
 
         public void Update()
@@ -83,8 +81,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
         public void Start() => _roundData.IsStart = true;
 
-        public void End() => _roundData.IsFinish = true;
-
         public void NextTurn()
         {
             switch (Mode)
@@ -99,9 +95,9 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             }
 
             _roundData.CountSetField++;
-            Log.Match.D($"[CurrentRoundMode]:{Mode.ToString()}");
+            Log.Match.D(nameof(RoundManager),$"[CurrentRoundMode]:{Mode.ToString()}");
         }
-        
+
         public void Reset()
         {
             InitializedFirstActionRound();
@@ -110,7 +106,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
 
         private void Win(MatchWin characterWin)
         {
-            Log.Match.D($"[Match]:[{characterWin.ToString()}]");
+            Log.Match.D(nameof(RoundManager),$"[Match]:[{characterWin.ToString()}]");
             
             switch (characterWin)
             {
@@ -126,6 +122,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
             End();
             OnWin.OnNext(characterWin);
         }
+
+        private void End() => _roundData.IsFinish = true;
 
         private void TurnPlayer()
         {
@@ -149,7 +147,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round
         {
             _isPlayerAction = true;
             OnButtonInteractive.OnNext(true);
-            Log.Match.D($"[Match]:Flag player action {_isPlayerAction}");
+            Log.Match.D(nameof(RoundManager),$"[Match]:Flag player action {_isPlayerAction}");
         }
 
         private void UpdateTurnTimer()

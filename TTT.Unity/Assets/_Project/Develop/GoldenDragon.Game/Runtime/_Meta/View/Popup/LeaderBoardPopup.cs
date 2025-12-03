@@ -11,7 +11,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Meta.View.Popu
         [Header("Lang")]
         [SerializeField] private TextMeshProUGUI _namePopupText;
 
-        [Header("Массив мест лидеров")]
+        [Header("Array of leading positions")]
         [SerializeField] private Item[] _leaders;
         
         public Item[] Leaders => _leaders;

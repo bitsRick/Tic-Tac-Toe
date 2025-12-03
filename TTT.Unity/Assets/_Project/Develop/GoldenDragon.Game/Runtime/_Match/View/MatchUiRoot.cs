@@ -14,20 +14,20 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 {
     public class MatchUiRoot : MonoBehaviour, IUiRoot, ILoadUnit
     {
-        [Header("Контейнер игрового поля")] 
+        [Header("Playing field container")] 
         [SerializeField]private PlayingField _playingField;
         
-        [Header("Настройки")]
+        [Header("Settings")]
         [SerializeField] private Button _setting;
         
-        [Header("Визуальнаые данные игроков")] 
+        [Header("Visual data of players")] 
         [SerializeField]private TopProgressViewWinUi _playerVisualDataLeft;
         [SerializeField]private TopProgressViewWinUi _botVisualDataRight;
         
-        [Header("Контейнер для окон")] 
+        [Header("Window container")] 
         [SerializeField]private GameObject _parent;
         
-        [Header("Темный экран для окон")] 
+        [Header("Dark screen for windows")] 
         [SerializeField]private BackPopupBackground _popupBackground;
 
         private CharacterMatchData _botMatchDataData;

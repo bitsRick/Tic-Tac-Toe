@@ -78,7 +78,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
         {
             _config = _assetService.Load.GetAsset<ConfigSounds>(TypeAsset.Audio,RuntimeConstants.Audio.AudioConfig);
             
-            if (_config == null) Log.Default.W($"Not Load config:{RuntimeConstants.Audio.AudioConfig}");
+            if (_config == null) 
+                Log.Default.W(nameof(AudioService),$"Not Load config:{RuntimeConstants.Audio.AudioConfig}");
 
             return UniTask.CompletedTask;
         }
@@ -110,7 +111,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             if (clip != null)
                 _sfxSource.PlayOneShot(clip);
             else
-                Log.Default.W($"Not yet sfx:{clip}");
+                Log.Default.W(nameof(AudioService),$"Not yet sfx:{clip}");
         }
 
         public void PlayBackground(AudioClip clip)
@@ -122,7 +123,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Audio
             }
             else
             {
-                Log.Default.W($"Not yet bacground:{clip}");
+                Log.Default.W(nameof(AudioService),$"Not yet background:{clip}");
             }
         }
 

@@ -58,6 +58,8 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
             if (_popupLists.Keys.Count < 1)
                 return;
             
+            Close(true);
+            
             List<string> removeKey = new List<string>(_popupLists.Keys);
             
             foreach (var key  in removeKey)
@@ -108,14 +110,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
 
         public void SetNoClose(bool isFlag) => _isNoClose = isFlag;
 
-        public void Close()
+        public void Close(bool isReset = false)
         {
-            if (_isNoClose)
+            if (isReset == false)
             {
-                _isNoClose = false;
-                return;
+                if (_isNoClose)
+                    return;
             }
-
+            
             RestActivePopup();
             _saveLoadService.SaveProgress();
         }
@@ -123,8 +125,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Service
         public void RestActivePopup()
         {
             _isActivePopup = false;
-            _activePopup.Hide();
-            _activePopup = null;
+
+            if (_activePopup != null)
+            {
+                _activePopup.Hide();
+                _activePopup = null;
+            }
+            
+            _isNoClose = false;
         }
 
         private bool IsNotOpenPopup<T>()where T:PopupBase

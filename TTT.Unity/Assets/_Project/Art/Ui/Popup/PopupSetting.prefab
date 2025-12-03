@@ -1936,6 +1936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5530337127909884982}
   - component: {fileID: 7449215893434738434}
+  - component: {fileID: 4719878736940286701}
   m_Layer: 5
   m_Name: PopupSetting
   m_TagString: Untagged
@@ -1975,6 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f58a0bd3f29c634ba187b612746ea83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 4719878736940286701}
   _headerText: {fileID: 186377876463147040}
   _soundText: {fileID: 7461140066000154571}
   _musicText: {fileID: 1840094060224602211}
@@ -1987,6 +1989,18 @@ MonoBehaviour:
   _musicSlider: {fileID: 2977152141516261029}
   _soundSlider: {fileID: 5639150382640401248}
   _toMeta: {fileID: 1650559732541116977}
+--- !u!225 &4719878736940286701
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7670204353049152063}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7985798384641269008
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Sty
         public Sprite O{ get; private set;}
         public Sprite Board { get; private set;}
 
+        public bool IsNotDefaultBoard;
+        public bool IsNotDefaultX;
+        public bool IsNotDefaultO;
+
         public StyleMatchData(AssetService assetService,IPlayerProfile playerProfile)
         {
             _playerProfile = playerProfile;
@@ -28,6 +32,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Sty
             Board = await _assetService.Load.GetAssetAsync<Sprite>(TypeAsset.Sprite,data.Board.Id);
             X = await _assetService.Load.GetAssetAsync<Sprite>(TypeAsset.Sprite,data.X.Id);
             O = await _assetService.Load.GetAssetAsync<Sprite>(TypeAsset.Sprite,data.O.Id);
+
+            IsNotDefaultBoard = data.Board.Id != RuntimeConstants.StyleData.DefaultBoard;
+            IsNotDefaultX = data.X.Id != RuntimeConstants.StyleData.DefaultX;
+            IsNotDefaultO  = data.O.Id != RuntimeConstants.StyleData.DefaultO;
+            
 
             await Task.CompletedTask;
         }

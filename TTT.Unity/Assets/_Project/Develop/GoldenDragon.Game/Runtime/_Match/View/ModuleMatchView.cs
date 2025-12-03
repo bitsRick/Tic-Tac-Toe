@@ -107,35 +107,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             }
         }
 
-        public void Dispose()
-        {
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.WinLose);
-            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.StartMatchViewAction);
-            _winImageUiPlayer = null;
-            _winImageUiBot = null;
-        }
-        
 
         public void Reset()
         {
             ResetTopViewDataWin(_winImageUiPlayer);
             ResetTopViewDataWin(_winImageUiBot);
-        }
-
-        private void ResetTopViewDataWin(WinImageUi[] winImageUiPlayerArray)
-        {
-            foreach (var winImageUi in winImageUiPlayerArray)
-            {
-                winImageUi.Win.gameObject.SetActive(false);
-                winImageUi.Default.gameObject.SetActive(true);
-                winImageUi.IsNotWin = true;
-            }
-        }
-
-        private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
-        {
-            TopProgressViewWinUi viewDataTop = topProgressViewWinUi;
-            viewDataTop.Name.color = isFlag == false ? viewDataTop.NoActive : viewDataTop.Active;
         }
 
         public void OpenWinLose(MatchWin matchWin)
@@ -185,11 +161,6 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
             _popupBackground.Show();
             popup.Show();
-        }
-
-        private void InitDataView(TopProgressViewWinUi viewData, CharacterMatchData matchDataData)
-        {
-            viewData.Name.text = matchDataData.Name;
         }
 
         public void OpenCharacterStartMatchPopup()
@@ -242,6 +213,35 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             }
         }
 
+        public void Dispose()
+        {
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.WinLose);
+            _assetService.Release.ReleaseAsset<GameObject>(TypeAsset.Popup, RuntimeConstants.Popup.StartMatchViewAction);
+            _winImageUiPlayer = null;
+            _winImageUiBot = null;
+        }
+
+        private void ResetTopViewDataWin(WinImageUi[] winImageUiPlayerArray)
+        {
+            foreach (var winImageUi in winImageUiPlayerArray)
+            {
+                winImageUi.Win.gameObject.SetActive(false);
+                winImageUi.Default.gameObject.SetActive(true);
+                winImageUi.IsNotWin = true;
+            }
+        }
+
+        private void InitDataView(TopProgressViewWinUi viewData, CharacterMatchData matchDataData)
+        {
+            viewData.Name.text = matchDataData.Name;
+        }
+
+        private void SetColorText(bool isFlag, TopProgressViewWinUi topProgressViewWinUi)
+        {
+            TopProgressViewWinUi viewDataTop = topProgressViewWinUi;
+            viewDataTop.Name.color = isFlag == false ? viewDataTop.NoActive : viewDataTop.Active;
+        }
+
         private void UpdateProgressWinUi( WinImageUi[] winImageUiPlayer)
         {
             var winImageUi = winImageUiPlayer.FirstOrDefault(win => win.IsNotWin);
@@ -257,7 +257,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         private void SetWinPlayer(WinLosePopup popup)
         {
             int softValue = _playerMatchData.WinCount * RuntimeConstants.Match.SoftValueWin;
-
+            
             TextMeshProUGUI valueWin = _playerMatchData.Field == TypePlayingField.X ? popup.X : popup.O;
             valueWin.text = softValue.ToString();
 
@@ -265,13 +265,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
             {
                 case TypePlayingField.X:
                     _playerProfile.profileData.SoftValueX += softValue;
+                    _playerProfile.profileData.Score += RuntimeConstants.Match.Score + softValue; 
                     break;
                 
                 case TypePlayingField.O:
                     _playerProfile.profileData.SoftValueO += softValue;
                     break;
             }
-
+            
             _saveLoadService.SaveProgress(true);
             
             popup.Win.SetActive(true);

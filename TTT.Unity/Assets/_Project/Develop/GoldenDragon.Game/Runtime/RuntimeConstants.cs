@@ -66,6 +66,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime
             public const int MaxCountSetField = 8;
             public const int PlayerAction = 0;
             public const int BotAction = 2;
+            public const int Score = 10;
         }
 
         public static class UiRoot

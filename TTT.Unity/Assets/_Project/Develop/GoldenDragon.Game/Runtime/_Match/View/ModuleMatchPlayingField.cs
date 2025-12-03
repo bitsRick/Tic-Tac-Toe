@@ -8,6 +8,7 @@ using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Round;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View.Style;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
 using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
@@ -46,9 +47,14 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
         {
             _playingField.Border.sprite = styleMatchData.Board;
             
+            Color colorReset = new Color(255, 255, 255, 255);
+            
             PositionElementToField[] enumValues = Enum.GetValues(typeof(PositionElementToField))
                 .Cast<PositionElementToField>()
                 .ToArray();
+            
+            if (styleMatchData.IsNotDefaultBoard) 
+                _playingField.Border.color = colorReset;
 
             for (var i = 0; i < _playingField.Fields.GetLength(0); i++)
             {
@@ -60,7 +66,13 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View
 
                 field.X.sprite = styleMatchData.X;
                 field.O.sprite = styleMatchData.O;
+
+                if (styleMatchData.IsNotDefaultX) 
+                    field.X.color = colorReset;
                 
+                if (styleMatchData.IsNotDefaultO) 
+                    field.O.color = colorReset;
+
                 field.Resolve(type, this);
                 field.Btn.onClick.AsObservable().Subscribe((_) =>
                     {

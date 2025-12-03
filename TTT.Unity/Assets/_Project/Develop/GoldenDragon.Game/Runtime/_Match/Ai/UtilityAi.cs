@@ -13,11 +13,11 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Ai
 {
     public class UtilityAi:IAi
     {
+        private readonly Calculation _calculation;
+        private readonly Brains _brains;
         private PlayingField _playingField;
-        private IEnumerable<IUtilityFunction> _utilityFunction;
-        private Calculation _calculation;
-        private Brains _brains;
         private MatchUiRoot _matchUiRoot;
+        private IEnumerable<IUtilityFunction> _utilityFunction;
 
         [Inject]
         public UtilityAi(Calculation calculation,Brains brains)

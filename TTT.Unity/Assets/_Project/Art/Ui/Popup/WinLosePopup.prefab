@@ -954,13 +954,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5110873241356076231}
   - component: {fileID: 6184079599081520148}
+  - component: {fileID: 8657514696949145319}
   m_Layer: 5
   m_Name: WinLosePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5110873241356076231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -996,6 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc52732c2964399960802c55a37877f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 8657514696949145319}
   _winText: {fileID: 7689254043454982520}
   _loseText: {fileID: 6775362715177797534}
   _rewardText: {fileID: 649687028468057974}
@@ -1005,6 +1007,18 @@ MonoBehaviour:
   _btnNextMath: {fileID: 7400693867113444063}
   _xSoftValue: {fileID: 4254692904400779639}
   _oSoftValue: {fileID: 818218508895094626}
+--- !u!225 &8657514696949145319
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6263665637655415094}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6412904736861074181
 GameObject:
   m_ObjectHideFlags: 0

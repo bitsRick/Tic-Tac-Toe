@@ -439,6 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5775829084720176954}
   - component: {fileID: 4976191320777135192}
+  - component: {fileID: 1184191739343902785}
   m_Layer: 5
   m_Name: PopupMath
   m_TagString: Untagged
@@ -478,11 +479,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bdee614df34a35a0f7bc8810c6882d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 1184191739343902785}
   _playerVsBot: {fileID: 5588742103051380071}
-  _playerVsPlayer: {fileID: 0}
   _x: {fileID: 9185189503333994608}
   _o: {fileID: 3273011042685158505}
-  _coop: {fileID: 0}
+--- !u!225 &1184191739343902785
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023638233179484293}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1551896868257001418
 GameObject:
   m_ObjectHideFlags: 0

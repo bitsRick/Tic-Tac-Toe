@@ -587,6 +587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4198718969347366276}
   - component: {fileID: 301006802128291599}
+  - component: {fileID: 5438532534540205918}
   m_Layer: 5
   m_Name: PopupInventory
   m_TagString: Untagged
@@ -626,12 +627,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fdc41b795724f79a2c5c58628b7ee5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 5438532534540205918}
   _nameHeaderForm: {fileID: 7726045127047248582}
   _nameButtonBoard: {fileID: 8694782435682716966}
   _btnBoard: {fileID: 3706322891688088876}
   _btnX: {fileID: 253257117644566814}
   _btnO: {fileID: 8764991234238588411}
   _root: {fileID: 8667244057609064568}
+--- !u!225 &5438532534540205918
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3391658502968994873}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3494235807099906853
 GameObject:
   m_ObjectHideFlags: 0

@@ -102,8 +102,7 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match
             _playerMatchDataData.Reset();
             _roundManager.Reset();
             
-            _popupService.SetNoClose(false);
-            _popupService.Close();
+            _popupService.Close(true);
             
             _matchUi.OpenCharacterStartMatchPopup();
 

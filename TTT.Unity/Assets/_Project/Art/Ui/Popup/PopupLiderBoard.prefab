@@ -4674,6 +4674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6142639824465968767}
   - component: {fileID: 250602219979610081}
+  - component: {fileID: 2404499857663179986}
   m_Layer: 5
   m_Name: PopupLiderBoard
   m_TagString: Untagged
@@ -4713,6 +4714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715da9063f5cf9c4f9d65403ac2c2ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 2404499857663179986}
   _namePopupText: {fileID: 1708486117462940400}
   _leaders:
   - {fileID: 136429989678802802}
@@ -4722,6 +4724,18 @@ MonoBehaviour:
   - {fileID: 7414242182288319643}
   - {fileID: 7111616008494371623}
   - {fileID: 6757393596253040496}
+--- !u!225 &2404499857663179986
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8163982033940538679}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8270828587570946444
 GameObject:
   m_ObjectHideFlags: 0

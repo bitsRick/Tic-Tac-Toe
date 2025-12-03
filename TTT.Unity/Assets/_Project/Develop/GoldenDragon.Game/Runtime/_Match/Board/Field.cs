@@ -1,0 +1,48 @@
+﻿using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.View;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Match.Board
+{
+    public class Field:MonoBehaviour,IPointerEnterHandler, IPointerExitHandler
+    {
+        [SerializeField] private Image _x;
+        [SerializeField] private Image _o;
+        [SerializeField] private Image _empty;
+        [SerializeField] private Button btn;
+        
+        private PositionElementToField _positionElementToField;
+        private TypePlayingField _currentCurrentPlayingFieldPlayingField;
+        private PlayingField _playingField;
+        private ModuleMatchPlayingField _matchUiRoot;
+        public Image X => _x;
+        public Image O => _o;
+        public Image Empty => _empty;
+        
+        public Button Btn => btn;
+        public TypePlayingField CurrentPlayingField
+        {
+            get => _currentCurrentPlayingFieldPlayingField;
+            set => _currentCurrentPlayingFieldPlayingField = value;
+        }
+
+        public PositionElementToField Position => _positionElementToField; 
+        
+        public void Resolve(PositionElementToField position, ModuleMatchPlayingField moduleMatchPlayingField)
+        {
+            _matchUiRoot = moduleMatchPlayingField;
+            _positionElementToField = position;
+        }
+        
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _matchUiRoot.OnMouseEnterField(this);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _matchUiRoot.OnMouseExitField(this);
+        }
+    }
+}

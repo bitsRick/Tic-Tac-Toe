@@ -1,7 +1,4 @@
-# This is a comment
-# This file should be placed at the root of your Unity project
-
-# Unity generated files
+# =============== UNITY =============== #
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -9,64 +6,111 @@
 [Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
-[Aa]ssets/AssetStoreTools*
+[Uu]ser[Ss]ettings/
 
-# Visual Studio / MonoDevelop generated files
-[Dd]ebug/
-[Rr]elease/
-[Bb]in/
-[Oo]bj/
-*.userprefs
-*.sln
+# Asset meta files should be committed
+# *.meta - НЕ игнорируем .meta файлы! Они критически важны!
+
+# =============== VISUAL STUDIO =============== #
 *.csproj
-*.pidb
-*.user
-*.suo
 *.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
 *.booproj
 *.svd
+*.pdb
+*.opendb
+*.VC.db
 
 # Rider
 .idea/
 *.sln.iml
+*.csproj.iml
+*.DotSettings.user
 
+# Visual Studio Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# =============== OS =============== #
 # macOS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db
 
 # Windows
-Thumbs.db
-ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
 # Linux
 *~
 
-# Build results
+# =============== BUILD RESULTS =============== #
 *.apk
 *.aab
 *.unitypackage
+*.app
+*.exe
+*.dmg
+*.ipa
+*.pkg
+*.xcode
+*.xcodeproj
 
-# Asset meta data
-*.pidb.meta
-*.pdb.meta
-*.mdb.meta
-*.mdb
-*.pdb
+# Addressables (можно коммитить, но часто не нужно)
+**/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*.bin*
+**/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*.hash
 
-# Visual Studio Code
-.vscode/
+# StreamingAssets (обычно содержат runtime данные)
+**/[Aa]ssets/[Ss]treamingAssets/*.meta
+**/[Aa]ssets/[Ss]treamingAssets/*/*
 
-# JetBrains Rider
-.idea/
-*.sln.iml
+# =============== PACKAGES =============== #
+# Unity Package Manager
+**/Packages/packages-lock.json
+**/Packages/manifest.json.backup
+**/Packages/manifest.json.prev
 
-# Temporary files
+# NuGet
+[Nn]u[Gg]et/
+*.nupkg
+
+# =============== ASSET STORE =============== #
+[Aa]ssets/AssetStoreTools*
+[Aa]ssets/AssetStoreTools.meta
+
+# =============== CUSTOM =============== #
+# Личные настройки
+*.private
+*.secret
+.env
+.env.local
+*.localconfig
+
+# Временные файлы
 *.tmp
 *.temp
 *.bak
 *.swp
 *.swm
 
-# Other
+# Логи
 *.log
+*.log.*
+
+# Другие
 *.sublime-project
 *.sublime-workspace

@@ -15,11 +15,12 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/2.Meta.unity
     guid: b60c29e2d8a7d0048910d6bef8c7f4c4
   - enabled: 1
-    path: Assets/_Project/Scenes/3.Core.unity
+    path: Assets/_Project/Scenes/3.Match.unity
     guid: 20f3651fcb8de434a89198160f1d0beb
   - enabled: 1
     path: Assets/_Project/Scenes/4.Empty.unity
     guid: 4b477e7c2d70a0147901410e8fa6fe87
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 3df8463ccc28b37438f477e33354d5d8, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

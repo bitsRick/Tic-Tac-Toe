@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19af8758f1af4706ae41a9a520653929, type: 3}
+  m_Name: ConfigSounds
+  m_EditorClassIdentifier: 
+  MetaBackground: {fileID: 8300000, guid: b84f484923483c1478555ff0ee8dd048, type: 3}
+  Click: {fileID: 8300000, guid: 398444d7780c3854ab5b1f5d682e39ad, type: 3}

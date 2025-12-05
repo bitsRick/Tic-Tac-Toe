@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Language;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.UI.Base;
 using GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime.Utilities;
@@ -16,9 +17,8 @@ namespace GoldenDragon
         [SerializeField] private TextMeshProUGUI _nameGame;
         [SerializeField] private CanvasGroup _canvasGroup;
         
-        private readonly float _countNegativeAlpha = 0.75f;
         private int _timeReduceAlpha;
-        private Tween _fadeTween = null;
+        private Tween _fadeTween;
 
         private void Awake()
         {
@@ -44,7 +44,7 @@ namespace GoldenDragon
         {
             if (_fadeTween != null) _fadeTween.Kill();
             
-            _fadeTween = _canvasGroup.DOFade(0f, _countNegativeAlpha)
+            _fadeTween = _canvasGroup.DOFade(0f, RuntimeConstants.LoadingView.CountNegativeAlpha)
                 .SetAutoKill(true)
                 .SetTest(() => gameObject.SetActive(false))
                 .Play();

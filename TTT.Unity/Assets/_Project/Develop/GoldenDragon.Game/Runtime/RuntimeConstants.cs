@@ -5,6 +5,10 @@ namespace GoldenDragon._Project.Develop.GoldenDragon.Game.Runtime
 {
     public static class RuntimeConstants
     {
+        public static class LoadingView
+        {
+            public const float CountNegativeAlpha = 0.75f;
+        }
         public static class Scene
         {
             public static readonly int Bootstrap = SceneUtility.GetBuildIndexByScenePath("0.Bootstrap");

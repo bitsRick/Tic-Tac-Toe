@@ -2,7 +2,7 @@
 
 [![Made with Unity](https://img.shields.io/badge/Made%20with-Unity-57b9d3.svg?style=for-the-badge&logo=unity)](https://unity3d.com)
 
-Hierarchical N-tree architecture with reactive programming.
+Hierarchical N-ary Tree architecture with reactive programming.
 
 ## Contents
   -  About the Project
@@ -16,9 +16,9 @@ Hierarchical N-tree architecture with reactive programming.
 
 ## About the Project
 
-N-Tic-Tac-Toe with N-Tree topology is a demonstration of a hierarchical architecture, where each component is organized as a tree node with an arbitrary number of child elements.
+N-Tic-Tac-Toe with N-ary Tree topology is a demonstration of a hierarchical architecture, where each component is organized as a tree node with an arbitrary number of child elements.
 Key concepts:
-- N-Tree as the basis of the architecture
+- N-ary Tree as the basis of the architecture
 - DI container for dependency management
 Advantages of the N-Tree architecture:
 - Scalability – easy to add new nodes

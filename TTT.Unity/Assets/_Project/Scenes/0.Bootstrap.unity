@@ -463,6 +463,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2417363240187186370, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
+      propertyPath: m_text
+      value: Tic -Ta - Toe
+      objectReference: {fileID: 0}
     - target: {fileID: 3042583146891888930, guid: 1b1a1dda09eb3a44ab47499d72c5308c, type: 3}
       propertyPath: m_Name
       value: LoadingCanvas

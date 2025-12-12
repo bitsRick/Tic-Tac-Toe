@@ -26,7 +26,7 @@ Advantages of the N-Tree architecture:
 ##  Architectural scheme
 
 ```
-BootstrapScope (корень)
+BootstrapScope (Root)
 ├── LoadingScope
 │ └── LoadingFlow
 ├── MetaScope
@@ -77,20 +77,20 @@ Assets/
 │   │        │       ├── 📂 Runtime/ 	# Scripts for Runtime
 │   │        │        │       ├── 📂 _Bootstrap/
 │   │        │        │       │      ├── …….
-│   │        │        │       │      ├── BootstrapScope.cs  	# Entry point 
-│   │        │        │       │      ├── BootstrapFlow.cs
+│   │        │        │       │      ├── BootstrapScope.cs  	
+│   │        │        │       │      ├── BootstrapFlow.cs      # Entry point 
 │   │        │        │       ├── 📂 _Loading/
 │   │        │        │       │      ├── …….
-│   │        │        │       │      ├── LoadingScope.cs 		# Entry point
-│   │        │        │       │      ├── LoadingFlow.cs
+│   │        │        │       │      ├── LoadingScope.cs
+│   │        │        │       │      ├── LoadingFlow.cs      # Entry point 
 │   │        │        │       ├── 📂 _Match/
 │   │        │        │       │      ├── …….
-│   │        │        │       │      ├── MatchScope.cs 		# Entry point
-│   │        │        │       │      ├── MatchFlow.cs
+│   │        │        │       │      ├── MatchScope.cs
+│   │        │        │       │      ├── MatchFlow.cs      # Entry point 
 │   │        │        │       ├── 📂 _Meta/
 │   │        │        │       │      ├── …….
-│   │        │        │       │      ├── MetaScope.cs 		# Entry point
-│   │        │        │       │      ├── MetaFlow.cs
+│   │        │        │       │      ├── MetaScope.cs
+│   │        │        │       │      ├── MetaFlow.cs      # Entry point 
 │   │        │        │       ├── ………….
 │   │        │       ├── 📂 Tests/ 	# Test scripts
 │   ├── 📂 Scenes/
